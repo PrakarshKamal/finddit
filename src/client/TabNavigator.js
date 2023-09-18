@@ -13,6 +13,7 @@ const TabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
+          tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" color={color} size={24} />
           ),
@@ -22,6 +23,7 @@ const TabNavigator = () => {
         name="Account"
         component={AccountScreen}
         options={{
+          tabBarLabel: "Account",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="user-alt" color={color} size={20} />
           ),
