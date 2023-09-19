@@ -16,6 +16,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/signupStyles";
 import { Divider } from "@rneui/themed";
+import { AntDesign } from "@expo/vector-icons";
 
 function SignupScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
@@ -100,6 +101,11 @@ function SignupScreen() {
         />
         <Pressable style={styles.signUpButton} onPress={signUp}>
           <Text style={styles.signUpButtonText}>Create Account</Text>
+          <Divider width={5} color="grey" />
+        </Pressable>
+        <Pressable style={styles.signInGoogleButton} onPress={null}>
+          <AntDesign name="google" size={24} color="black" />
+          <Text style={styles.signInGoogleText}>Sign in with Google</Text>
         </Pressable>
       </View>
       <Text style={styles.alreadyAccountText}>Already have an account?</Text>
