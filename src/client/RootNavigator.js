@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./screens/Login";
+import LoginScreen from "./screens/LoginScreen";
 import TabNavigator from "./TabNavigator"; // Import your TabNavigator component
 
 const Stack = createStackNavigator();
@@ -16,8 +16,8 @@ const MainAppScreen = () => {
 const RootNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="App" component={MainAppScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="App" component={MainAppScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

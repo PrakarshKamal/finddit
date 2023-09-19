@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import TabNavigator from "./TabNavigator";
 import RootNavigator from "./RootNavigator"
-import LoginScreen from "./screens/Login";
+import LoginScreen from "./screens/LoginScreen";
 
 export default function App() {
   return (

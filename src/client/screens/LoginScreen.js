@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { FIREBASE_AUTH } from '../FirebaseConfig'; // Import the Firebase configuration
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useNavigation } from "@react-navigation/native";
+
 
 function LoginScreen() {
   const [email, setEmail] = useState(''); //useState<string>('') when changing to ts
