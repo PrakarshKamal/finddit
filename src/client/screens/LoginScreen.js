@@ -15,7 +15,8 @@ import {
 } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/loginStyles";
-
+import { Divider } from "@rneui/themed";
+import { AntDesign } from "@expo/vector-icons";
 
 function LoginScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
@@ -64,8 +65,14 @@ function LoginScreen() {
           <Text style={styles.forgotPasswordText}>Forgot password?</Text>
         </Pressable>
 
-        <Pressable style={styles.loginButton} onPress={signIn}>
-          <Text style={styles.loginButtonText}>Login</Text>
+        <Pressable style={styles.logInButton} onPress={signIn}>
+          <Text style={styles.logInButtonText}>Login</Text>
+          <Divider width={5} color="grey" />
+        </Pressable>
+
+        <Pressable style={styles.logInGoogleButton} onPress={null}>
+          <AntDesign name="google" size={24} color="black" />
+          <Text style={styles.logInGoogleText}>Log in with Google</Text>
         </Pressable>
       </View>
       <Text style={styles.noAccountText}>Don't have an account? </Text>

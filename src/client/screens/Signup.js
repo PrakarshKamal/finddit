@@ -15,6 +15,7 @@ import {
 } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/signupStyles";
+import { Divider } from "@rneui/themed";
 
 function SignupScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
