@@ -12,7 +12,7 @@ export const AuthProvider = ({children}) => {
         const response = await signInWithEmailAndPassword(auth, email, password);
         setUser(response.user)
         return response
-        }catch{
+        }catch(error){
             throw error
         }
     }
@@ -22,18 +22,17 @@ export const AuthProvider = ({children}) => {
         const response = await createUserWithEmailAndPassword(auth, email, password);
         setUser(response.user)
         return response
-        }catch{
+        }catch(error){
             throw error
         }
     }
 
     const signOutUser = async() => {
         try{
-        const response = await signOut(auth)
-        console.log(response)
-        setUser(null)
-        return response
-        }catch{
+        signOut(auth).then(() => {
+            setUser(null)
+        })
+        }catch(error){
             throw error
         }
     }
