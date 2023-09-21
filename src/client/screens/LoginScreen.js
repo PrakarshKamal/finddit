@@ -7,6 +7,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Pressable,
+  Image,
 } from "react-native";
 import { FIREBASE_AUTH } from "../FirebaseConfig"; // Import the Firebase configuration
 import {
@@ -16,7 +17,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/loginStyles";
 import { Divider } from "@rneui/themed";
-import { AntDesign } from "@expo/vector-icons";
 
 function LoginScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
@@ -60,18 +60,18 @@ function LoginScreen() {
           secureTextEntry
           style={styles.input}
         />
-
         <Pressable onPress={null}>
           <Text style={styles.forgotPasswordText}>Forgot password?</Text>
         </Pressable>
-
         <Pressable style={styles.logInButton} onPress={signIn}>
           <Text style={styles.logInButtonText}>Login</Text>
-          <Divider width={5} color="grey" />
         </Pressable>
 
         <Pressable style={styles.logInGoogleButton} onPress={null}>
-          <AntDesign name="google" size={24} color="black" />
+          <Image
+            style={styles.googleIcon}
+            source={require("../assets/google-icon.png")}
+          />
           <Text style={styles.logInGoogleText}>Log in with Google</Text>
         </Pressable>
       </View>

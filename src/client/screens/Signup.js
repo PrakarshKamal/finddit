@@ -8,6 +8,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Pressable,
+  Image,
 } from "react-native";
 import { FIREBASE_AUTH } from "../FirebaseConfig"; // Import the Firebase configuration
 import {
@@ -103,10 +104,12 @@ function SignupScreen() {
         />
         <Pressable style={styles.signUpButton} onPress={signUp}>
           <Text style={styles.signUpButtonText}>Create Account</Text>
-          <Divider width={5} color="grey" />
         </Pressable>
         <Pressable style={styles.signInGoogleButton} onPress={null}>
-          <AntDesign name="google" size={24} color="black" />
+          <Image
+            style={styles.googleIcon}
+            source={require("../assets/google-icon.png")}
+          />
           <Text style={styles.signInGoogleText}>Sign in with Google</Text>
         </Pressable>
       </View>

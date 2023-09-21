@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 30,
     backgroundColor: "#f27575",
-    marginTop: 65,
-    marginBottom: 75,
+    marginTop: 60,
+    marginBottom: 40,
     shadowColor: "#171717",
     shadowOffset: { width: -2, height: 4 },
     shadowRadius: 4,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   logInButtonText: {
     color: "white",
     textAlign: "center",
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
   },
   logInGoogleButton: {
@@ -83,17 +83,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#857E7E",
   },
+  googleIcon: {
+    right: 5,
+    width: 25,
+    height: 25,
+  },
   noAccountText: {
     marginTop: 20,
     color: "#000000",
     opacity: 0.35,
-    fontSize: 21,
+    fontSize: 18,
     textAlign: "center",
   },
   signUpButtonText: {
     color: "#3685FC",
     textAlign: "center",
-    fontSize: 21,
+    fontSize: 18,
     fontWeight: "bold",
   },
 });
