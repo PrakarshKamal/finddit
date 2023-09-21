@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios'
 import {
   View,
   Text,
@@ -54,6 +55,7 @@ function SignupScreen() {
       }
     } finally {
       setLoading(false);
+      axios.post('https://localhost:3000/api/users', {email, firstName, lastName}) //fix axios network error
     }
   };
 

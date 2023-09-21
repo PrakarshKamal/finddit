@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 const MainAppScreen = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false , presentation: 'modal' }} >
+    <Stack.Navigator screenOptions={{ headerShown: false  }} >
       <Stack.Screen name="Home" component={TabNavigator} />
     </Stack.Navigator>
   );
@@ -16,7 +16,7 @@ const MainAppScreen = () => {
 
 const RootNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, presentation: 'modal'  }}>
+    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false}}>
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="App" component={MainAppScreen} />
