@@ -10,15 +10,12 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import { FIREBASE_AUTH } from "../FirebaseConfig"; // Import the Firebase configuration
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/signupStyles";
 import { Divider } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";
+import useAuth from "../hooks/useAuth";
 
 function SignupScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
@@ -29,19 +26,17 @@ function SignupScreen() {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [inUseEmail, setEmailInUse] = useState(false);
   const [weakPassword, setWeakPassword] = useState(false);
-  const auth = FIREBASE_AUTH;
   const navigation = useNavigation();
+  const {signUpUser} = useAuth()
 
   const signUp = async () => {
     setLoading(true);
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
+      const response = await signUpUser(
         email,
         password
       );
       console.log("User logged in:", response);
-      navigation.navigate("App");
     } catch (error) {
       console.log(error.code);
       if (error.code === "auth/invalid-email") {

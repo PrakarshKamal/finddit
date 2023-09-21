@@ -9,28 +9,25 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import { FIREBASE_AUTH } from "../FirebaseConfig"; // Import the Firebase configuration
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/loginStyles";
 import { Divider } from "@rneui/themed";
+import useAuth from "../hooks/useAuth";
 
 function LoginScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
   const [password, setPassword] = useState(""); //useState<string>('') when changing to ts
   const [loading, setLoading] = useState(false);
-  const auth = FIREBASE_AUTH;
   const navigation = useNavigation();
+  const {signInUser} = useAuth()
 
   const signIn = async () => {
     setLoading(true);
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
+      const response = await signInUser(email, password);
       console.log("User logged in:", response);
-      navigation.navigate("App");
+      //navigation.navigate("Signup");
     } catch (error) {
       console.log(error);
       //alert('Registration failed: ' + error.message);
