@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Image,
+  SafeAreaView,
 } from "react-native";
 import { FIREBASE_AUTH } from "../FirebaseConfig"; // Import the Firebase configuration
 import {
@@ -17,6 +18,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/loginStyles";
 import { Divider } from "@rneui/themed";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function LoginScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
@@ -42,6 +44,8 @@ function LoginScreen() {
   // ... rest of the component ...
 
   return (
+    <SafeAreaView>
+      <KeyboardAwareScrollView>
     <View style={styles.container}>
       <View style={styles.topHeadingContainer}>
         <Text style={styles.titleText}>Login</Text>
@@ -80,6 +84,8 @@ function LoginScreen() {
         <Text style={styles.signUpButtonText}>Sign Up</Text>
       </Pressable>
     </View>
+    </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 }
 
