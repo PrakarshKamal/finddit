@@ -8,7 +8,7 @@ import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{headerShown:false}}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
