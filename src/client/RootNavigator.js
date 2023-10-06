@@ -10,14 +10,9 @@ import Header from "./components/Header";
 const Stack = createStackNavigator();
 
 const MainAppScreen = () => {
-
-  function HeaderWithoutBack (){
-    return <Header backbuttonShown={false} ></Header>
-  }
   return (
-    <Stack.Navigator screenOptions={{header: Header}} >
-      <Stack.Screen name="TabNavigator" component={TabNavigator} options={{header : HeaderWithoutBack}}  />
-      <Stack.Screen name="GroupInnit" component={GroupInnit}  />
+    <Stack.Navigator screenOptions={{headerShown : false}} >
+      <Stack.Screen name="TabNavigator" component={TabNavigator}/>
     </Stack.Navigator>
   );
 };
