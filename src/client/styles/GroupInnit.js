@@ -6,11 +6,24 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       padding: 20,
     },
-    circularImage: {
-      width: 200, // Adjust the image width as needed
-      height: 200, // Adjust the image height as needed
-      borderRadius: 100, // Make it circular by setting half of the width and height as border radius
-      marginBottom: 20, // Spacing between image and text input
+    heading : {
+      color : "black",
+      fontSize : 18,
+      textAlign:'center',
+      marginBottom : 30
+    },
+    circle: {
+      width: 150, 
+      height: 150, 
+      borderRadius: 75, 
+      borderWidth : 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 20, 
+    },
+    plusIcon: {
+      fontSize: 40, 
+      color: "#f27575",
     },
     textInputView:{
       flex:1,
@@ -23,13 +36,13 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: 'gray',
       paddingHorizontal: 10,
-      marginBottom: 20, // Spacing between text input and button
+      marginBottom: 20, 
     },
     nextButton: {
       position: 'absolute',
-      bottom: 20, // Adjust the distance from the bottom as needed
-      right: 40, // Adjust the distance from the right as needed
-      backgroundColor: 'blue', // Button background color
+      bottom: 20, 
+      right: 40, 
+      backgroundColor: "#f27575",
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 5,
@@ -39,6 +52,53 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
     },
+  heading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  iconGrid: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconContainer: {
+    width: 100,
+    height: 100,
+    backgroundColor: 'lightgray',
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconText: {
+    fontSize: 16,
+  },
+  selectedIcon: {
+    borderColor: "#f27575",
+    borderWidth: 2, // Customize the border width for the selected icon
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  selectButton: {
+    backgroundColor: "#f27575",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  cancelButton: {
+    backgroundColor: 'gray',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   });
   
-  export default styles
+  
+  export default styles 
