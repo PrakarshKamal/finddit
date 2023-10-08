@@ -1,15 +1,24 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import styles from '../styles/accountScreenStyles';
+import styles from '../styles/ProfileIcon';
 
-const ProfileIcon = ({ userImageSource, userName }) => {
+const ProfileIcon = ({ user , removeUser }) => {
+    function removeUserOnPress () {
+        removeUser(user.id)
+    }
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image source={require("../assets/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpeg")} style={styles.userImage} />
-        </View>
-  
-        <Text style={styles.userName}>Hriday</Text>
+        <TouchableOpacity onPress={removeUserOnPress}>
+            <Text style={{textAlign:'right'}}>
+                X
+            </Text>
+        </TouchableOpacity>
+         <View
+      style={styles.iconContainer}
+    >
+      <Text style={styles.iconText}>{user.groupIcon}</Text>
+    </View>
+        <Text style={styles.userName}>{user.name}</Text>
       </View>
     );
   };

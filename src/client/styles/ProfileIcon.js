@@ -21,6 +21,17 @@ const styles = StyleSheet.create({
       fontSize: 18, // Adjust the font size as needed
       fontWeight: 'bold',
     },
+    iconContainer: {
+        width: 100,
+        height: 100,
+        backgroundColor: 'lightgray',
+        margin: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      iconText: {
+        fontSize: 16,
+      },
   });
 
   export default styles

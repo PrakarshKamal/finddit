@@ -2,16 +2,23 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     searchBar: {
-      display : flex,
+      display : 'flex',
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'stretch',
       backgroundColor: '#f0f0f0', // Background color of the search bar
-      borderRadius: 5,
+      borderRadius: 10,
       paddingHorizontal: 10,
+      marginHorizontal: 40,
+      marginVertical : 30,
       marginTop: 10,
+      alignContent:'center',
+      borderWidth:1,
     },
     searchIcon: {
       marginRight: 10,
+      justifyContent:'center',
+      alignItems:'center',
+      alignContent:'center'
     },
     input: {
       flex: 1,
