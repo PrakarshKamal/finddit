@@ -9,7 +9,7 @@ const AddUsers = ({route , navigation}) => {
     const [groupMembers, addGroupMembers] = useState([])
     function handleNextButtonPressed () {
         if (groupMembers.length !== 0){
-          navigation.navigate("AddUsers" , {groupIcon : selectedIcon , groupName : groupName})
+          navigation.navigate("GroupPreferences" , {groupName , groupIcon , groupMembers})
         }else {
           alert("Add alteast 1 user")
         }

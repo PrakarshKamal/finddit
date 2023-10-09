@@ -5,6 +5,7 @@ import GroupInnit from '../screens/CreateSessionScreens/GroupInnit';
 import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/Header';
 import AddUsers from '../screens/CreateSessionScreens/AddUsers';
+import GroupPreferences from '../screens/CreateSessionScreens/GroupPreferences';
 
 const HomeTab = () => {
     const Stack = createStackNavigator();
@@ -17,6 +18,7 @@ const HomeTab = () => {
       <Stack.Screen name="HomeScreen" component={HomeScreen} options={{header : HeaderWithoutBack}}/>
       <Stack.Screen name="GroupInnit" component={GroupInnit}  />
       <Stack.Screen name="AddUsers" component={AddUsers}  />
+      <Stack.Screen name="GroupPreferences" component={GroupPreferences}  />
     </Stack.Navigator>
   )
 }
