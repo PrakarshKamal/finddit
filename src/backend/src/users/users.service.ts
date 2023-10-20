@@ -6,14 +6,17 @@ import {
   Firestore,
   collection,
   addDoc,
+  setDoc,
   CollectionReference,
   getDocs,
   query,
   where,
   or,
+  getDoc,
   deleteDoc,
-  doc
+  doc,
 } from 'firebase/firestore';
+import { get } from 'http';
 
 @Injectable()
 export class UsersService {
@@ -25,12 +28,11 @@ export class UsersService {
   }
   async create(createUserDto: CreateUserDto) {
     try {
-      const docRef = await addDoc(collection(this.db, 'users'), {
+      await setDoc(doc(this.usersRef, createUserDto.email), {
         firstName: createUserDto.firstName,
         lastName: createUserDto.lastName,
-        email: createUserDto.email,
+        iconID: createUserDto.iconID
       });
-      console.log('Document written with ID: ', docRef.id);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
@@ -47,21 +49,14 @@ export class UsersService {
 
   async findOne(email_id: string) {
     try {
-      const queryToFindUserByEmail = query(
-        this.usersRef,
-        where('email', '==', email_id),
-      );
-      const querySnapshot = await getDocs(queryToFindUserByEmail);
-      if (querySnapshot.empty) {
-        return 'No user found with that email ID!';
-      }
-      const userData = querySnapshot.docs[0].data();
-      return new CreateUserDto(
-        userData.firstName,
-        userData.lastName,
-        userData.email,
-        userData.iconID
-      );
+        const userDocs = await getDoc(doc(this.usersRef, email_id));
+        const userData = userDocs.data();
+        return new CreateUserDto(
+          userData.firstName,
+          userData.lastName,
+          userData.email,
+          userData.iconID,
+        );
     } catch (e) {
       console.error('Error finding document: ', e);
     }
@@ -72,22 +67,22 @@ export class UsersService {
       const userList: CreateUserDto[] = [];
       const queryFindUserByName = query(
         this.usersRef,
-        or(
-        where('firstName', '==', name ),
-        where('lastName', '==', name))
-        );
+        or(where('firstName', '==', name), where('lastName', '==', name)),
+      );
       const querySnapshot = await getDocs(queryFindUserByName);
       if (querySnapshot.empty) {
         return 'No user found with that name!';
       }
       for (const doc of querySnapshot.docs) {
         const userData = doc.data();
-        userList.push(new CreateUserDto(
-          userData.firstName,
-          userData.lastName,
-          userData.email,
-          userData.iconID
-        ));
+        userList.push(
+          new CreateUserDto(
+            userData.firstName,
+            userData.lastName,
+            userData.email,
+            userData.iconID,
+          ),
+        );
       }
       const userData = querySnapshot.docs[0].data();
       return userList;
@@ -102,8 +97,8 @@ export class UsersService {
 
   async remove(email: string) {
     try {
-    await deleteDoc(doc(this.usersRef, email));
-    return `User with the email: #${email} was removed successfully!`;
+      await deleteDoc(doc(this.usersRef, email));
+      return `User with the email: #${email} was removed successfully!`;
     } catch (e) {
       console.error('Error deleting document: ', e);
     }
