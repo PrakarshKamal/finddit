@@ -16,13 +16,16 @@ import styles from "../styles/loginStyles";
 import { Divider } from "@rneui/themed";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import useAuth from "../hooks/useAuth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { FIREBASE_AUTH, FIREBASE_GOOGLE_PROVIDER } from "../FirebaseConfig";
 
 function LoginScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
   const [password, setPassword] = useState(""); //useState<string>('') when changing to ts
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const {signInUser} = useAuth()
+  const {signInUser} = useAuth();
+  const {signInWithGoogle} = useAuth();
 
   const signIn = async () => {
     setLoading(true);
@@ -38,6 +41,41 @@ function LoginScreen() {
     }
   };
 
+  // const auth = FIREBASE_AUTH;
+  // const provider = FIREBASE_GOOGLE_PROVIDER
+  // signInWithPopup(auth, provider)
+  //   .then((result) => {
+  //     // This gives you a Google Access Token. You can use it to access the Google API.
+  //     const credential = GoogleAuthProvider.credentialFromResult(result);
+  //     const token = credential.accessToken;
+  //     // The signed-in user info.
+  //     const user = result.user;
+  //     // IdP data available using getAdditionalUserInfo(result)
+  //     // ...
+  //   }).catch((error) => {
+  //     // Handle Errors here.
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     // The email of the user's account used.
+  //     const email = error.customData.email;
+  //     // The AuthCredential type that was used.
+  //     const credential = GoogleAuthProvider.credentialFromError(error);
+  //     // ...
+  //   });
+  
+  // const googleSignIn = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const result = await googleSignIn();
+  //     console.log("User logged in:", result);
+  //     //navigation.navigate("Signup");
+  //   } catch (error) {
+  //     console.log(error);
+  //     //alert('Registration failed: ' + error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   // ... rest of the component ...
 
   return (
@@ -68,7 +106,7 @@ function LoginScreen() {
           <Text style={styles.logInButtonText}>Login</Text>
         </Pressable>
 
-        <Pressable style={styles.logInGoogleButton} onPress={null}>
+        <Pressable style={styles.logInGoogleButton} onPress={signInWithGoogle}>
           <Image
             style={styles.googleIcon}
             source={require("../assets/google-icon.png")}

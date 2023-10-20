@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1086803235540",
+    "project_id": "finddit-18aa3",
+    "storage_bucket": "finddit-18aa3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086803235540:android:56e3a6bbcd0e3c5d6b6141",
+        "android_client_info": {
+          "package_name": "host.exp.exponent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1086803235540-nn0ttmhmamrc9ur03bqj4jpml556p6db.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBitboxVKdHDoTJzFHGt_S0MhtkmNR7fPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1086803235540-nn0ttmhmamrc9ur03bqj4jpml556p6db.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1086803235540-foi437so0m2616jgu30nq0irq4v3h2pd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "host.exp.exponent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
