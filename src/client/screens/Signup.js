@@ -29,6 +29,7 @@ function SignupScreen() {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [inUseEmail, setEmailInUse] = useState(false);
   const [weakPassword, setWeakPassword] = useState(false);
+  const NGROKLINK = "https://8870-108-170-147-96.ngrok-free.app";
   const auth = FIREBASE_AUTH;
   const navigation = useNavigation();
 
@@ -56,7 +57,7 @@ function SignupScreen() {
       }
     } finally {
       setLoading(false);
-      axios.post('https://localhost:3000/api/users', {email, firstName, lastName}) //fix axios network error
+      await axios.post(`${NGROKLINK}/users`, {email, firstName, lastName});
     }
   };
 
