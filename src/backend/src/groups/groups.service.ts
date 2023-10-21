@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { DbService } from 'src/db/db.service';
+import { NearbySearchService } from 'src/nearby-search/nearby-search.service';
 import {
   Firestore,
   collection,
@@ -24,7 +25,7 @@ import {
 export class GroupsService {
   private db: Firestore;
   private groupsRef: CollectionReference;
-  constructor(private readonly dbService: DbService) {
+  constructor(private readonly dbService: DbService, private readonly nearbySearchService: NearbySearchService) {
     this.db = this.dbService.getDB();
     this.groupsRef = collection(this.db, 'groups');
   }
@@ -38,10 +39,14 @@ export class GroupsService {
         groupMembersEmails: createGroupDto.groupMembersEmails,
         votingDeadline: createGroupDto.votingDeadline,
         isActive: createGroupDto.isActive,
+        adminPreferences: createGroupDto.adminPreferences,
         timeStamp: new Date()
       });
       console.log('Document written with ID: ', docRef.id);
       //TODO: Implement a function to send notification to user being added to a group
+      // TODO: call the resturant finding dunction with the admin preferences
+      const restuarantData = await this.nearbySearchService.getNearbyRestaurants(createGroupDto.adminPreferences);
+      this.addRestaurantDataToGroup(restuarantData, docRef.id);
       this.addGroupMembersToGroup(
         docRef.id,
         createGroupDto.groupMembersEmails,
@@ -71,6 +76,13 @@ export class GroupsService {
 
     }
     return `Admin & Members have been added to group ${currentGroupRefID}!`;
+  }
+
+  async addRestaurantDataToGroup(restaurantData, currentGroupRefID: string) {
+    var groupRestaurantSubCollectionRef = doc(this.groupsRef, currentGroupRefID, 'groupRestaurants', 'restaurantData');
+    await setDoc(groupRestaurantSubCollectionRef, restaurantData);
+    return `Restaurants have been added to group ${currentGroupRefID}!`;
+
   }
 
   async findAll() {
