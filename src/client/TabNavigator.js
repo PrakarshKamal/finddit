@@ -1,17 +1,18 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./screens/HomeScreen";
+
 import AccountScreen from "./screens/AccountScreen";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+import HomeTab from "./tabs/HomeTab";
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{headerShown:false}}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeTab}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
