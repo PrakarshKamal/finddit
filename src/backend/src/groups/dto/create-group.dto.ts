@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { NearbyRequestDto } from 'src/dto/nearby-request.dto';
 export class CreateGroupDto {
   constructor(
     groupName: string,
@@ -7,6 +8,7 @@ export class CreateGroupDto {
     groupMembersEmails: string[],
     votingDeadline: number,
     isActive: boolean,
+    adminPreferences: NearbyRequestDto
   ) {
     this.groupName = groupName;
     this.groupIconID = groupIconID;
@@ -14,6 +16,7 @@ export class CreateGroupDto {
     this.groupMembersEmails = groupMembersEmails;
     this.votingDeadline = votingDeadline;
     this.isActive = isActive;
+    this.adminPreferences = adminPreferences;
   }
 
   @ApiProperty()
@@ -28,4 +31,6 @@ export class CreateGroupDto {
   votingDeadline: number;
   @ApiProperty()
   isActive: boolean;
+  @ApiProperty()
+  adminPreferences: NearbyRequestDto
 }
