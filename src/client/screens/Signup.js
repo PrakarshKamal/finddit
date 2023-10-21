@@ -18,6 +18,7 @@ import { Divider } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import useAuth from "../hooks/useAuth";
+import { sendSignUpRequest } from '../utils/api_function_calls/user_functions';
 
 function SignupScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
@@ -25,11 +26,12 @@ function SignupScreen() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState(""); //useState<string>('') when changing to ts
   const [loading, setLoading] = useState(false);
+  const iconID = Math.floor(Math.random() * 4);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [inUseEmail, setEmailInUse] = useState(false);
   const [weakPassword, setWeakPassword] = useState(false);
-  const NGROKLINK = "https://8870-108-170-147-96.ngrok-free.app";
-  const auth = FIREBASE_AUTH;
+
+  // const auth = FIREBASE_AUTH;
   const navigation = useNavigation();
   const {signUpUser} = useAuth()
 
@@ -55,7 +57,9 @@ function SignupScreen() {
       }
     } finally {
       setLoading(false);
-      await axios.post(`${NGROKLINK}/users`, {email, firstName, lastName});
+      // await axios.post(`${NGROKLINK}/users`, {email, firstName, lastName, iconID});
+      await sendSignUpRequest(firstName, lastName, email, iconID);
+      console.log("User created in database");
     }
   };
 
