@@ -20,12 +20,16 @@ import {
   limit,
   doc,
 } from 'firebase/firestore';
+import { RestaurantDto } from 'src/dto/restaurant-response.dto';
 
 @Injectable()
 export class GroupsService {
   private db: Firestore;
   private groupsRef: CollectionReference;
-  constructor(private readonly dbService: DbService, private readonly nearbySearchService: NearbySearchService) {
+  constructor(
+    private readonly dbService: DbService,
+    private readonly nearbySearchService: NearbySearchService,
+  ) {
     this.db = this.dbService.getDB();
     this.groupsRef = collection(this.db, 'groups');
   }
@@ -40,22 +44,25 @@ export class GroupsService {
         votingDeadline: createGroupDto.votingDeadline,
         isActive: createGroupDto.isActive,
         adminPreferences: createGroupDto.adminPreferences,
-        timeStamp: new Date()
+        timeStamp: new Date(),
       });
       console.log('Document written with ID: ', docRef.id);
       //TODO: Implement a function to send notification to user being added to a group
-      // TODO: call the resturant finding dunction with the admin preferences
-      const restuarantData = await this.nearbySearchService.getNearbyRestaurants(createGroupDto.adminPreferences);
+      const restuarantData: RestaurantDto[] =
+        await this.nearbySearchService.getNearbyRestaurants(
+          createGroupDto.adminPreferences,
+        );
       this.addRestaurantDataToGroup(restuarantData, docRef.id);
       this.addGroupMembersToGroup(
         docRef.id,
         createGroupDto.groupMembersEmails,
         createGroupDto.groupAdminEmail,
       );
+      return `A new group with group admin: ${createGroupDto.groupAdminEmail} & id: ${docRef.id} has been created!`;
     } catch (e) {
       console.error('Error adding document: ', e);
+      return;
     }
-    return `A new group with group admin: ${createGroupDto.groupAdminEmail} has been created!`;
   }
 
   async addGroupMembersToGroup(
@@ -65,24 +72,46 @@ export class GroupsService {
   ) {
     groupMembersEmails.push(groupAdminEmail);
     for (const groupMemberEmail of groupMembersEmails) {
-      var groupMemberSubCollectionRef = doc(this.groupsRef, currentGroupRefID, 'groupMembers', groupMemberEmail);
+      var groupMemberSubCollectionRef = doc(
+        this.groupsRef,
+        currentGroupRefID,
+        'groupMembers',
+        groupMemberEmail,
+      );
       await setDoc(groupMemberSubCollectionRef, {
         memberPreferences: {},
-        memberVotes: {}, 
+        memberVotes: {},
         memberUsedSuperDislike: false,
         memberCheckedInGroup: false,
-        memberCheckinTimestamp: null
-      })
-
+        memberCheckinTimestamp: null,
+      });
     }
     return `Admin & Members have been added to group ${currentGroupRefID}!`;
   }
 
   async addRestaurantDataToGroup(restaurantData, currentGroupRefID: string) {
-    var groupRestaurantSubCollectionRef = doc(this.groupsRef, currentGroupRefID, 'groupRestaurants', 'restaurantData');
-    await setDoc(groupRestaurantSubCollectionRef, restaurantData);
+    var groupRestaurantSubCollectionRef = collection(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupRestaurants',
+    );
+    for (const restaurant of restaurantData) {
+      await addDoc(groupRestaurantSubCollectionRef, {
+        business_status: restaurant.business_status,
+        lat: restaurant.lat,
+        long: restaurant.long,
+        name: restaurant.name,
+        place_opening_hours: restaurant.place_opening_hours,
+        photos: restaurant.photos,
+        place_id: restaurant.place_id,
+        plus_code: restaurant.plus_code,
+        price_level: restaurant.price_level,
+        rating: restaurant.rating,
+        user_ratings_total: restaurant.user_ratings_total,
+        vicinity: restaurant.vicinity,
+      });
+    }
     return `Restaurants have been added to group ${currentGroupRefID}!`;
-
   }
 
   async findAll() {
@@ -94,24 +123,47 @@ export class GroupsService {
   }
 
   async getActiveGroupsForUser(userEmail: string) {
-    const querySnapshot = await getDocs(query(this.groupsRef, where('groupMembersEmails', 'array-contains', userEmail), where('isActive', '==', true)));
+    const querySnapshot = await getDocs(
+      query(
+        this.groupsRef,
+        where('groupMembersEmails', 'array-contains', userEmail),
+        where('isActive', '==', true),
+      ),
+    );
     querySnapshot.forEach((doc) => {
       console.log(doc.id, ' => ', doc.data());
     });
     return `This action returns all active groups for user ${userEmail}`;
   }
-  
-  async groupMemberCheckInToGroup(groupMemberEmail: string, currentGroupRefID: string, memberPreferences: any) {
-    var groupMemberSubCollectionRef = doc(this.groupsRef, currentGroupRefID, 'groupMembers', groupMemberEmail);
-    await updateDoc(groupMemberSubCollectionRef,{
-      "memberCheckedInGroup": true,
-      "memberCheckinTimestamp": new Date(),
-      "memberPreferences": memberPreferences
-    })
+
+  async groupMemberCheckInToGroup(
+    groupMemberEmail: string,
+    currentGroupRefID: string,
+    memberPreferences: any,
+  ) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      groupMemberEmail,
+    );
+    await updateDoc(groupMemberSubCollectionRef, {
+      memberCheckedInGroup: true,
+      memberCheckinTimestamp: new Date(),
+      memberPreferences: memberPreferences,
+    });
   }
 
   async getInactiveGroupsForUser(userEmail: string) {
-    const querySnapshot = await getDocs(query(this.groupsRef, where('groupMembersEmails', 'array-contains', userEmail), where('isActive', '==', false), orderBy("timeStamp", "desc"), limit(5)));
+    const querySnapshot = await getDocs(
+      query(
+        this.groupsRef,
+        where('groupMembersEmails', 'array-contains', userEmail),
+        where('isActive', '==', false),
+        orderBy('timeStamp', 'desc'),
+        limit(5),
+      ),
+    );
     querySnapshot.forEach((doc) => {
       console.log(doc.id, ' => ', doc.data());
     });
@@ -129,4 +181,3 @@ export class GroupsService {
     return `This action removes a #${id} group`;
   }
 }
-

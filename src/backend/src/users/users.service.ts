@@ -32,7 +32,7 @@ export class UsersService {
         firstName: createUserDto.firstName,
         lastName: createUserDto.lastName,
         iconID: createUserDto.iconID,
-        email: createUserDto.email
+        email: createUserDto.email,
       });
     } catch (e) {
       console.error('Error adding document: ', e);
@@ -58,17 +58,17 @@ export class UsersService {
 
   async findOne(email_id: string) {
     try {
-        const userDocs = await getDoc(doc(this.usersRef, email_id));
-        const userData = userDocs.data();
-        if (userData == undefined){
-          return null;
-        }
-        return new CreateUserDto(
-          userData.firstName,
-          userData.lastName,
-          userData.email,
-          userData.iconID,
-        );
+      const userDocs = await getDoc(doc(this.usersRef, email_id));
+      const userData = userDocs.data();
+      if (userData == undefined) {
+        return null;
+      }
+      return new CreateUserDto(
+        userData.firstName,
+        userData.lastName,
+        userData.email,
+        userData.iconID,
+      );
     } catch (e) {
       console.error('Error finding document: ', e);
     }
