@@ -21,3 +21,5 @@ export const FIREBASE_APP = initializeApp(firebaseConfig);
 export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
 export const FIREBASE_DB = getFirestore(FIREBASE_APP);
 export const FIREBASE_GOOGLE_PROVIDER = new GoogleAuthProvider();
+
+// IOS: 1086803235540-foi437so0m2616jgu30nq0irq4v3h2pd.apps.googleusercontent.com
