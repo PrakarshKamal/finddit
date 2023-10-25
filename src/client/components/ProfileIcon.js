@@ -4,7 +4,7 @@ import styles from '../styles/ProfileIcon';
 
 const ProfileIcon = ({ user , removeUser }) => {
     function removeUserOnPress () {
-        removeUser(user.id)
+        removeUser(user.email)
     }
     return (
       <View style={styles.container}>
@@ -16,9 +16,9 @@ const ProfileIcon = ({ user , removeUser }) => {
          <View
       style={styles.iconContainer}
     >
-      <Text style={styles.iconText}>{user.groupIcon}</Text>
+      <Text style={styles.iconText}>{user.iconID}</Text>
     </View>
-        <Text style={styles.userName}>{user.name}</Text>
+        <Text style={styles.userName}>{user.firstName} {user.lastName}</Text>
       </View>
     );
   };

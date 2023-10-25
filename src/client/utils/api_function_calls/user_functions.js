@@ -6,10 +6,9 @@ async function sendSignUpRequest (firstName, lastName, email, iconID) {
 }
 
 async function findUserByEmailOrName (emailOrName){
-    await axios.get(`${NGROK_URL}/users/email-or-name/${emailOrName}`)
-    .then(function (response) {
-        console.log(response.data);
-    })
+    const response =  await axios.get(`${NGROK_URL}/users/email-or-name/${emailOrName}`)
+        console.log(response.data)
+        return response.data
 }
 
 module.exports = {sendSignUpRequest, findUserByEmailOrName};
