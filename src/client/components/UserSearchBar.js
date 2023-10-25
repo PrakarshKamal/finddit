@@ -16,7 +16,9 @@ const UserSearchBar = ({searchUser, hideResults, searchResultsShown}) => {
       hideResults()
     }
     async function searchThisUser (){
-      await  searchUser(searchText)
+      if(searchText){
+        await  searchUser(searchText)
+      }
     }
     return (
       <View style={styles.searchBar}>
@@ -25,6 +27,7 @@ const UserSearchBar = ({searchUser, hideResults, searchResultsShown}) => {
           style={styles.input}
           onChangeText={(text) => onSearchtextChange(text)}
           value={searchText}
+          onSubmitEditing={searchThisUser}
         />
         {!searchResultsShown ? 
         <TouchableOpacity onPress={searchThisUser}>
