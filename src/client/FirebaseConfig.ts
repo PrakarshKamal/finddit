@@ -23,3 +23,5 @@ export const FIREBASE_DB = getFirestore(FIREBASE_APP);
 export const FIREBASE_GOOGLE_PROVIDER = new GoogleAuthProvider();
 
 // IOS: 1086803235540-foi437so0m2616jgu30nq0irq4v3h2pd.apps.googleusercontent.com
+// android: FF:B1:5E:F5:84:5F:C2:B8:15:AB:52:EA:D9:A7:9A:A6:1F:49:C6:9B
+// 1086803235540-d4juseob9paphchgd8go08up0q5t9qqj.apps.googleusercontent.com
