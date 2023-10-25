@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import UserSearchBar from '../../components/UserSearchBar'
 import ProfileIcon from '../../components/ProfileIcon'
 import styles from '../../styles/AddUsersStyles'
+import { findUserByEmailOrName } from '../../utils/api_function_calls/user_functions'
 
 const AddUsers = ({route , navigation}) => {
     const { groupName, groupIcon } = route.params;
@@ -16,6 +17,7 @@ const AddUsers = ({route , navigation}) => {
       }
     function addMembersUsingEmail (username) {
         console.log(username)
+        console.log(findUserByEmailOrName(username))
         if (true){
             addGroupMembers([...groupMembers , { id : Math.random(), name : username , groupIcon : groupIcon.name}])
         }else{

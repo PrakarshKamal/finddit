@@ -31,7 +31,8 @@ export class UsersService {
       await setDoc(doc(this.usersRef, createUserDto.email), {
         firstName: createUserDto.firstName,
         lastName: createUserDto.lastName,
-        iconID: createUserDto.iconID
+        iconID: createUserDto.iconID,
+        email: createUserDto.email,
       });
     } catch (e) {
       console.error('Error adding document: ', e);
@@ -47,16 +48,27 @@ export class UsersService {
     return `This action returns all users`;
   }
 
+  async findByEmailOrName(emailOrName: string) {
+    var foundByEmail = await this.findOne(emailOrName);
+    if (foundByEmail == null) {
+      return await this.findByName(emailOrName);
+    }
+    return foundByEmail;
+  }
+
   async findOne(email_id: string) {
     try {
-        const userDocs = await getDoc(doc(this.usersRef, email_id));
-        const userData = userDocs.data();
-        return new CreateUserDto(
-          userData.firstName,
-          userData.lastName,
-          userData.email,
-          userData.iconID,
-        );
+      const userDocs = await getDoc(doc(this.usersRef, email_id));
+      const userData = userDocs.data();
+      if (userData == undefined) {
+        return null;
+      }
+      return new CreateUserDto(
+        userData.firstName,
+        userData.lastName,
+        userData.email,
+        userData.iconID,
+      );
     } catch (e) {
       console.error('Error finding document: ', e);
     }
@@ -71,7 +83,7 @@ export class UsersService {
       );
       const querySnapshot = await getDocs(queryFindUserByName);
       if (querySnapshot.empty) {
-        return 'No user found with that name!';
+        return null;
       }
       for (const doc of querySnapshot.docs) {
         const userData = doc.data();
@@ -84,7 +96,6 @@ export class UsersService {
           ),
         );
       }
-      const userData = querySnapshot.docs[0].data();
       return userList;
     } catch (e) {
       console.error('Error finding document: ', e);

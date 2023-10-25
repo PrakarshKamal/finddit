@@ -50,7 +50,6 @@ export class GroupsController {
     return this.groupsService.update(+id, updateGroupDto);
   }
 
-
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.groupsService.remove(+id);

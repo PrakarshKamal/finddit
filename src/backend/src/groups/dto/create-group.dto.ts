@@ -8,7 +8,7 @@ export class CreateGroupDto {
     groupMembersEmails: string[],
     votingDeadline: number,
     isActive: boolean,
-    adminPreferences: NearbyRequestDto
+    adminPreferences: NearbyRequestDto,
   ) {
     this.groupName = groupName;
     this.groupIconID = groupIconID;
@@ -32,5 +32,5 @@ export class CreateGroupDto {
   @ApiProperty()
   isActive: boolean;
   @ApiProperty()
-  adminPreferences: NearbyRequestDto
+  adminPreferences: NearbyRequestDto;
 }
