@@ -25,7 +25,13 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "host.exp.exponent"
+      "package": "host.exp.exponent",
+      "signingConfig": {
+        "storeFile": "./android/app/release.keystore",
+        "storePassword": "android",
+        "keyAlias": "androidreleasekey",
+        "keyPassword": "android"
+      }
     },
     "plugins": [
       "@react-native-google-signin/google-signin"

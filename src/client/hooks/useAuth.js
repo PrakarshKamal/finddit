@@ -1,9 +1,7 @@
 import { View, Text } from 'react-native'
 import  { createContext, useContext, useState } from 'react'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
-import { FIREBASE_AUTH, FIREBASE_GOOGLE_PROVIDER } from "../FirebaseConfig"; // Import the Firebase configuration
-//import * as Google from "expo-google-app-auth";
-// import * as Google from "expo-auth-session/providers/google"
+import { FIREBASE_AUTH, FIREBASE_GOOGLE_PROVIDER } from "../FirebaseConfig";
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
@@ -52,38 +50,22 @@ export const AuthProvider = ({children}) => {
     }
     const signInWithGoogle = async () => {
       try {
-        console.log("starting google sign in")
         // Get the users ID token
         const { idToken } = await GoogleSignin.signIn();
-        console.log("idToken acquired");
     
         // Create a Google credential with the token
         const googleCredential = GoogleAuthProvider.credential(idToken);
-        console.log("googleCredential acquired");
         // Sign-in the user with the credential
         const user_sign_in = await signInWithCredential(auth, googleCredential);
-        console.log("user:", user_sign_in.user);
 
         // Save the user data to AsyncStorage
         await AsyncStorage.setItem('userData', JSON.stringify(user_sign_in.user));
-        console.log("userdata acquired");
 
         //await storeUserData(user_sign_in.user);
         setUser(user_sign_in.user);
-        console.log("user has been set");
 
       } catch(error) {
         console.log("Google sign-in error", error);
-
-        if (error.code) {
-          console.log("error code", error.code);
-        }
-        if (error.message) {
-          console.log("error code", error.message);
-        }
-        if (error.satck) {
-          console.log("error code", error.stack);
-        }
       }
     }
 
