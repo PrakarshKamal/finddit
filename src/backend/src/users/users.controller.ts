@@ -13,7 +13,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
-
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -28,9 +27,19 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Get('email/:email_id')
+  findOne(@Param('email_id') email_id: string) {
+    return this.usersService.findOne(email_id);
+  }
+
+  @Get('name/:name')
+  findByName(@Param('name') name: string) {
+    return this.usersService.findByName(name);
+  }
+
+  @Get('email-or-name/:email_or_name')
+  findByEmailOrName(@Param('email_or_name') email_or_name: string) {
+    return this.usersService.findByEmailOrName(email_or_name);
   }
 
   @Patch(':id')
@@ -38,8 +47,8 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @Delete('delete-user/:email')
+  remove(@Param('email') email: string) {
+    return this.usersService.remove(email);
   }
 }
