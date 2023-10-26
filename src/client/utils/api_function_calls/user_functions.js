@@ -12,4 +12,20 @@ async function findUserByEmailOrName (emailOrName){
     })
 }
 
-module.exports = {sendSignUpRequest, findUserByEmailOrName};
+async function saveGoogleInfo (firstName, lastName, email, iconID) {
+    try {
+        const response = await axios.get(`${NGROK_URL}/users/email-or-name/${email}`)
+        
+        // Check if the response data contains user information
+        if (response.data) {
+            console.log("User exists");
+        } else {
+            sendSignUpRequest(firstName, lastName, email, iconID);
+        }
+    } catch (error) {
+        console.error("An error occurred:", error);
+        
+    }
+}
+
+module.exports = {sendSignUpRequest, findUserByEmailOrName, saveGoogleInfo};

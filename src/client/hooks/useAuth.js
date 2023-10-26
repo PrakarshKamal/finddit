@@ -6,6 +6,7 @@ import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-si
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { useEffect } from 'react';
+import { saveGoogleInfo } from '../utils/api_function_calls/user_functions';
 
 const auth = FIREBASE_AUTH;
 const provider = FIREBASE_GOOGLE_PROVIDER
@@ -21,6 +22,7 @@ GoogleSignin.configure({
 
 export const AuthProvider = ({children}) => {
     const [user , setUser] = useState(null)
+
     const signInUser = async(email , password) => {
         try{
         const response = await signInWithEmailAndPassword(auth, email, password);
@@ -64,6 +66,15 @@ export const AuthProvider = ({children}) => {
         //await storeUserData(user_sign_in.user);
         setUser(user_sign_in.user);
 
+        const displayName = user_sign_in.user.displayName;
+        const email = user_sign_in.user.email;
+        const iconID = Math.floor(Math.random() * 4);
+
+        const displayNameParts = displayName.split(' ');
+        const firstName = displayNameParts.slice(0, -1).join(' ');
+        const lastName = displayNameParts.slice(-1).join(' ');
+
+        await saveGoogleInfo(firstName, lastName, email, iconID);
       } catch(error) {
         console.log("Google sign-in error", error);
       }
