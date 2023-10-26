@@ -3,22 +3,40 @@ import React, { useState } from 'react'
 import { Icon } from '@rneui/base';
 import styles from '../styles/UserSearchBarStyles';
 
-const UserSearchBar = ({addMembersUsingEmail}) => {
+const UserSearchBar = ({searchUser, hideResults, searchResultsShown}) => {
     const [searchText, setSearchText] = useState('');
-    function searchUser (){
-        addMembersUsingEmail(searchText)
+
+    function onSearchtextChange(text){
+      setSearchText(text)
+      hideResults()
+    }
+
+    function clearText(){
+      setSearchText(null)
+      hideResults()
+    }
+    async function searchThisUser (){
+      if(searchText){
+        await  searchUser(searchText)
+      }
     }
     return (
       <View style={styles.searchBar}>
         <TextInput
           placeholder="Add Members"
           style={styles.input}
-          onChangeText={(text) => setSearchText(text)}
+          onChangeText={(text) => onSearchtextChange(text)}
           value={searchText}
+          onSubmitEditing={searchThisUser}
         />
-        <TouchableOpacity onPress={searchUser}>
-        <Icon name="search" size={40} color="#f27575" style={styles.searchIcon} />
+        {!searchResultsShown ? 
+        <TouchableOpacity onPress={searchThisUser}>
+           <Icon name="search" size={40} color="#f27575" style={styles.searchIcon} />
         </TouchableOpacity>
+        :
+        <TouchableOpacity onPress={clearText}>
+           <Icon name="cancel" size={40} color="#f27575" style={styles.searchIcon} /> 
+        </TouchableOpacity>}
       </View>
     );
   };
