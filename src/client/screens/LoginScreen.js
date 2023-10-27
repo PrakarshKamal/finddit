@@ -16,13 +16,16 @@ import styles from "../styles/loginStyles";
 import { Divider } from "@rneui/themed";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import useAuth from "../hooks/useAuth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { FIREBASE_AUTH, FIREBASE_GOOGLE_PROVIDER } from "../FirebaseConfig";
 
 function LoginScreen() {
   const [email, setEmail] = useState(""); //useState<string>('') when changing to ts
   const [password, setPassword] = useState(""); //useState<string>('') when changing to ts
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const {signInUser} = useAuth()
+  const {signInUser} = useAuth();
+  const {signInWithGoogle} = useAuth();
 
   const signIn = async () => {
     setLoading(true);
@@ -37,8 +40,6 @@ function LoginScreen() {
       setLoading(false);
     }
   };
-
-  // ... rest of the component ...
 
   return (
     <SafeAreaView>
@@ -68,7 +69,7 @@ function LoginScreen() {
           <Text style={styles.logInButtonText}>Login</Text>
         </Pressable>
 
-        <Pressable style={styles.logInGoogleButton} onPress={null}>
+        <Pressable style={styles.logInGoogleButton} onPress={signInWithGoogle}>
           <Image
             style={styles.googleIcon}
             source={require("../assets/google-icon.png")}
@@ -86,6 +87,5 @@ function LoginScreen() {
   );
 }
 
-// ... rest of the component ...
 
 export default LoginScreen;

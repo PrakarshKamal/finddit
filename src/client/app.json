@@ -15,16 +15,29 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "supportsTablet": true,
+      "bundleIdentifier": "host.exp.exponent"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.client"
+      "package": "host.exp.exponent",
+      "signingConfig": {
+        "storeFile": "./android/app/release.keystore",
+        "storePassword": "android",
+        "keyAlias": "androidreleasekey",
+        "keyPassword": "android"
+      }
     },
+    "plugins": [
+      "@react-native-google-signin/google-signin"
+    ],
     "web": {
+      "googleServicesFile": "./GoogleService-Info.plist",
       "favicon": "./assets/favicon.png"
     }
   }
