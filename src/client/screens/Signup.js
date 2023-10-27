@@ -34,7 +34,6 @@ function SignupScreen() {
   // const auth = FIREBASE_AUTH;
   const navigation = useNavigation();
   const {signUpUser} = useAuth()
-  const {signInWithGoogle} = useAuth();
 
   const signUp = async () => {
     setLoading(true);
@@ -111,7 +110,7 @@ function SignupScreen() {
         <Pressable style={styles.signUpButton} onPress={signUp}>
           <Text style={styles.signUpButtonText}>Create Account</Text>
         </Pressable>
-        <Pressable style={styles.signInGoogleButton} onPress={signInWithGoogle}>
+        <Pressable style={styles.signInGoogleButton} onPress={null}>
           <Image
             style={styles.googleIcon}
             source={require("../assets/google-icon.png")}
