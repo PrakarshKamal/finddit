@@ -17,6 +17,7 @@ import {
   deleteDoc,
   updateDoc,
   orderBy,
+  getDoc,
   limit,
   doc,
 } from 'firebase/firestore';
@@ -58,7 +59,7 @@ export class GroupsService {
         createGroupDto.groupMembersEmails,
         createGroupDto.groupAdminEmail,
       );
-      return `A new group with group admin: ${createGroupDto.groupAdminEmail} & id: ${docRef.id} has been created!`;
+      return docRef.id;
     } catch (e) {
       console.error('Error adding document: ', e);
       return;
@@ -169,6 +170,45 @@ export class GroupsService {
     });
   }
 
+  async getDataForCards(currentGroupRefID: string) {
+    var cardData = [];
+    const querySnapshot = await getDocs(
+      collection(this.groupsRef, currentGroupRefID, 'groupRestaurants'),
+    );
+    querySnapshot.forEach((doc) => {
+      cardData.push(doc.data());
+    });
+    return cardData;
+  }
+
+  async getCheckedInMembersForGroup(currentGroupRefID: string) {
+    var checkedInMembers = [];
+    const querySnapshot = await getDocs(
+      collection(this.groupsRef, currentGroupRefID, 'groupMembers'),
+    );
+    querySnapshot.forEach((doc) => {
+      if (doc.data().memberCheckedInGroup) {
+        checkedInMembers.push(doc.id);
+      }
+    });
+    return checkedInMembers;
+  }
+
+  async getGroupMetadata(currentGroupRefID: string) {
+    const docRef = doc(this.groupsRef, currentGroupRefID)
+    const docSnapshot = await getDoc(docRef);
+    if (docSnapshot.exists()) {
+      return docSnapshot.data();
+    } 
+  }
+  
+  async getUserDataFromGroup(currentGroupRefID: string, userEmail: string) {
+    const docRef = doc(this.groupsRef, currentGroupRefID, 'groupMembers', userEmail)
+    const docSnapshot = await getDoc(docRef);
+    if (docSnapshot.exists()) {
+      return docSnapshot.data();
+    } 
+  }
   findOne(id: number) {
     return `This action returns a #${id} group`;
   }
