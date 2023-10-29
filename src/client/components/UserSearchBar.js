@@ -17,7 +17,7 @@ const UserSearchBar = ({searchUser, hideResults, searchResultsShown}) => {
     }
     async function searchThisUser (){
       if(searchText){
-        await  searchUser(searchText)
+        await  searchUser(searchText.toString().trim())
       }
     }
     return (
