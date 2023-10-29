@@ -12,6 +12,8 @@ export class NearbyRequestDto {
   maxPrice: number;
   @ApiProperty()
   minPrice: number;
+  @ApiProperty()
+  openNow: boolean;
   @ApiPropertyOptional()
   rankby: string;
   @ApiPropertyOptional()
