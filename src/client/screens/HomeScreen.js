@@ -3,17 +3,19 @@ import React from "react";
 import styles from "../styles/homeScreenStyles";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
+import useAuth from "../hooks/useAuth";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const user = useAuth()
   const handleButton1Press = () => {
     navigation.navigate("GroupInnit");
-    console.log("Button 1 Pressed");
   };
 
   const handleButton2Press = () => {
-    console.log("Button 2 Pressed");
+    navigation.navigate("ActiveSessions" , {email: user.user.email});
   };
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handleButton1Press}>

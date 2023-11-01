@@ -6,7 +6,7 @@ async function createNewGroup(groupName, groupIconID, groupAdminEmail, groupMemb
 }
 
 async function getActiveGroupsForUser(userEmail){
-    await axios.get(`${NGROK_URL}/groups/active-groups/${userEmail}`);
+    return await axios.get(`${NGROK_URL}/groups/active-groups/${userEmail}`);
 } 
 
 async function getInactiveGroupsForUser(userEmail){
@@ -30,4 +30,4 @@ async function getGroupMetadata(groupID){
 }
 
 
-module.exports = {createNewGroup ,getCardDataFromGroup};
+module.exports = {createNewGroup ,getCardDataFromGroup , getActiveGroupsForUser};
