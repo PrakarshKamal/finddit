@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
     },
+    toggleButtonContainer: {
+      flexDirection: 'column',
+    },
+    
   });
 
   export default styles
