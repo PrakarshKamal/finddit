@@ -45,6 +45,26 @@ export class GroupsController {
     return this.groupsService.getInactiveGroupsForUser(email);
   }
 
+  @Get('group-card-data/:groupId')
+  getDataForCards(@Param('groupId') groupId: string) {
+    return this.groupsService.getDataForCards(groupId);
+  }
+
+  @Get('checked-in-members/:groupId')
+  getCheckedInMembersForGroup(@Param('groupId') groupId: string) {
+    return this.groupsService.getCheckedInMembersForGroup(groupId);
+  }
+
+  @Get('group-metadata/:groupId')
+  getGroupMetadata(@Param('groupId') groupId: string) {
+    return this.groupsService.getGroupMetadata(groupId);
+  }
+
+  @Get('member-data-from-group/:groupId/:email')
+  getUserDataFromGroup(@Param('groupId') groupId: string, @Param('email') email: string) {
+    return this.groupsService.getUserDataFromGroup(groupId, email);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
     return this.groupsService.update(+id, updateGroupDto);

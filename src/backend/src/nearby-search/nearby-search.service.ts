@@ -24,7 +24,7 @@ export class NearbySearchService {
           radius: `${request.radius}`,
           maxprice: `${request.maxPrice}`,
           minprice: `${request.minPrice}`,
-          opennow: true,
+          opennow: `${request.openNow}`,
         },
       });
 
