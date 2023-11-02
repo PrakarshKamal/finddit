@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     },
 
     iconGrid: {
+        flex: 1,
         alignItems: "center",
         justifyContent: "center",
     },

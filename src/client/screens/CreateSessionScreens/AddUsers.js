@@ -48,7 +48,7 @@ const AddUsers = ({ route, navigation }) => {
             setGroupMembers(temp);
             setResultDropdownShown(false);
         } else {
-            alert("User Already exists");
+            alert("User already exists");
         }
     }
     function removeUser(email) {
