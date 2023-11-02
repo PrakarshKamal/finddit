@@ -130,6 +130,7 @@ export class GroupsService {
   }
 
   async getActiveGroupsForUser(userEmail: string) {
+    const activeGroups = [];
     const querySnapshot = await getDocs(
       query(
         this.groupsRef,
@@ -137,10 +138,14 @@ export class GroupsService {
         where('isActive', '==', true),
       ),
     );
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
-    });
-    return `This action returns all active groups for user ${userEmail}`;
+
+  const promises = querySnapshot.docs.map(async (doc) => {
+    console.log(doc.id);
+    activeGroups.push( await this.getGroupMetadata(doc.id));
+  });
+
+  await Promise.all(promises);
+  return activeGroups;
   }
 
   async groupMemberCheckInToGroup(
@@ -204,6 +209,7 @@ export class GroupsService {
     const docRef = doc(this.groupsRef, currentGroupRefID)
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
+      console.log(docSnapshot.data())
       return docSnapshot.data();
     } 
   }
