@@ -5,9 +5,12 @@ import ProfileIcon from '../../components/ProfileIcon'
 import styles from '../../styles/AddUsersStyles'
 import { findUserByEmailOrName } from '../../utils/api_function_calls/user_functions'
 import SearchResultItem from '../../components/SearchResultItem'
+import useAuth from '../../hooks/useAuth'
 
 const AddUsers = ({route , navigation}) => {
     const { groupName, groupIcon } = route.params;
+    const loggedInUser = useAuth()
+    const loggedInUserEmail = loggedInUser.user.email
     const [groupMembers, setGroupMembers] = useState([])
     const [resultDropdownShown , setResultDropdownShown] = useState(false)
     const [searchResult, setSearchResult] = useState([])
@@ -19,13 +22,13 @@ const AddUsers = ({route , navigation}) => {
         }
       }
       async function searchUser (input){
-        const response = await findUserByEmailOrName(input)
-        console.log("users",response)
+        const response = await findUserByEmailOrName(input,loggedInUserEmail )
         setSearchResult(response)
         setResultDropdownShown(true)
       }
     function addMember(user) {
-        if (!groupMembers.some(existingUser => existingUser.email === user.email)){
+      const index = groupMembers.findIndex(existingUser => existingUser.email === user.email);
+        if (index === -1 ){
           let temp = groupMembers
           temp.push(user)
           setGroupMembers(temp)
@@ -33,7 +36,6 @@ const AddUsers = ({route , navigation}) => {
         }else{
             alert("User Already exists")
         }
-        console.log(groupMembers)
     }
     function removeUser(email) {
         let temp = groupMembers.filter(user => user.email !== email)

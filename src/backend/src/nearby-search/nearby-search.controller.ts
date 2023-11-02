@@ -1,8 +1,10 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { NearbySearchService } from './nearby-search.service';
 import { NearbyRequestDto } from 'src/dto/nearby-request.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('nearby-search')
+@ApiTags('nearby-search')
 export class NearbySearchController {
   constructor(private readonly nearbysearchService: NearbySearchService) {}
 

@@ -48,6 +48,24 @@ const styles = StyleSheet.create({
     priceRangeText: {
       fontSize: 16,
     },
+    nextButton: {
+      position: 'absolute',
+      bottom: 20, 
+      right: 40, 
+      backgroundColor: "#f27575",
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 5,
+    },
+    nextButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    toggleButtonContainer: {
+      flexDirection: 'column',
+    },
+    
   });
 
   export default styles

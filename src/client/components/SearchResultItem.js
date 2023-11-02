@@ -6,7 +6,7 @@ const SearchResultItem = ({ item }) => {
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
-        <Image source={{ uri: '../assets/favicon.png' }} style={styles.profileImage} />
+        
         <View style={styles.textContainer}>
           <Text style={styles.firstName}>{item.firstName} </Text>
           <Text style={styles.lastName}>{item.lastName}</Text>

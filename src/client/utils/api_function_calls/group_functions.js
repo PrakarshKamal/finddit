@@ -2,7 +2,7 @@ import {NGROK_URL} from '../constants';
 import axios from 'axios';
 
 async function createNewGroup(groupName, groupIconID, groupAdminEmail, groupMembersEmails, votingDeadline, isActive, adminPreferences){
-    await axios.post(`${NGROK_URL}/groups`, {groupName, groupIconID, groupAdminEmail, groupMembersEmails, votingDeadline, isActive, adminPreferences});
+    return await axios.post(`${NGROK_URL}/groups`, {groupName, groupIconID, groupAdminEmail, groupMembersEmails, votingDeadline, isActive, adminPreferences});
 }
 
 async function getActiveGroupsForUser(userEmail){
@@ -22,9 +22,12 @@ async function getCheckedInUsersForGroup(groupID){
 }
 
 async function getCardDataFromGroup(groupID){
-    await axios.get(`${NGROK_URL}/group-card-data/${groupID}`);
+    return await axios.get(`${NGROK_URL}/groups/group-card-data/${groupID}`);
 }
 
 async function getGroupMetadata(groupID){
     await axios.get(`${NGROK_URL}/groups/group-metadata/${groupID}`);
 }
+
+
+module.exports = {createNewGroup ,getCardDataFromGroup};
