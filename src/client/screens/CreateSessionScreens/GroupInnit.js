@@ -43,7 +43,7 @@ const GroupInnit = () => {
     const handleSelectPress = () => {
         // Add your logic for confirming the selected icon
         if (selectedIcon) {
-            console.log(`Selected Icon: ${selectedIcon.name}`);
+            console.log(`Selected Icon: ${selectedIcon.source}`);
             setProfileIconModalVisible(false);
         }
     };
@@ -125,7 +125,14 @@ const GroupInnit = () => {
                     <TouchableOpacity onPress={handleProfileIconPressed}>
                         <View style={styles.profileCircle}>
                             {selectedIcon ? (
-                                <Image source={selectedIcon} />
+                                <Image
+                                    style={styles.profileIcon}
+                                    source={
+                                        icons.find(
+                                            (icon) => icon.id === selectedIcon
+                                        ).source
+                                    }
+                                />
                             ) : (
                                 <View style={styles.circleBorder}>
                                     <Entypo

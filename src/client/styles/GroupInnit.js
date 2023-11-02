@@ -73,10 +73,15 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: "transparent",
         padding: 5,
+        borderRadius: 20,
     },
     image: {
         width: 100,
         height: 100,
+    },
+    profileIcon: {
+        width: 120,
+        height: 120,
     },
     iconText: {
         fontSize: 16,
@@ -95,13 +100,15 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        marginLeft: 10,
+        marginLeft: 20,
+        marginBottom: 20,
     },
     cancelButton: {
         backgroundColor: "gray",
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        marginBottom: 20,
     },
     buttonText: {
         color: "white",
