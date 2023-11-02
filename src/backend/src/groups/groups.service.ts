@@ -141,7 +141,9 @@ export class GroupsService {
 
   const promises = querySnapshot.docs.map(async (doc) => {
     console.log(doc.id);
-    activeGroups.push( await this.getGroupMetadata(doc.id));
+    let obj = { groupID: doc.id, groupMetadata: {}};
+    obj.groupMetadata = await this.getGroupMetadata(doc.id);
+    activeGroups.push( obj );
   });
 
   await Promise.all(promises);
