@@ -63,12 +63,12 @@ export class UsersService {
       if (userData == undefined) {
         return null;
       }
-      return new CreateUserDto(
+      return [new CreateUserDto(
         userData.firstName,
         userData.lastName,
         userData.email,
         userData.iconID,
-      );
+      )];
     } catch (e) {
       console.error('Error finding document: ', e);
     }
