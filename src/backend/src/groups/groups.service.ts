@@ -71,6 +71,7 @@ export class GroupsService {
     groupMembersEmails: string[],
     groupAdminEmail: string,
   ) {
+    try { 
     groupMembersEmails.push(groupAdminEmail);
     for (const groupMemberEmail of groupMembersEmails) {
       var groupMemberSubCollectionRef = doc(
@@ -88,6 +89,11 @@ export class GroupsService {
       });
     }
     return `Admin & Members have been added to group ${currentGroupRefID}!`;
+  }
+  catch (e) {
+    console.error('Error adding document: ', e);
+    return;
+  }
   }
 
   async addRestaurantDataToGroup(restaurantData, currentGroupRefID: string) {
