@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/Header';
 import AddUsers from '../screens/CreateSessionScreens/AddUsers';
 import GroupPreferences from '../screens/CreateSessionScreens/GroupPreferences';
-import groupCreated from '../screens/Session/groupCreated';
+import GroupCreated from '../screens/Session/groupCreated'
 import ActiveSessions from '../screens/ActiveSessions';
 
 const HomeTab = () => {
@@ -21,7 +21,7 @@ const HomeTab = () => {
       <Stack.Screen name="GroupInnit" component={GroupInnit}  />
       <Stack.Screen name="AddUsers" component={AddUsers}  />
       <Stack.Screen name="GroupPreferences" component={GroupPreferences}  />
-      <Stack.Screen name="GroupCreated" component={groupCreated}  />
+      <Stack.Screen name="GroupCreated" component={GroupCreated}  />
       <Stack.Screen name="ActiveSessions" component={ActiveSessions}  />
     </Stack.Navigator>
   )
