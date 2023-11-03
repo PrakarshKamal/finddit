@@ -22,6 +22,7 @@ const AddUsers = ({ route, navigation }) => {
     const [groupMembers, setGroupMembers] = useState([]);
     const [resultDropdownShown, setResultDropdownShown] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
     function handleNextButtonPressed() {
         if (groupMembers.length !== 0) {
             navigation.navigate("GroupPreferences", {
@@ -34,9 +35,22 @@ const AddUsers = ({ route, navigation }) => {
         }
     }
     async function searchUser(input) {
-        const response = await findUserByEmailOrName(input, loggedInUserEmail);
+        if (isLoading) {
+            // The button is already processing a request; prevent further clicks.
+            return;
+          }
+          setIsLoading(true)
+          try{
+            const response = await findUserByEmailOrName(input, loggedInUserEmail);
         setSearchResult(response);
         setResultDropdownShown(true);
+          }
+          catch(err){
+            throw err
+          } finally{
+            setIsLoading(false)
+          }
+        
     }
     function addMember(user) {
         const index = groupMembers.findIndex(

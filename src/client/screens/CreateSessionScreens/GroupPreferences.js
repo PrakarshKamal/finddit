@@ -27,7 +27,7 @@ const GroupPreferences = ({ route, navigation }) => {
     const [openNow, setOpenNow] = useState(true);
     const [groupDeadLine, setGroupDeadLine] = useState(24);
     const [isActive, setIsActive] = useState(true);
-
+    const [isLoading, setIsLoading] = useState(false)
     const handleRadiusChange = (value) => {
         setRadius(value);
     };
@@ -50,6 +50,12 @@ const GroupPreferences = ({ route, navigation }) => {
             openNow: openNow,
         };
         const groupMembersEmails = groupMembers.map((user) => user.email);
+        if (isLoading) {
+          // The button is already processing a request; prevent further clicks.
+          return;
+        }
+        setIsLoading(true)
+        try{
         const res = await createNewGroup(
             groupName,
             groupIcon,
@@ -78,6 +84,12 @@ const GroupPreferences = ({ route, navigation }) => {
         } else {
             alert("Something went wrong");
         }
+      }catch (err) {
+        throw err
+      }
+      finally{
+        setIsLoading(false)
+      }
     };
     return (
         <View style={styles.container}>
