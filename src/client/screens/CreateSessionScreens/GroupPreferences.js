@@ -36,7 +36,7 @@ const GroupPreferences = ({ route, navigation }) => {
         setSelectedPriceRange(priceRange);
     };
     const handleGenerateButtonPressed = async () => {
-        if (!radius || !selectedPriceRange || !openNow) {
+        if (!radius || !selectedPriceRange) {
             alert("please enter valid fields");
             return;
         }
