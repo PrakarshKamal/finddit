@@ -10,7 +10,9 @@ import GroupCreated from '../screens/Session/groupCreated'
 import ActiveSessions from '../screens/ActiveSessions';
 
 const HomeTab = () => {
-    const Stack = createStackNavigator();
+  const Stack = createStackNavigator();
+    const Stack1 = createStackNavigator();
+    const Stack2 = createStackNavigator();
     // this function is to render the header without a back button
   function HeaderWithoutBack (){
     return <Header backbuttonShown={false} ></Header>
@@ -21,9 +23,10 @@ const HomeTab = () => {
       <Stack.Screen name="GroupInnit" component={GroupInnit}  />
       <Stack.Screen name="AddUsers" component={AddUsers}  />
       <Stack.Screen name="GroupPreferences" component={GroupPreferences}  />
-      <Stack.Screen name="GroupCreated" component={GroupCreated}  />
-      <Stack.Screen name="ActiveSessions" component={ActiveSessions}  />
+    <Stack.Screen name="GroupCreated" component={GroupCreated} options={{header : HeaderWithoutBack , gestureEnabled:false}}  />
+    <Stack.Screen name="ActiveSessions" component={ActiveSessions} />
     </Stack.Navigator>
+    
   )
 }
 
