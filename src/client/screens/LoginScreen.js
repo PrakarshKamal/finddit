@@ -9,6 +9,7 @@ import {
   Pressable,
   Image,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
@@ -64,25 +65,25 @@ function LoginScreen() {
           secureTextEntry
           style={styles.input}
         />
-        <Pressable onPress={null}>
+        <TouchableOpacity onPress={null}>
           <Text style={styles.forgotPasswordText}>Forgot password?</Text>
-        </Pressable>
-        <Pressable style={styles.logInButton} onPress={signIn}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.logInButton} onPress={signIn}>
           <Text style={styles.logInButtonText}>Login</Text>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={styles.logInGoogleButton} onPress={null}>
+        <TouchableOpacity style={styles.logInGoogleButton} onPress={null}>
           <Image
             style={styles.googleIcon}
             source={require("../assets/google-icon.png")}
           />
           <Text style={styles.logInGoogleText}>Log in with Google</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       <Text style={styles.noAccountText}>Don't have an account? </Text>
-      <Pressable onPress={() => navigation.navigate("Signup")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
         <Text style={styles.signUpButtonText}>Sign Up</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
     </KeyboardAwareScrollView>
     </SafeAreaView>

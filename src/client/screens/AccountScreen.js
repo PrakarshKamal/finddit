@@ -9,9 +9,9 @@ const AccountScreen = () => {
   return (
     <View>
       <Text>AccountScreen</Text>
-      <Pressable style={styles.signOutButton} onPress={signOutUser}>
+      <TouchableOpacity style={styles.signOutButton} onPress={signOutUser}>
         <Text style={styles.signOutButtonText}>Sign Out</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

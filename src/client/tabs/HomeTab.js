@@ -11,8 +11,6 @@ import ActiveSessions from '../screens/ActiveSessions';
 
 const HomeTab = () => {
   const Stack = createStackNavigator();
-    const Stack1 = createStackNavigator();
-    const Stack2 = createStackNavigator();
     // this function is to render the header without a back button
   function HeaderWithoutBack (){
     return <Header backbuttonShown={false} ></Header>
