@@ -36,6 +36,9 @@ function SignupScreen() {
   const {signUpUser} = useAuth()
 
   const signUp = async () => {
+    if(loading){
+      return
+    }
     setLoading(true);
     try {
       const response = await signUpUser(

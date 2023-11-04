@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const groupCreated = ({route, navigation}) => {
+const GroupCreated = ({route, navigation}) => {
     const {groupName , groupId } = route.params
   return (
     <View>
@@ -10,4 +10,4 @@ const groupCreated = ({route, navigation}) => {
   )
 }
 
-export default groupCreated
+export default GroupCreated

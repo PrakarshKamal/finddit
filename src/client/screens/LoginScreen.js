@@ -25,6 +25,9 @@ function LoginScreen() {
   const {signInUser} = useAuth()
 
   const signIn = async () => {
+    if(loading){
+      return 
+    }
     setLoading(true);
     try {
       const response = await signInUser(email, password);
