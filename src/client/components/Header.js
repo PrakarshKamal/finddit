@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Header = ({ backbuttonShown = true }) => {
   const navigation = useNavigation();
@@ -16,6 +17,7 @@ const Header = ({ backbuttonShown = true }) => {
   };
   return (
     <SafeAreaView>
+      <KeyboardAwareScrollView>
       <View style={styles.header}>
         {backbuttonShown ? (
           <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
@@ -24,6 +26,7 @@ const Header = ({ backbuttonShown = true }) => {
         ) : null}
         <Text style={styles.title}>Finddit</Text>
       </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

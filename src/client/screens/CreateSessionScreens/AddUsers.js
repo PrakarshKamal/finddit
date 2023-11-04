@@ -14,6 +14,7 @@ import { findUserByEmailOrName } from "../../utils/api_function_calls/user_funct
 import SearchResultItem from "../../components/SearchResultItem";
 import useAuth from "../../hooks/useAuth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const AddUsers = ({ route, navigation }) => {
     const { groupName, groupIcon } = route.params;
@@ -100,7 +101,8 @@ const AddUsers = ({ route, navigation }) => {
                 hideResults={hideResults}
                 searchResultsShown={resultDropdownShown}
             ></UserSearchBar>
-
+        <KeyboardAwareScrollView style={{flex : 1 ,  display: "flex",}}>  
+        </KeyboardAwareScrollView>
             {resultDropdownShown ? (
                 <View>
                     <View>
@@ -115,7 +117,8 @@ const AddUsers = ({ route, navigation }) => {
                         renderItem={renderResultItem}
                     />
                 </View>
-            ) : null}
+            ) : <KeyboardAwareScrollView style={{flex : 1 ,  display: "flex",}}>  
+            </KeyboardAwareScrollView>}
 
             <FlatList
                 data={groupMembers}
@@ -123,6 +126,7 @@ const AddUsers = ({ route, navigation }) => {
                 numColumns={3} // Adjust the number of columns as needed
                 contentContainerStyle={styles.iconGrid}
             />
+            
 
             <TouchableOpacity onPress={handleNextButtonPressed}>
                 <MaterialCommunityIcons

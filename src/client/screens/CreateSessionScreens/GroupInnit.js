@@ -77,7 +77,9 @@ const GroupInnit = () => {
     }
     return (
         <SafeAreaView style={styles.container}>
+            
             <View style={styles.container}>
+            <KeyboardAwareScrollView>
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -157,7 +159,7 @@ const GroupInnit = () => {
                     />
                     <Divider width={1} />
                 </View>
-
+                </KeyboardAwareScrollView>
                 <TouchableOpacity onPress={handleNextButtonPressed}>
                     <MaterialCommunityIcons
                         name="arrow-right-circle"
@@ -167,6 +169,7 @@ const GroupInnit = () => {
                     />
                 </TouchableOpacity>
             </View>
+            
         </SafeAreaView>
     );
 };
