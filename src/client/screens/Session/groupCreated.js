@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import Swiper from "react-native-deck-swiper";
 import cardOverlayLabels from "../../styles/cardOverlayLabels";
+import styles from "../../styles/groupCreatedStyles";
 
 const GroupCreated = ({ route, navigation }) => {
     const { groupName, groupId } = route.params;
@@ -40,18 +41,3 @@ const GroupCreated = ({ route, navigation }) => {
 };
 
 export default GroupCreated;
-
-const styles = StyleSheet.create({
-    card: {
-        maxHeight: 350,
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "white",
-        borderRadius: 8,
-        shadowColor: "rgba(0, 0, 0, 0.1)",
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.8,
-        shadowRadius: 10,
-    },
-});
