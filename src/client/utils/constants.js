@@ -1,4 +1,4 @@
-const NGROK_URL = "https://4947-142-116-197-163.ngrok-free.app";
+const NGROK_URL = "https://9051-130-113-109-39.ngrok-free.app";
 
 
 module.exports = {
