@@ -27,7 +27,7 @@ const GroupPreferences = ({ route, navigation }) => {
     const [openNow, setOpenNow] = useState(true);
     const [groupDeadLine, setGroupDeadLine] = useState(24);
     const [isActive, setIsActive] = useState(true);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const handleRadiusChange = (value) => {
         setRadius(value);
     };
@@ -51,45 +51,51 @@ const GroupPreferences = ({ route, navigation }) => {
         };
         const groupMembersEmails = groupMembers.map((user) => user.email);
         if (isLoading) {
-          // The button is already processing a request; prevent further clicks.
-          return;
+            // The button is already processing a request; prevent further clicks.
+            return;
         }
-        setIsLoading(true)
-        try{
-        const res = await createNewGroup(
-            groupName,
-            groupIcon,
-            admin.user.email,
-            groupMembersEmails,
-            groupDeadLine,
-            isActive,
-            adminPreferences
-        );
-        if (res.data) {
-            const groupId = res.data;
-            const cardData = await getCardDataFromGroup(groupId);
-            console.log(cardData.data);
-            const group = {
-                groupName: groupName,
-                groupId: groupId,
-                cardData: cardData.data,
-                groupIcon: groupIcon,
-                groupMembers: groupMembers,
-                groupAdmin: admin.user.email,
-                groupDeadLine: groupDeadLine,
-                isActive: isActive,
-                adminPreferences: adminPreferences,
-            };
-            navigation.navigate("GroupCreated", group);
-        } else {
-            alert("Something went wrong");
+        setIsLoading(true);
+        try {
+            const res = await createNewGroup(
+                groupName,
+                groupIcon,
+                admin.user.email,
+                groupMembersEmails,
+                groupDeadLine,
+                isActive,
+                adminPreferences
+            );
+            console.log("result from backend", res);
+            // await new Promise(r => setTimeout(r, 2000));
+            if (res.data) {
+                const groupId = res.data;
+                const cardData = await getCardDataFromGroup(groupId);
+                // let cards = []
+                // cardData.data.forEach(item => {
+                //     let ref = item?.photos?[0]?.photo_reference
+                // })
+                console.log("this data", cardData.data);
+                console.log("for", groupId);
+                const group = {
+                    groupName: groupName,
+                    groupId: groupId,
+                    cardData: cardData.data,
+                    groupIcon: groupIcon,
+                    groupMembers: groupMembers,
+                    groupAdmin: admin.user.email,
+                    groupDeadLine: groupDeadLine,
+                    isActive: isActive,
+                    adminPreferences: adminPreferences,
+                };
+                navigation.navigate("GroupCreated", group);
+            } else {
+                alert("Something went wrong");
+            }
+        } catch (err) {
+            throw err;
+        } finally {
+            setIsLoading(false);
         }
-      }catch (err) {
-        throw err
-      }
-      finally{
-        setIsLoading(false)
-      }
     };
     return (
         <View style={styles.container}>
