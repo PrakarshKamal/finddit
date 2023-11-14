@@ -123,7 +123,7 @@ const GroupInnit = () => {
                 <Text style={styles.headingForGroupName}>
                     Set the name of the group and choose a profile icon
                 </Text>
-                <View>
+                <View style={styles.container}>
                     <TouchableOpacity onPress={handleProfileIconPressed}>
                         <View style={styles.profileCircle}>
                             {selectedIcon ? (
