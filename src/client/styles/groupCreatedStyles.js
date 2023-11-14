@@ -1,8 +1,15 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
+
+const screenHeight = Dimensions.get("window").height;
+const bottomTabHeight = 50;
 
 const styles = StyleSheet.create({
     card: {
-        maxHeight: 350,
+        maxHeight:
+            Platform.OS === "ios"
+                ? screenHeight - bottomTabHeight - 235
+                : screenHeight * 0.78,
+        marginTop: -30,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
