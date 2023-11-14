@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import React from "react";
 import { Button } from "react-native";
 import useAuth from "../hooks/useAuth";
@@ -9,9 +9,9 @@ const AccountScreen = () => {
   return (
     <View>
       <Text>AccountScreen</Text>
-      <Pressable style={styles.signOutButton} onPress={signOutUser}>
+      <TouchableOpacity style={styles.signOutButton} onPress={signOutUser}>
         <Text style={styles.signOutButtonText}>Sign Out</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };
