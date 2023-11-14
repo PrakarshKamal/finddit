@@ -2,19 +2,19 @@ import { Entypo, FontAwesome } from "@expo/vector-icons";
 
 export default cardOverlayLabels = {
     left: {
-        element: <Entypo name="check" size={72} color="green" />,
+        element: <Entypo name="cross" size={84} color="red" />,
         style: {
             wrapper: {
                 flexDirection: "column",
                 alignItems: "flex-end",
                 justifyContent: "flex-start",
-                marginTop: 20,
+                marginTop: 5,
                 marginLeft: -20,
             },
         },
     },
     right: {
-        element: <Entypo name="cross" size={84} color="red" />,
+        element: <Entypo name="check" size={72} color="green" />,
         style: {
             wrapper: {
                 flexDirection: "column",
@@ -32,6 +32,7 @@ export default cardOverlayLabels = {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
+                marginTop: 20,
             },
         },
     },
