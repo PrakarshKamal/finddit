@@ -8,7 +8,7 @@ const CardItem = ({ itemData }) => {
     console.log("pangke use this url to display", image);
     return (
         <View style={styles.card}>
-            <Image source={{ uri: image }} style={styles.image} />
+            <Image src={{ uri: image }} style={styles.image} />
             <View style={styles.infoContainer}>
                 <Text style={styles.name}>{name}</Text>
                 <Text style={styles.location}>{vicinity}</Text>
