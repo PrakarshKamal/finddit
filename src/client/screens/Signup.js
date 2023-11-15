@@ -62,8 +62,12 @@ function SignupScreen() {
     } finally {
       setLoading(false);
       // await axios.post(`${NGROKLINK}/users`, {email, firstName, lastName, iconID});
-      await sendSignUpRequest(firstName, lastName, email.toLocaleLowerCase(), iconID);
-      console.log("User created in database");
+      const resp =  await sendSignUpRequest(firstName, lastName, email.toLocaleLowerCase(), iconID);
+      if (resp){
+        console.log("User created in database" , resp);
+      }else{
+        console.log("failed")
+      }
     }
   };
 

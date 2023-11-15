@@ -5,6 +5,7 @@ import {
     FlatList,
     Modal,
     SafeAreaView,
+    ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import UserSearchBar from "../../components/UserSearchBar";
@@ -103,7 +104,9 @@ const AddUsers = ({ route, navigation }) => {
             ></UserSearchBar>
         <KeyboardAwareScrollView style={{flex : 1 ,  display: "flex",}}>  
         </KeyboardAwareScrollView>
-            {resultDropdownShown ? (
+            {resultDropdownShown ? ( 
+                <View style={{margin:20}}>
+                    {isLoading ? <ActivityIndicator /> : 
                 <View>
                     <View>
                         {searchResult.length > 0 ? (
@@ -116,6 +119,8 @@ const AddUsers = ({ route, navigation }) => {
                         data={searchResult}
                         renderItem={renderResultItem}
                     />
+                </View>
+            }
                 </View>
             ) : <KeyboardAwareScrollView style={{flex : 1 ,  display: "flex",}}>  
             </KeyboardAwareScrollView>}
