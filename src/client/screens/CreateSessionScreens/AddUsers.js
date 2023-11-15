@@ -24,7 +24,7 @@ const AddUsers = ({ route, navigation }) => {
     const [groupMembers, setGroupMembers] = useState([]);
     const [resultDropdownShown, setResultDropdownShown] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     function handleNextButtonPressed() {
         if (groupMembers.length !== 0) {
             navigation.navigate("GroupPreferences", {
@@ -33,26 +33,27 @@ const AddUsers = ({ route, navigation }) => {
                 groupMembers,
             });
         } else {
-            alert("Add alteast 1 user");
+            alert("Add at least 1 user");
         }
     }
     async function searchUser(input) {
         if (isLoading) {
             // The button is already processing a request; prevent further clicks.
             return;
-          }
-          setIsLoading(true)
-          try{
-            const response = await findUserByEmailOrName(input, loggedInUserEmail);
-        setSearchResult(response);
-        setResultDropdownShown(true);
-          }
-          catch(err){
-            throw err
-          } finally{
-            setIsLoading(false)
-          }
-        
+        }
+        setIsLoading(true);
+        try {
+            const response = await findUserByEmailOrName(
+                input,
+                loggedInUserEmail
+            );
+            setSearchResult(response);
+            setResultDropdownShown(true);
+        } catch (err) {
+            throw err;
+        } finally {
+            setIsLoading(false);
+        }
     }
     function addMember(user) {
         const index = groupMembers.findIndex(
@@ -102,28 +103,34 @@ const AddUsers = ({ route, navigation }) => {
                 hideResults={hideResults}
                 searchResultsShown={resultDropdownShown}
             ></UserSearchBar>
-        <KeyboardAwareScrollView style={{flex : 1 ,  display: "flex",}}>  
-        </KeyboardAwareScrollView>
-            {resultDropdownShown ? ( 
-                <View style={{margin:20}}>
-                    {isLoading ? <ActivityIndicator /> : 
-                <View>
-                    <View>
-                        {searchResult.length > 0 ? (
-                            <Text> Search Results </Text>
-                        ) : (
-                            <Text> No user found</Text>
-                        )}
-                    </View>
-                    <FlatList
-                        data={searchResult}
-                        renderItem={renderResultItem}
-                    />
+            <KeyboardAwareScrollView
+                style={{ flex: 1, display: "flex" }}
+            ></KeyboardAwareScrollView>
+            {resultDropdownShown ? (
+                <View style={{ margin: 20 }}>
+                    {isLoading ? (
+                        <ActivityIndicator />
+                    ) : (
+                        <View>
+                            <View>
+                                {searchResult.length > 0 ? (
+                                    <Text> Search Results </Text>
+                                ) : (
+                                    <Text> No user found</Text>
+                                )}
+                            </View>
+                            <FlatList
+                                data={searchResult}
+                                renderItem={renderResultItem}
+                            />
+                        </View>
+                    )}
                 </View>
-            }
-                </View>
-            ) : <KeyboardAwareScrollView style={{flex : 1 ,  display: "flex",}}>  
-            </KeyboardAwareScrollView>}
+            ) : (
+                <KeyboardAwareScrollView
+                    style={{ flex: 1, display: "flex" }}
+                ></KeyboardAwareScrollView>
+            )}
 
             <FlatList
                 data={groupMembers}
@@ -131,7 +138,6 @@ const AddUsers = ({ route, navigation }) => {
                 numColumns={3} // Adjust the number of columns as needed
                 contentContainerStyle={styles.iconGrid}
             />
-            
 
             <TouchableOpacity onPress={handleNextButtonPressed}>
                 <MaterialCommunityIcons
