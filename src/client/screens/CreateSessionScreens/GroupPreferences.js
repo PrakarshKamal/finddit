@@ -17,6 +17,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
 import { FontAwesome } from "@expo/vector-icons";
+import { getEmbedUrlFromPhotoRef } from "../../utils/api_function_calls/photo_functions";
 
 const GroupPreferences = ({ route, navigation }) => {
     const { groupName, groupIcon, groupMembers } = route.params;
@@ -30,6 +31,28 @@ const GroupPreferences = ({ route, navigation }) => {
     const [isLoading, setIsLoading] = useState(false);
     const handleRadiusChange = (value) => {
         setRadius(value);
+    };
+    const fetchImageUrl = async (cardData) => {
+        const cards = [];
+
+        const promises = cardData.data.map(async (item) => {
+            try {
+                let ref = item.photos[0].photo_reference;
+                let imageUrl = await getEmbedUrlFromPhotoRef(ref, 100);
+                let card = {
+                    ...item,
+                    image: imageUrl,
+                };
+                cards.push(card);
+            } catch (error) {
+                // Handle errors if necessary
+                console.error(`Error processing item: ${error.message}`);
+            }
+        });
+
+        await Promise.all(promises);
+
+        return cards;
     };
 
     const handlePriceRangeSelect = (priceRange) => {
@@ -65,21 +88,14 @@ const GroupPreferences = ({ route, navigation }) => {
                 isActive,
                 adminPreferences
             );
-            console.log("result from backend", res);
-            // await new Promise(r => setTimeout(r, 2000));
             if (res.data) {
                 const groupId = res.data;
                 const cardData = await getCardDataFromGroup(groupId);
-                // let cards = []
-                // cardData.data.forEach(item => {
-                //     let ref = item?.photos?[0]?.photo_reference
-                // })
-                console.log("this data", cardData.data);
-                console.log("for", groupId);
+                let cards = await fetchImageUrl(cardData);
                 const group = {
                     groupName: groupName,
                     groupId: groupId,
-                    cardData: cardData.data,
+                    cardData: cards,
                     groupIcon: groupIcon,
                     groupMembers: groupMembers,
                     groupAdmin: admin.user.email,
