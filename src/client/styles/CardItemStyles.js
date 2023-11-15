@@ -1,48 +1,44 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     card: {
-        flex :1 ,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      margin: 10,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 2,
-      elevation: 3,
+        flex: 1,
+        backgroundColor: "white",
+        borderRadius: 10,
+        margin: 10,
     },
     image: {
-      width: '100%',
-      height: 150,
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
+        marginTop: 5,
+        width: Dimensions.get("window").width - 70,
+        height: Dimensions.get("window").height / 2.7,
+        borderRadius: 10,
     },
     infoContainer: {
-      padding: 10,
+        padding: 10,
     },
     name: {
-      fontSize: 20,
-      fontWeight: 'bold',
+        fontSize: 32,
+        fontWeight: "bold",
     },
     location: {
-      fontSize: 16,
-      color: 'gray',
+        marginTop: 5,
+        fontSize: 22,
+        color: "gray",
     },
     operationalHours: {
-      fontSize: 16,
-      color: 'gray',
+        fontSize: 16,
+        color: "gray",
     },
     ratingContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: 5,
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 5,
     },
     rating: {
-      fontSize: 16,
-      color: 'orange',
-      marginRight: 5,
+        fontSize: 28,
+        color: "orange",
+        marginRight: 5,
     },
-  });
-  
-  export default styles
+});
+
+export default styles;
