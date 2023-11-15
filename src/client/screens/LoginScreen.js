@@ -54,7 +54,7 @@ function LoginScreen() {
       <View style={styles.middleContainer}>
         <TextInput
           placeholder="Email"
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setEmail(text.toLocaleLowerCase())}
           value={email}
           style={styles.input}
         />
