@@ -39,7 +39,7 @@ const GroupPreferences = ({ route, navigation }) => {
         const promises = cardData.data.map(async (item) => {
             try {
                 let ref = item.photos[0].photo_reference;
-                let imageUrl = await getEmbedUrlFromPhotoRef(ref, 100);
+                let imageUrl = await getEmbedUrlFromPhotoRef(ref, 1000);
                 let card = {
                     ...item,
                     image: imageUrl,
