@@ -10,8 +10,10 @@ import {
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('groups')
+@ApiTags('groups')
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
@@ -43,6 +45,26 @@ export class GroupsController {
   @Get('inactive-groups/:email')
   getInactiveGroupsForUser(@Param('email') email: string) {
     return this.groupsService.getInactiveGroupsForUser(email);
+  }
+
+  @Get('group-card-data/:groupId')
+  getDataForCards(@Param('groupId') groupId: string) {
+    return this.groupsService.getDataForCards(groupId);
+  }
+
+  @Get('checked-in-members/:groupId')
+  getCheckedInMembersForGroup(@Param('groupId') groupId: string) {
+    return this.groupsService.getCheckedInMembersForGroup(groupId);
+  }
+
+  @Get('group-metadata/:groupId')
+  getGroupMetadata(@Param('groupId') groupId: string) {
+    return this.groupsService.getGroupMetadata(groupId);
+  }
+
+  @Get('member-data-from-group/:groupId/:email')
+  getUserDataFromGroup(@Param('groupId') groupId: string, @Param('email') email: string) {
+    return this.groupsService.getUserDataFromGroup(groupId, email);
   }
 
   @Patch(':id')

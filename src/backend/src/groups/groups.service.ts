@@ -17,6 +17,7 @@ import {
   deleteDoc,
   updateDoc,
   orderBy,
+  getDoc,
   limit,
   doc,
 } from 'firebase/firestore';
@@ -58,7 +59,7 @@ export class GroupsService {
         createGroupDto.groupMembersEmails,
         createGroupDto.groupAdminEmail,
       );
-      return `A new group with group admin: ${createGroupDto.groupAdminEmail} & id: ${docRef.id} has been created!`;
+      return docRef.id;
     } catch (e) {
       console.error('Error adding document: ', e);
       return;
@@ -70,6 +71,7 @@ export class GroupsService {
     groupMembersEmails: string[],
     groupAdminEmail: string,
   ) {
+    try { 
     groupMembersEmails.push(groupAdminEmail);
     for (const groupMemberEmail of groupMembersEmails) {
       var groupMemberSubCollectionRef = doc(
@@ -87,6 +89,11 @@ export class GroupsService {
       });
     }
     return `Admin & Members have been added to group ${currentGroupRefID}!`;
+  }
+  catch (e) {
+    console.error('Error adding document: ', e);
+    return;
+  }
   }
 
   async addRestaurantDataToGroup(restaurantData, currentGroupRefID: string) {
@@ -123,6 +130,7 @@ export class GroupsService {
   }
 
   async getActiveGroupsForUser(userEmail: string) {
+    const activeGroups = [];
     const querySnapshot = await getDocs(
       query(
         this.groupsRef,
@@ -130,10 +138,16 @@ export class GroupsService {
         where('isActive', '==', true),
       ),
     );
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
-    });
-    return `This action returns all active groups for user ${userEmail}`;
+
+  const promises = querySnapshot.docs.map(async (doc) => {
+    console.log(doc.id);
+    let obj = { groupID: doc.id, groupMetadata: {}};
+    obj.groupMetadata = await this.getGroupMetadata(doc.id);
+    activeGroups.push( obj );
+  });
+
+  await Promise.all(promises);
+  return activeGroups;
   }
 
   async groupMemberCheckInToGroup(
@@ -169,6 +183,46 @@ export class GroupsService {
     });
   }
 
+  async getDataForCards(currentGroupRefID: string) {
+    var cardData = [];
+    const querySnapshot = await getDocs(
+      collection(this.groupsRef, currentGroupRefID, 'groupRestaurants'),
+    );
+    querySnapshot.forEach((doc) => {
+      cardData.push(doc.data());
+    });
+    return cardData;
+  }
+
+  async getCheckedInMembersForGroup(currentGroupRefID: string) {
+    var checkedInMembers = [];
+    const querySnapshot = await getDocs(
+      collection(this.groupsRef, currentGroupRefID, 'groupMembers'),
+    );
+    querySnapshot.forEach((doc) => {
+      if (doc.data().memberCheckedInGroup) {
+        checkedInMembers.push(doc.id);
+      }
+    });
+    return checkedInMembers;
+  }
+
+  async getGroupMetadata(currentGroupRefID: string) {
+    const docRef = doc(this.groupsRef, currentGroupRefID)
+    const docSnapshot = await getDoc(docRef);
+    if (docSnapshot.exists()) {
+      console.log(docSnapshot.data())
+      return docSnapshot.data();
+    } 
+  }
+  
+  async getUserDataFromGroup(currentGroupRefID: string, userEmail: string) {
+    const docRef = doc(this.groupsRef, currentGroupRefID, 'groupMembers', userEmail)
+    const docSnapshot = await getDoc(docRef);
+    if (docSnapshot.exists()) {
+      return docSnapshot.data();
+    } 
+  }
   findOne(id: number) {
     return `This action returns a #${id} group`;
   }

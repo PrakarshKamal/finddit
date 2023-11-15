@@ -36,6 +36,9 @@ function SignupScreen() {
   const {signUpUser} = useAuth()
 
   const signUp = async () => {
+    if(loading){
+      return
+    }
     setLoading(true);
     try {
       const response = await signUpUser(
@@ -58,7 +61,7 @@ function SignupScreen() {
     } finally {
       setLoading(false);
       // await axios.post(`${NGROKLINK}/users`, {email, firstName, lastName, iconID});
-      await sendSignUpRequest(firstName, lastName, email, iconID);
+      await sendSignUpRequest(firstName, lastName, email.toLocaleLowerCase(), iconID);
       console.log("User created in database");
     }
   };

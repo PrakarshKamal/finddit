@@ -5,11 +5,15 @@ async function sendSignUpRequest (firstName, lastName, email, iconID) {
     await axios.post(`${NGROK_URL}/users`, {email, firstName, lastName, iconID});
 }
 
-async function findUserByEmailOrName(emailOrName) {
+async function findUserByEmailOrName(emailOrName,loggedInUser) {
     try {
-      const response = await axios.get(`${NGROK_URL}/users/email-or-name/${emailOrName}`);
-      console.log(response.data);
-      return response.data;
+      const response = await axios.get(`${NGROK_URL}/users/email-or-name/${emailOrName}`); 
+      if(response.data){
+        const retValue = response.data.filter(user => user.email !== loggedInUser)
+        return retValue;
+      }else{
+        return []
+      }
     } catch (error) {
       throw error
     }

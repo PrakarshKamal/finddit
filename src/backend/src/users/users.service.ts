@@ -33,6 +33,8 @@ export class UsersService {
         lastName: createUserDto.lastName,
         iconID: createUserDto.iconID,
         email: createUserDto.email,
+        firstNameLower: createUserDto.firstName.toLowerCase(),
+        lastNameLower: createUserDto.lastName.toLowerCase(),
       });
     } catch (e) {
       console.error('Error adding document: ', e);
@@ -63,12 +65,12 @@ export class UsersService {
       if (userData == undefined) {
         return null;
       }
-      return new CreateUserDto(
+      return [new CreateUserDto(
         userData.firstName,
         userData.lastName,
         userData.email,
         userData.iconID,
-      );
+      )];
     } catch (e) {
       console.error('Error finding document: ', e);
     }
@@ -77,9 +79,10 @@ export class UsersService {
   async findByName(name: string) {
     try {
       const userList: CreateUserDto[] = [];
+      const nameLower = name.toLowerCase();
       const queryFindUserByName = query(
         this.usersRef,
-        or(where('firstName', '==', name), where('lastName', '==', name)),
+        or(where('firstNameLower', '==', nameLower), where('lastNameLower', '==', nameLower)),
       );
       const querySnapshot = await getDocs(queryFindUserByName);
       if (querySnapshot.empty) {
