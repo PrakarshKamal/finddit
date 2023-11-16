@@ -26,8 +26,6 @@ import { ActivityIndicator } from "react-native";
 
 const GroupPreferences = ({ route, navigation }) => {
     const { groupName, groupIcon, groupMembers } = route.params;
-    const [latitude, setLatitude] = useState(43.260838906356824);
-    const [longitude, setLongitude] = useState(-79.91288781166078);
     const admin = useAuth();
     const [radius, setRadius] = useState(5); // Default radius value
     const [selectedPriceRange, setSelectedPriceRange] = useState(null);
@@ -36,6 +34,7 @@ const GroupPreferences = ({ route, navigation }) => {
     const [isActive, setIsActive] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
+    const [locationSelected, setLocationSelected] = useState(false);
     const mapRef = useRef(null);
 
     const handleRadiusChange = (value) => {
@@ -69,8 +68,8 @@ const GroupPreferences = ({ route, navigation }) => {
     };
 
     const [region, setRegion] = React.useState({
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: 43.260838906356824,
+        longitude: -79.91288781166078,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     });
@@ -82,6 +81,7 @@ const GroupPreferences = ({ route, navigation }) => {
                 longitude: details.geometry.location.lng,
             };
             setRegion(newLocation);
+            setLocationSelected(true);
             mapRef.current.animateToRegion({
                 latitude: newLocation.latitude,
                 longitude: newLocation.longitude,
@@ -92,13 +92,13 @@ const GroupPreferences = ({ route, navigation }) => {
     };
 
     const handleGenerateButtonPressed = async () => {
-        if (!radius || !selectedPriceRange) {
+        if (!radius || !selectedPriceRange || !locationSelected) {
             alert("please enter valid fields");
             return;
         }
         const adminPreferences = {
-            latitude: latitude,
-            longitude: longitude,
+            latitude: region.latitude,
+            longitude: region.longitude,
             radius: radius * 10000,
             keyword: "restaurant",
             maxPrice: selectedPriceRange,
@@ -125,6 +125,10 @@ const GroupPreferences = ({ route, navigation }) => {
                 const groupId = res.data;
                 const cardData = await getCardDataFromGroup(groupId);
                 let cards = await fetchImageUrl(cardData);
+                if (cards.length === 0) {
+                    alert("No restaurants found");
+                    return;
+                }
                 const group = {
                     groupName: groupName,
                     groupId: groupId,
@@ -165,7 +169,7 @@ const GroupPreferences = ({ route, navigation }) => {
                                 onPress={() => setModalVisible(false)}
                             >
                                 <Ionicons
-                                    name="close"
+                                    name="arrow-back"
                                     size={40}
                                     color="#F27575"
                                 />
@@ -231,6 +235,7 @@ const GroupPreferences = ({ route, navigation }) => {
                                                 e.nativeEvent.coordinate
                                                     .longitude,
                                         });
+                                        setLocationSelected(true);
                                     }}
                                 />
                                 <Circle
@@ -250,10 +255,17 @@ const GroupPreferences = ({ route, navigation }) => {
                     <View style={styles.locationContainer}>
                         <Text style={styles.locationLabel}>LOCATION</Text>
                         <TouchableOpacity onPress={() => setModalVisible(true)}>
-                            <Text style={{ color: "blue" }}>
-                                {" "}
-                                Select location
-                            </Text>
+                            {locationSelected ? (
+                                <Text style={{ color: "grey" }}>
+                                    {" "}
+                                    Location selected{" "}
+                                </Text>
+                            ) : (
+                                <Text style={{ color: "blue" }}>
+                                    {" "}
+                                    Select location{" "}
+                                </Text>
+                            )}
                         </TouchableOpacity>
                     </View>
 
