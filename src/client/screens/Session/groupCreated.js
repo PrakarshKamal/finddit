@@ -1,26 +1,29 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import Swiper from "react-native-deck-swiper";
 import cardOverlayLabels from "../../styles/cardOverlayLabels";
 import styles from "../../styles/groupCreatedStyles";
 import CardItem from "../../components/CardItem";
+import { icons } from "../../utils/constants";
 
 const GroupCreated = ({ route, navigation }) => {
-    const {groupName , groupId, cardData } = route.params
-
+    const { groupName, groupId, groupIcon, cardData } = route.params;
     const renderCardItem = (item) => {
         return (
             <View style={styles.card}>
-            <CardItem itemData={item}></CardItem>
+                <CardItem itemData={item}></CardItem>
             </View>
-        )
-    }
-
+        );
+    };
 
     return (
         <View>
+            <Image
+                source={icons.find((icon) => icon.id === groupIcon).source}
+                style={{ width: 50, height: 50 }}
+            ></Image>
             <Text style={{ textAlign: "center" }}>
-                Group {groupName} created with id {groupId}
+                Group {groupName} created
             </Text>
             <View>
                 <Swiper
