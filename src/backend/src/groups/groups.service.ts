@@ -53,8 +53,8 @@ export class GroupsService {
         await this.nearbySearchService.getNearbyRestaurants(
           createGroupDto.adminPreferences,
         );
-      this.addRestaurantDataToGroup(restuarantData, docRef.id);
-      this.addGroupMembersToGroup(
+      await this.addRestaurantDataToGroup(restuarantData, docRef.id);
+      await this.addGroupMembersToGroup(
         docRef.id,
         createGroupDto.groupMembersEmails,
         createGroupDto.groupAdminEmail,
@@ -71,29 +71,28 @@ export class GroupsService {
     groupMembersEmails: string[],
     groupAdminEmail: string,
   ) {
-    try { 
-    groupMembersEmails.push(groupAdminEmail);
-    for (const groupMemberEmail of groupMembersEmails) {
-      var groupMemberSubCollectionRef = doc(
-        this.groupsRef,
-        currentGroupRefID,
-        'groupMembers',
-        groupMemberEmail,
-      );
-      await setDoc(groupMemberSubCollectionRef, {
-        memberPreferences: {},
-        memberVotes: {},
-        memberUsedSuperDislike: false,
-        memberCheckedInGroup: false,
-        memberCheckinTimestamp: null,
-      });
+    try {
+      groupMembersEmails.push(groupAdminEmail);
+      for (const groupMemberEmail of groupMembersEmails) {
+        var groupMemberSubCollectionRef = doc(
+          this.groupsRef,
+          currentGroupRefID,
+          'groupMembers',
+          groupMemberEmail,
+        );
+        await setDoc(groupMemberSubCollectionRef, {
+          memberPreferences: {},
+          memberVotes: {},
+          memberUsedSuperDislike: false,
+          memberCheckedInGroup: false,
+          memberCheckinTimestamp: null,
+        });
+      }
+      return `Admin & Members have been added to group ${currentGroupRefID}!`;
+    } catch (e) {
+      console.error('Error adding document: ', e);
+      return;
     }
-    return `Admin & Members have been added to group ${currentGroupRefID}!`;
-  }
-  catch (e) {
-    console.error('Error adding document: ', e);
-    return;
-  }
   }
 
   async addRestaurantDataToGroup(restaurantData, currentGroupRefID: string) {
@@ -102,7 +101,7 @@ export class GroupsService {
       currentGroupRefID,
       'groupRestaurants',
     );
-    for (const restaurant of restaurantData) {
+    const promises = restaurantData.map(async (restaurant) => {
       await addDoc(groupRestaurantSubCollectionRef, {
         business_status: restaurant.business_status,
         lat: restaurant.lat,
@@ -117,10 +116,10 @@ export class GroupsService {
         user_ratings_total: restaurant.user_ratings_total,
         vicinity: restaurant.vicinity,
       });
-    }
+    });
+    await Promise.all(promises);
     return `Restaurants have been added to group ${currentGroupRefID}!`;
   }
-
   async findAll() {
     const querySnapshot = await getDocs(this.groupsRef);
     querySnapshot.forEach((doc) => {
@@ -139,15 +138,15 @@ export class GroupsService {
       ),
     );
 
-  const promises = querySnapshot.docs.map(async (doc) => {
-    console.log(doc.id);
-    let obj = { groupID: doc.id, groupMetadata: {}};
-    obj.groupMetadata = await this.getGroupMetadata(doc.id);
-    activeGroups.push( obj );
-  });
+    const promises = querySnapshot.docs.map(async (doc) => {
+      console.log(doc.id);
+      let obj = { groupID: doc.id, groupMetadata: {} };
+      obj.groupMetadata = await this.getGroupMetadata(doc.id);
+      activeGroups.push(obj);
+    });
 
-  await Promise.all(promises);
-  return activeGroups;
+    await Promise.all(promises);
+    return activeGroups;
   }
 
   async groupMemberCheckInToGroup(
@@ -208,20 +207,25 @@ export class GroupsService {
   }
 
   async getGroupMetadata(currentGroupRefID: string) {
-    const docRef = doc(this.groupsRef, currentGroupRefID)
+    const docRef = doc(this.groupsRef, currentGroupRefID);
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
-      console.log(docSnapshot.data())
+      console.log(docSnapshot.data());
       return docSnapshot.data();
-    } 
+    }
   }
-  
+
   async getUserDataFromGroup(currentGroupRefID: string, userEmail: string) {
-    const docRef = doc(this.groupsRef, currentGroupRefID, 'groupMembers', userEmail)
+    const docRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      userEmail,
+    );
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
       return docSnapshot.data();
-    } 
+    }
   }
   findOne(id: number) {
     return `This action returns a #${id} group`;

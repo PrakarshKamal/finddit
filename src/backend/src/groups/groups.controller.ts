@@ -63,7 +63,10 @@ export class GroupsController {
   }
 
   @Get('member-data-from-group/:groupId/:email')
-  getUserDataFromGroup(@Param('groupId') groupId: string, @Param('email') email: string) {
+  getUserDataFromGroup(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
     return this.groupsService.getUserDataFromGroup(groupId, email);
   }
 

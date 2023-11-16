@@ -14,6 +14,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useNavigation } from "@react-navigation/native";
 import { Entypo, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Divider } from "@rneui/themed";
+import { icons } from "../../utils/constants";
 
 const GroupInnit = () => {
     const navigation = useNavigation();
@@ -22,12 +23,12 @@ const GroupInnit = () => {
     const [isProfileIconModalVisible, setProfileIconModalVisible] =
         useState(false);
     const [selectedIcon, setSelectedIcon] = useState(null);
-    const icons = [
-        { id: 1, source: require("../../assets/burger.jpeg") },
-        { id: 2, source: require("../../assets/pizza.jpeg") },
-        { id: 3, source: require("../../assets/coffee.jpeg") },
-        { id: 4, source: require("../../assets/sushi.jpeg") },
-    ];
+    // const icons = [
+    //     { id: 1, source: require("../../assets/burger.jpeg") },
+    //     { id: 2, source: require("../../assets/pizza.jpeg") },
+    //     { id: 3, source: require("../../assets/coffee.jpeg") },
+    //     { id: 4, source: require("../../assets/sushi.jpeg") },
+    // ];
 
     // Function to handle icon selection
     const handleIconSelect = (icon) => {
@@ -78,86 +79,94 @@ const GroupInnit = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={isProfileIconModalVisible}
-                    onRequestClose={() => {
-                        setProfileIconModalVisible(!isProfileIconModalVisible);
-                    }}
-                >
-                    <SafeAreaView style={styles.container}>
-                        <Text style={styles.headingForProfileIcon}>
-                            Pick a Profile Icon for Your Group
-                        </Text>
-
-                        {/* Icon Grid */}
-                        <View style={styles.iconGrid}>
-                            <FlatList
-                                data={icons}
-                                renderItem={renderIconItem}
-                                keyExtractor={(item) => item.id}
-                                numColumns={2} // Adjust the number of columns as needed
-                            />
-                        </View>
-
-                        {/* Select and Cancel Buttons */}
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity
-                                onPress={handleCancelPress}
-                                style={styles.cancelButton}
-                            >
-                                <Text style={styles.buttonText}>Cancel</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={handleSelectPress}
-                                style={styles.selectButton}
-                            >
-                                <Text style={styles.buttonText}>Select</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </SafeAreaView>
-                </Modal>
-                <Text style={styles.headingForGroupName}>
-                    Set the name of the group and choose a profile icon
-                </Text>
-                <View>
-                    <TouchableOpacity onPress={handleProfileIconPressed}>
-                        <View style={styles.profileCircle}>
-                            {selectedIcon ? (
-                                <Image
-                                    style={styles.profileIcon}
-                                    source={
-                                        icons.find(
-                                            (icon) => icon.id === selectedIcon
-                                        ).source
-                                    }
-                                />
-                            ) : (
-                                <View style={styles.circleBorder}>
-                                    <Entypo
-                                        name="plus"
-                                        size={20}
-                                        style={styles.plusIcon}
-                                    />
-                                </View>
-                            )}
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.textInputView}>
-                    <Text>GROUP NAME</Text>
-                    <TextInput
-                        placeholder="Enter text here"
-                        style={styles.textInput}
-                        value={groupName}
-                        onChangeText={(text) => {
-                            setGroupName(text);
+                <KeyboardAwareScrollView>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={isProfileIconModalVisible}
+                        onRequestClose={() => {
+                            setProfileIconModalVisible(
+                                !isProfileIconModalVisible
+                            );
                         }}
-                    />
-                    <Divider width={1} />
-                </View>
+                    >
+                        <SafeAreaView style={styles.container}>
+                            <Text style={styles.headingForProfileIcon}>
+                                Pick a Profile Icon for Your Group
+                            </Text>
 
+                            {/* Icon Grid */}
+                            <View style={styles.iconGrid}>
+                                <FlatList
+                                    data={icons}
+                                    renderItem={renderIconItem}
+                                    keyExtractor={(item) => item.id}
+                                    numColumns={2} // Adjust the number of columns as needed
+                                />
+                            </View>
+
+                            {/* Select and Cancel Buttons */}
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity
+                                    onPress={handleCancelPress}
+                                    style={styles.cancelButton}
+                                >
+                                    <Text style={styles.buttonText}>
+                                        Cancel
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={handleSelectPress}
+                                    style={styles.selectButton}
+                                >
+                                    <Text style={styles.buttonText}>
+                                        Select
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </SafeAreaView>
+                    </Modal>
+                    <Text style={styles.headingForGroupName}>
+                        Set the name of the group and choose a profile icon
+                    </Text>
+                    <View style={styles.container}>
+                        <TouchableOpacity onPress={handleProfileIconPressed}>
+                            <View style={styles.profileCircle}>
+                                {selectedIcon ? (
+                                    <Image
+                                        style={styles.profileIcon}
+                                        source={
+                                            icons.find(
+                                                (icon) =>
+                                                    icon.id === selectedIcon
+                                            ).source
+                                        }
+                                    />
+                                ) : (
+                                    <View style={styles.circleBorder}>
+                                        <Entypo
+                                            name="plus"
+                                            size={20}
+                                            style={styles.plusIcon}
+                                        />
+                                    </View>
+                                )}
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.textInputView}>
+                        <Text>GROUP NAME</Text>
+                        <TextInput
+                            placeholder="Enter text here"
+                            style={styles.textInput}
+                            value={groupName}
+                            onChangeText={(text) => {
+                                setGroupName(text);
+                            }}
+                        />
+                        <Divider width={1} />
+                    </View>
+                </KeyboardAwareScrollView>
                 <TouchableOpacity onPress={handleNextButtonPressed}>
                     <MaterialCommunityIcons
                         name="arrow-right-circle"

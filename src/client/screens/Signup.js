@@ -10,6 +10,7 @@ import {
   Pressable,
   Image,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
@@ -61,8 +62,12 @@ function SignupScreen() {
     } finally {
       setLoading(false);
       // await axios.post(`${NGROKLINK}/users`, {email, firstName, lastName, iconID});
-      await sendSignUpRequest(firstName, lastName, email.toLocaleLowerCase(), iconID);
-      console.log("User created in database");
+      const resp =  await sendSignUpRequest(firstName, lastName, email.toLocaleLowerCase(), iconID);
+      if (resp){
+        console.log("User created in database" , resp);
+      }else{
+        console.log("failed")
+      }
     }
   };
 
@@ -110,21 +115,21 @@ function SignupScreen() {
           secureTextEntry
           style={styles.input}
         />
-        <Pressable style={styles.signUpButton} onPress={signUp}>
+        <TouchableOpacity style={styles.signUpButton} onPress={signUp}>
           <Text style={styles.signUpButtonText}>Create Account</Text>
-        </Pressable>
-        <Pressable style={styles.signInGoogleButton} onPress={null}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.signInGoogleButton} onPress={null}>
           <Image
             style={styles.googleIcon}
             source={require("../assets/google-icon.png")}
           />
           <Text style={styles.signInGoogleText}>Sign in with Google</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       <Text style={styles.alreadyAccountText}>Already have an account?</Text>
-      <Pressable onPress={() => navigation.navigate("Login")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={styles.logInButtonText}>Log In</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
     </KeyboardAwareScrollView>
     </SafeAreaView>

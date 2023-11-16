@@ -5,6 +5,7 @@ import {
     FlatList,
     Modal,
     SafeAreaView,
+    ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import UserSearchBar from "../../components/UserSearchBar";
@@ -14,6 +15,7 @@ import { findUserByEmailOrName } from "../../utils/api_function_calls/user_funct
 import SearchResultItem from "../../components/SearchResultItem";
 import useAuth from "../../hooks/useAuth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const AddUsers = ({ route, navigation }) => {
     const { groupName, groupIcon } = route.params;
@@ -22,7 +24,7 @@ const AddUsers = ({ route, navigation }) => {
     const [groupMembers, setGroupMembers] = useState([]);
     const [resultDropdownShown, setResultDropdownShown] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     function handleNextButtonPressed() {
         if (groupMembers.length !== 0) {
             navigation.navigate("GroupPreferences", {
@@ -31,26 +33,27 @@ const AddUsers = ({ route, navigation }) => {
                 groupMembers,
             });
         } else {
-            alert("Add alteast 1 user");
+            alert("Add at least 1 user");
         }
     }
     async function searchUser(input) {
         if (isLoading) {
             // The button is already processing a request; prevent further clicks.
             return;
-          }
-          setIsLoading(true)
-          try{
-            const response = await findUserByEmailOrName(input, loggedInUserEmail);
-        setSearchResult(response);
-        setResultDropdownShown(true);
-          }
-          catch(err){
-            throw err
-          } finally{
-            setIsLoading(false)
-          }
-        
+        }
+        setIsLoading(true);
+        try {
+            const response = await findUserByEmailOrName(
+                input,
+                loggedInUserEmail
+            );
+            setSearchResult(response);
+            setResultDropdownShown(true);
+        } catch (err) {
+            throw err;
+        } finally {
+            setIsLoading(false);
+        }
     }
     function addMember(user) {
         const index = groupMembers.findIndex(
@@ -100,22 +103,34 @@ const AddUsers = ({ route, navigation }) => {
                 hideResults={hideResults}
                 searchResultsShown={resultDropdownShown}
             ></UserSearchBar>
-
+            <KeyboardAwareScrollView
+                style={{ flex: 1, display: "flex" }}
+            ></KeyboardAwareScrollView>
             {resultDropdownShown ? (
-                <View>
-                    <View>
-                        {searchResult.length > 0 ? (
-                            <Text> Search Results </Text>
-                        ) : (
-                            <Text> No user found</Text>
-                        )}
-                    </View>
-                    <FlatList
-                        data={searchResult}
-                        renderItem={renderResultItem}
-                    />
+                <View style={{ margin: 20 }}>
+                    {isLoading ? (
+                        <ActivityIndicator />
+                    ) : (
+                        <View>
+                            <View>
+                                {searchResult.length > 0 ? (
+                                    <Text> Search Results </Text>
+                                ) : (
+                                    <Text> No user found</Text>
+                                )}
+                            </View>
+                            <FlatList
+                                data={searchResult}
+                                renderItem={renderResultItem}
+                            />
+                        </View>
+                    )}
                 </View>
-            ) : null}
+            ) : (
+                <KeyboardAwareScrollView
+                    style={{ flex: 1, display: "flex" }}
+                ></KeyboardAwareScrollView>
+            )}
 
             <FlatList
                 data={groupMembers}
