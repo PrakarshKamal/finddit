@@ -38,7 +38,7 @@ const GroupCreated = ({ route, navigation }) => {
                     onSwipedLeft={(cardIndex) => console.log("Swiped left")}
                     onSwipedRight={(cardIndex) => console.log("Swiped right")}
                     onSwipedTop={(cardIndex) => console.log("Swiped top")}
-                    onSwipedAll={() => console.log("Swiped all")}
+                    onSwipedAll={() => navigation.navigate("LeaderBoard")}
                     stackSize={5}
                     animateCardOpacity={true}
                     backgroundColor={"#4FD0E9"}
