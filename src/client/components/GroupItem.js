@@ -38,7 +38,10 @@ const GroupItem = ({ group }) => {
             <View style={styles.textContainer}>
                 <Image
                     source={
-                        icons.find((icon) => icon.id === groupIconID).source
+                        icons.find((icon) => icon.id === groupIconID)
+                            ? icons.find((icon) => icon.id === groupIconID)
+                                  .source
+                            : icons[0].source
                     }
                     style={{ width: 100, height: 100 }}
                 ></Image>

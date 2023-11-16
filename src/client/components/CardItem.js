@@ -6,7 +6,12 @@ import { Entypo } from "@expo/vector-icons";
 const CardItem = ({ itemData }) => {
     const { name, rating, vicinity, place_opening_hours, price_level, image } =
         itemData;
-    console.log("pangke use this url to display", image);
+    const costDict = {
+        1: "$",
+        2: "$$",
+        3: "$$$",
+        4: "$$$$",
+    };
     return (
         <View style={styles.card}>
             <Image source={{ uri: image }} style={styles.image} />
@@ -21,7 +26,7 @@ const CardItem = ({ itemData }) => {
                     <Entypo name="star" size={30} color="#fdd663" />
                 </View>
                 <View style={styles.ratingContainer}>
-                    <Text style={styles.rating}>{price_level} cost</Text>
+                    <Text style={styles.rating}>{costDict[price_level]}</Text>
                 </View>
             </View>
         </View>
