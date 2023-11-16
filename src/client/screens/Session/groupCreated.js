@@ -3,10 +3,18 @@ import React from "react";
 import Swiper from "react-native-deck-swiper";
 import cardOverlayLabels from "../../styles/cardOverlayLabels";
 import styles from "../../styles/groupCreatedStyles";
+import CardItem from "../../components/CardItem";
 import { icons } from "../../utils/constants";
 
 const GroupCreated = ({ route, navigation }) => {
-    const { groupName, groupId, groupIcon } = route.params;
+    const { groupName, groupId, groupIcon, cardData } = route.params;
+    const renderCardItem = (item) => {
+        return (
+            <View style={styles.card}>
+                <CardItem itemData={item}></CardItem>
+            </View>
+        );
+    };
 
     return (
         <View>
@@ -19,12 +27,8 @@ const GroupCreated = ({ route, navigation }) => {
             </Text>
             <View>
                 <Swiper
-                    cards={["Card 1", "Card 2", "Card 3", "Card 4", "Card 5"]}
-                    renderCard={(card) => (
-                        <View style={styles.card}>
-                            <Text>{card}</Text>
-                        </View>
-                    )}
+                    cards={cardData}
+                    renderCard={renderCardItem}
                     onSwiped={(cardIndex) => {
                         console.log(cardIndex);
                     }}

@@ -1,19 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { NearbyRequestDto } from 'src/dto/nearby-request.dto';
 interface GroupMemberPreferneces {
-
   // latitude: number;
-
   // longitude: number;
-
   // radius: number;
-
   // keyword: string;
-
   // maxPrice: number;
-
   // minPrice: number;
-
   // willingToTravel: boolean;
 }
 export class CheckinMemberDto {

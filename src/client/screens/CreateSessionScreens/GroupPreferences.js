@@ -17,6 +17,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
 import { FontAwesome } from "@expo/vector-icons";
+import { getEmbedUrlFromPhotoRef } from "../../utils/api_function_calls/photo_functions";
+import { ActivityIndicator } from "react-native";
 
 const GroupPreferences = ({ route, navigation }) => {
     const { groupName, groupIcon, groupMembers } = route.params;
@@ -27,9 +29,31 @@ const GroupPreferences = ({ route, navigation }) => {
     const [openNow, setOpenNow] = useState(true);
     const [groupDeadLine, setGroupDeadLine] = useState(24);
     const [isActive, setIsActive] = useState(true);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const handleRadiusChange = (value) => {
         setRadius(value);
+    };
+    const fetchImageUrl = async (cardData) => {
+        const cards = [];
+
+        const promises = cardData.data.map(async (item) => {
+            try {
+                let ref = item.photos[0].photo_reference;
+                let imageUrl = await getEmbedUrlFromPhotoRef(ref, 1000);
+                let card = {
+                    ...item,
+                    image: imageUrl,
+                };
+                cards.push(card);
+            } catch (error) {
+                // Handle errors if necessary
+                console.error(`Error processing item: ${error.message}`);
+            }
+        });
+
+        await Promise.all(promises);
+
+        return cards;
     };
 
     const handlePriceRangeSelect = (priceRange) => {
@@ -51,189 +75,200 @@ const GroupPreferences = ({ route, navigation }) => {
         };
         const groupMembersEmails = groupMembers.map((user) => user.email);
         if (isLoading) {
-          // The button is already processing a request; prevent further clicks.
-          return;
+            // The button is already processing a request; prevent further clicks.
+            return;
         }
-        setIsLoading(true)
-        try{
-        const res = await createNewGroup(
-            groupName,
-            groupIcon,
-            admin.user.email,
-            groupMembersEmails,
-            groupDeadLine,
-            isActive,
-            adminPreferences
-        );
-        if (res.data) {
-            const groupId = res.data;
-            const cardData = await getCardDataFromGroup(groupId);
-            console.log(cardData.data);
-            const group = {
-                groupName: groupName,
-                groupId: groupId,
-                cardData: cardData.data,
-                groupIcon: groupIcon,
-                groupMembers: groupMembers,
-                groupAdmin: admin.user.email,
-                groupDeadLine: groupDeadLine,
-                isActive: isActive,
-                adminPreferences: adminPreferences,
-            };
-            navigation.navigate("GroupCreated", group);
-        } else {
-            alert("Something went wrong");
+        setIsLoading(true);
+        try {
+            const res = await createNewGroup(
+                groupName,
+                groupIcon,
+                admin.user.email,
+                groupMembersEmails,
+                groupDeadLine,
+                isActive,
+                adminPreferences
+            );
+            if (res.data) {
+                const groupId = res.data;
+                const cardData = await getCardDataFromGroup(groupId);
+                let cards = await fetchImageUrl(cardData);
+                const group = {
+                    groupName: groupName,
+                    groupId: groupId,
+                    cardData: cards,
+                    groupIcon: groupIcon,
+                    groupMembers: groupMembers,
+                    groupAdmin: admin.user.email,
+                    groupDeadLine: groupDeadLine,
+                    isActive: isActive,
+                    adminPreferences: adminPreferences,
+                };
+                navigation.navigate("GroupCreated", group);
+            } else {
+                alert("Something went wrong");
+            }
+        } catch (err) {
+            throw err;
+        } finally {
+            setIsLoading(false);
         }
-      }catch (err) {
-        throw err
-      }
-      finally{
-        setIsLoading(false)
-      }
     };
     return (
         <View style={styles.container}>
-            <Text style={styles.groupName}>{groupName}</Text>
+            {isLoading ? (
+                <ActivityIndicator></ActivityIndicator>
+            ) : (
+                <View style={styles.container}>
+                    <Text style={styles.groupName}>{groupName}</Text>
 
-            <View style={styles.locationContainer}>
-                <Text style={styles.locationLabel}>LOCATION</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter location"
-                    value={location}
-                    onChangeText={(text) => setLocation(text)}
-                />
-            </View>
+                    <View style={styles.locationContainer}>
+                        <Text style={styles.locationLabel}>LOCATION</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Enter location"
+                            value={location}
+                            onChangeText={(text) => setLocation(text)}
+                        />
+                    </View>
 
-            <Divider width={1} />
+                    <Divider width={1} />
 
-            <View style={styles.radiusContainer}>
-                <Text style={styles.radiusLabel}>RADIUS (KM): {radius}</Text>
-                <Slider
-                    style={styles.slider}
-                    minimumValue={1}
-                    maximumValue={20}
-                    thumbTintColor={"#f27575"}
-                    minimumTrackTintColor={"#f27575"}
-                    step={1}
-                    value={radius}
-                    onValueChange={handleRadiusChange}
-                />
-            </View>
+                    <View style={styles.radiusContainer}>
+                        <Text style={styles.radiusLabel}>
+                            RADIUS (KM): {radius}
+                        </Text>
+                        <Slider
+                            style={styles.slider}
+                            minimumValue={1}
+                            maximumValue={20}
+                            thumbTintColor={"#f27575"}
+                            minimumTrackTintColor={"#f27575"}
+                            step={1}
+                            value={radius}
+                            onValueChange={handleRadiusChange}
+                        />
+                    </View>
 
-            <Divider width={1} />
+                    <Divider width={1} />
 
-            <View>
-                <Text style={styles.priceLabel}>PRICE RANGE</Text>
-                <View style={styles.priceRangeContainer}>
-                    <TouchableOpacity
-                        style={[
-                            styles.priceRangeButton,
-                            selectedPriceRange === 1 &&
-                                styles.selectedPriceRange,
-                        ]}
-                        onPress={() => handlePriceRangeSelect(1)}
-                    >
-                        <FontAwesome name="dollar" size={16} color="black" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[
-                            styles.priceRangeButton,
-                            selectedPriceRange === 2 &&
-                                styles.selectedPriceRange,
-                        ]}
-                        onPress={() => handlePriceRangeSelect(2)}
-                    >
-                        <View style={{ flexDirection: "row" }}>
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
+                    <View>
+                        <Text style={styles.priceLabel}>PRICE RANGE</Text>
+                        <View style={styles.priceRangeContainer}>
+                            <TouchableOpacity
+                                style={[
+                                    styles.priceRangeButton,
+                                    selectedPriceRange === 1 &&
+                                        styles.selectedPriceRange,
+                                ]}
+                                onPress={() => handlePriceRangeSelect(1)}
+                            >
+                                <FontAwesome
+                                    name="dollar"
+                                    size={16}
+                                    color="black"
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[
+                                    styles.priceRangeButton,
+                                    selectedPriceRange === 2 &&
+                                        styles.selectedPriceRange,
+                                ]}
+                                onPress={() => handlePriceRangeSelect(2)}
+                            >
+                                <View style={{ flexDirection: "row" }}>
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[
+                                    styles.priceRangeButton,
+                                    selectedPriceRange === 3 &&
+                                        styles.selectedPriceRange,
+                                ]}
+                                onPress={() => handlePriceRangeSelect(3)}
+                            >
+                                <View style={{ flexDirection: "row" }}>
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[
+                                    styles.priceRangeButton,
+                                    selectedPriceRange === 4 &&
+                                        styles.selectedPriceRange,
+                                ]}
+                                onPress={() => handlePriceRangeSelect(4)}
+                            >
+                                <View style={{ flexDirection: "row" }}>
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                    <FontAwesome
+                                        name="dollar"
+                                        size={16}
+                                        color="black"
+                                    />
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
+                    </View>
+
+                    <Divider width={1} />
+
+                    <View style={styles.toggleButtonContainer}>
+                        <Text style={styles.openNowSwitchLabel}>OPEN NOW</Text>
+                        <Switch
+                            style={styles.openNowSwitch}
+                            trackColor={{ false: "", true: "#f27575" }}
+                            value={openNow}
+                            onValueChange={() => setOpenNow(!openNow)}
+                        />
+                    </View>
                     <TouchableOpacity
-                        style={[
-                            styles.priceRangeButton,
-                            selectedPriceRange === 3 &&
-                                styles.selectedPriceRange,
-                        ]}
-                        onPress={() => handlePriceRangeSelect(3)}
+                        style={styles.nextButton}
+                        onPress={handleGenerateButtonPressed}
                     >
-                        <View style={{ flexDirection: "row" }}>
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[
-                            styles.priceRangeButton,
-                            selectedPriceRange === 4 &&
-                                styles.selectedPriceRange,
-                        ]}
-                        onPress={() => handlePriceRangeSelect(4)}
-                    >
-                        <View style={{ flexDirection: "row" }}>
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
-                            <FontAwesome
-                                name="dollar"
-                                size={16}
-                                color="black"
-                            />
-                        </View>
+                        <Text style={styles.nextButtonText}>Generate</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-
-            <Divider width={1} />
-
-            <View style={styles.toggleButtonContainer}>
-                <Text style={styles.openNowSwitchLabel}>OPEN NOW</Text>
-                <Switch
-                    style={styles.openNowSwitch}
-                    trackColor={{ false: "", true: "#f27575" }}
-                    value={openNow}
-                    onValueChange={() => setOpenNow(!openNow)}
-                />
-            </View>
-            <TouchableOpacity
-                style={styles.nextButton}
-                onPress={handleGenerateButtonPressed}
-            >
-                <Text style={styles.nextButtonText}>Generate</Text>
-            </TouchableOpacity>
+            )}
         </View>
     );
 };
