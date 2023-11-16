@@ -27,7 +27,7 @@ import { ActivityIndicator } from "react-native";
 const GroupPreferences = ({ route, navigation }) => {
     const { groupName, groupIcon, groupMembers } = route.params;
     const admin = useAuth();
-    const [radius, setRadius] = useState(5); // Default radius value
+    const [radius, setRadius] = useState(1); // Default radius value
     const [selectedPriceRange, setSelectedPriceRange] = useState(null);
     const [openNow, setOpenNow] = useState(true);
     const [groupDeadLine, setGroupDeadLine] = useState(24);
