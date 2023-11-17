@@ -1,10 +1,16 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    container: {
+    profileContainer: {
         alignItems: "center",
+        marginTop: 20,
+        marginBottom: 20,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        maxWidth: Dimensions.get("window").width - 200,
     },
     userName: {
+        marginLeft: 25,
         fontSize: 18, // Adjust the font size as needed
     },
     iconContainer: {
@@ -12,13 +18,14 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 50,
         backgroundColor: "#fbe1e5",
-        margin: 20,
+        marginBottom: 18,
+        marginLeft: 22,
         alignItems: "center",
         justifyContent: "center",
     },
     cancelIcon: {
-        top: 0,
-        left: 32,
+        top: -65,
+        left: 110,
         borderRadius: 15,
         position: "absolute",
         borderColor: "transparent",
