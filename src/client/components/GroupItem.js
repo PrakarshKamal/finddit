@@ -13,7 +13,6 @@ const GroupItem = ({ group }) => {
     } = group.groupMetadata;
     const [remainingTime, setRemainingTime] = useState(null);
 
-    console.log("groupicon", groupIconID);
     useEffect(() => {
         const SessionCreationtime = new Date(
             timeStamp.seconds * 1000 + timeStamp.nanoseconds / 1000000

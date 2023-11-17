@@ -135,6 +135,7 @@ export class GroupsService {
         this.groupsRef,
         where('groupMembersEmails', 'array-contains', userEmail),
         where('isActive', '==', true),
+        orderBy('timeStamp', 'desc'),
       ),
     );
 
