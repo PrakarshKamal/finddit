@@ -16,7 +16,9 @@ const CardItem = ({ itemData }) => {
         <View style={styles.card}>
             <Image source={{ uri: image }} style={styles.image} />
             <View style={styles.infoContainer}>
-                <Text style={styles.name}>{name}</Text>
+                <Text numberOfLines={2} style={styles.name}>
+                    {name}
+                </Text>
                 <Text style={styles.location}>{vicinity}</Text>
                 <Text style={styles.operationalHours}>
                     {place_opening_hours.open_now}
