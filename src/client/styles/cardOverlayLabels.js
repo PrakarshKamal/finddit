@@ -1,4 +1,5 @@
 import { Entypo, FontAwesome } from "@expo/vector-icons";
+import { Platform } from "react-native";
 
 export default cardOverlayLabels = {
     left: {
@@ -8,8 +9,8 @@ export default cardOverlayLabels = {
                 flexDirection: "column",
                 alignItems: "flex-end",
                 justifyContent: "flex-start",
-                marginTop: 5,
-                marginLeft: -20,
+                marginTop: -80,
+                marginLeft: 40,
             },
         },
     },
@@ -20,8 +21,8 @@ export default cardOverlayLabels = {
                 flexDirection: "column",
                 alignItems: "flex-start",
                 justifyContent: "flex-start",
-                marginTop: 20,
-                marginLeft: 15,
+                marginTop: -80,
+                marginLeft: -30,
             },
         },
     },
@@ -32,7 +33,7 @@ export default cardOverlayLabels = {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                marginTop: 20,
+                marginTop: 40,
             },
         },
     },
