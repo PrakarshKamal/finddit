@@ -9,7 +9,7 @@ const ProfileIcon = ({ user, removeUser }) => {
         removeUser(user.email);
     }
     return (
-        <View style={styles.container}>
+        <View style={styles.profileContainer}>
             <TouchableOpacity onPress={removeUserOnPress}>
                 <View style={styles.cancelIcon}>
                     <Icon name="cancel" size={36} color="gray" />

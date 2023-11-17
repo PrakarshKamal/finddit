@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     image: {
         marginTop: 5,
         width: Dimensions.get("window").width - 70,
-        height: Dimensions.get("window").height / 2.7,
+        height: Dimensions.get("window").height / 3.3,
         borderRadius: 10,
     },
     infoContainer: {

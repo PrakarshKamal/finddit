@@ -133,9 +133,11 @@ const AddUsers = ({ route, navigation }) => {
             )}
 
             <FlatList
+                columnWrapperStyle={{ margin: 15 }}
+                horizontal={false}
                 data={groupMembers}
                 renderItem={renderIconItem}
-                numColumns={3} // Adjust the number of columns as needed
+                numColumns={2} // Adjust the number of columns as needed
                 contentContainerStyle={styles.iconGrid}
             />
 

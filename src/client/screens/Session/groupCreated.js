@@ -18,13 +18,36 @@ const GroupCreated = ({ route, navigation }) => {
 
     return (
         <View>
-            <Image
-                source={icons.find((icon) => icon.id === groupIcon).source}
-                style={{ width: 50, height: 50 }}
-            ></Image>
-            <Text style={{ textAlign: "center" }}>
-                Group {groupName} created
-            </Text>
+            <View
+                style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    marginTop: 20,
+                }}
+            >
+                <Image
+                    source={icons.find((icon) => icon.id === groupIcon).source}
+                    style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 25,
+                        borderWidth: 2,
+                        borderColor: "#f27575",
+                        alignSelf: "left",
+                    }}
+                ></Image>
+                <Text
+                    style={{
+                        marginLeft: 5,
+                        textAlign: "center",
+                        alignSelf: "center",
+                        fontSize: 30,
+                        fontWeight: "bold",
+                    }}
+                >
+                    {groupName}
+                </Text>
+            </View>
             <View>
                 <Swiper
                     cards={cardData}
@@ -41,7 +64,6 @@ const GroupCreated = ({ route, navigation }) => {
                     onSwipedAll={() => navigation.navigate("LeaderBoard")}
                     stackSize={5}
                     animateCardOpacity={true}
-                    backgroundColor={"#4FD0E9"}
                     overlayLabels={cardOverlayLabels}
                 ></Swiper>
             </View>
