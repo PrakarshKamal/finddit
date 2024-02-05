@@ -22,6 +22,7 @@ import {
   doc,
 } from 'firebase/firestore';
 import { RestaurantDto } from 'src/dto/restaurant-response.dto';
+import { GroupMemberPreferencesDto } from './dto/group-member-preferences.dto';
 
 @Injectable()
 export class GroupsService {
@@ -153,7 +154,7 @@ export class GroupsService {
   async groupMemberCheckInToGroup(
     groupMemberEmail: string,
     currentGroupRefID: string,
-    memberPreferences: any,
+    memberPreferences: GroupMemberPreferencesDto,
   ) {
     var groupMemberSubCollectionRef = doc(
       this.groupsRef,
@@ -205,6 +206,20 @@ export class GroupsService {
       }
     });
     return checkedInMembers;
+  }
+
+  async checkIfUserIsCheckedIn(currentGroupRefID: string, userEmail: string) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      userEmail,
+    );
+
+    const querySnapshot = await getDoc(groupMemberSubCollectionRef);
+    if (querySnapshot.exists()) {
+      return querySnapshot.data().memberCheckedInGroup;
+    }
   }
 
   async getGroupMetadata(currentGroupRefID: string) {

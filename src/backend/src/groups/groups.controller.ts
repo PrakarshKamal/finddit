@@ -11,6 +11,7 @@ import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { CheckinMemberDto } from './dto/checkin-member.dto';
 
 @Controller('groups')
 @ApiTags('groups')
@@ -22,10 +23,15 @@ export class GroupsController {
     return this.groupsService.create(createGroupDto);
   }
 
-  // @Post()
-  // groupMemberCheckInToGroup(@Body() checkinParams: any) {
-  //   return this.groupsService.groupMemberCheckInToGroup("khuranajapnit@gmail.com", "abcd", {});
-  // }
+  @Post('group-member-checkin-to-group')
+  groupMemberCheckInToGroup(@Body() checkinParams: CheckinMemberDto) {
+    console.log(JSON.stringify(checkinParams));
+    return this.groupsService.groupMemberCheckInToGroup(
+      checkinParams.memberEmail,
+      checkinParams.groupID,
+      checkinParams.memberPreferences,
+    );
+  }
 
   @Get()
   findAll() {
@@ -57,6 +63,13 @@ export class GroupsController {
     return this.groupsService.getCheckedInMembersForGroup(groupId);
   }
 
+  @Get('check-if-user-checked-in/:groupId/:email')
+  checkIfUserCheckedIn(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
+    return this.groupsService.checkIfUserIsCheckedIn(groupId, email);
+  }
   @Get('group-metadata/:groupId')
   getGroupMetadata(@Param('groupId') groupId: string) {
     return this.groupsService.getGroupMetadata(groupId);

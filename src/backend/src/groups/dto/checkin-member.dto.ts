@@ -1,19 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { NearbyRequestDto } from 'src/dto/nearby-request.dto';
-interface GroupMemberPreferneces {
-  // latitude: number;
-  // longitude: number;
-  // radius: number;
-  // keyword: string;
-  // maxPrice: number;
-  // minPrice: number;
-  // willingToTravel: boolean;
-}
+import { GroupMemberPreferencesDto } from './group-member-preferences.dto';
 export class CheckinMemberDto {
   constructor(
     groupID: string,
     memberEmail: string,
-    memberPreferences: GroupMemberPreferneces,
+    memberPreferences: GroupMemberPreferencesDto,
   ) {
     this.groupID = groupID;
     this.memberEmail = memberEmail;
@@ -25,5 +17,5 @@ export class CheckinMemberDto {
   @ApiProperty()
   memberEmail: string;
   @ApiProperty()
-  memberPreferences: GroupMemberPreferneces;
+  memberPreferences: GroupMemberPreferencesDto;
 }
