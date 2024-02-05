@@ -96,6 +96,37 @@ export class GroupsService {
     }
   }
 
+  async userUsedSuperDislike(
+    groupMemberEmail: string,
+    currentGroupRefID: string,
+  ) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      groupMemberEmail,
+    );
+    await updateDoc(groupMemberSubCollectionRef, {
+      memberUsedSuperDislike: true,
+    });
+  }
+
+  async checkIfUserUsedSuperDislike(
+    groupMemberEmail: string,
+    currentGroupRefID: string,
+  ) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      groupMemberEmail,
+    );
+    const querySnapshot = await getDoc(groupMemberSubCollectionRef);
+    if (querySnapshot.exists()) {
+      return querySnapshot.data().memberUsedSuperDislike;
+    }
+  }
+
   async addRestaurantDataToGroup(restaurantData, currentGroupRefID: string) {
     var groupRestaurantSubCollectionRef = collection(
       this.groupsRef,

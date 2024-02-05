@@ -33,6 +33,14 @@ export class GroupsController {
     );
   }
 
+  @Post('user-used-superdislike/:groupId/:email')
+  userUsedSuperDislike(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
+    return this.groupsService.userUsedSuperDislike(email, groupId);
+  }
+
   @Get()
   findAll() {
     return this.groupsService.findAll();
@@ -70,6 +78,15 @@ export class GroupsController {
   ) {
     return this.groupsService.checkIfUserIsCheckedIn(groupId, email);
   }
+
+  @Get('check-if-user-used-superdislike/:groupId/:email')
+  checkIfUserUsedSuperDislike(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
+    return this.groupsService.checkIfUserUsedSuperDislike(email, groupId);
+  }
+
   @Get('group-metadata/:groupId')
   getGroupMetadata(@Param('groupId') groupId: string) {
     return this.groupsService.getGroupMetadata(groupId);

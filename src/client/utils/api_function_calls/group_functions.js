@@ -36,7 +36,7 @@ async function checkUserCheckedIn(groupID, userEmail) {
 }
 
 async function userCheckIn(groupID, memberEmail, memberPreferences) {
-    await axios.post(`${NGROK_URL}/groups//group-member-checkin-to-group`, {
+    await axios.post(`${NGROK_URL}/groups/group-member-checkin-to-group`, {
         groupID,
         memberEmail,
         memberPreferences,
@@ -50,6 +50,18 @@ async function getUserDataForGroup(groupID, userEmail) {
 
 async function getCheckedInUsersForGroup(groupID) {
     await axios.get(`${NGROK_URL}/groups/checked-in-members/${groupID}`);
+}
+
+async function userUsedSuperDislike(groupID, userEmail) {
+    await axios.post(
+        `${NGROK_URL}/groups/user-used-superdislike/${groupID}/${userEmail}`
+    );
+}
+
+async function checkIfUserUsedSuperDislike(groupID, userEmail) {
+    await axios.get(
+        `${NGROK_URL}/groups/check-if-user-used-superdislike/${groupID}/${userEmail}`
+    );
 }
 
 async function getCardDataFromGroup(groupID) {
