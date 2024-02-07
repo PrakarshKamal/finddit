@@ -20,8 +20,10 @@ import {
   getDoc,
   limit,
   doc,
+  increment,
 } from 'firebase/firestore';
 import { RestaurantDto } from 'src/dto/restaurant-response.dto';
+import { GroupMemberPreferencesDto } from './dto/group-member-preferences.dto';
 
 @Injectable()
 export class GroupsService {
@@ -95,6 +97,37 @@ export class GroupsService {
     }
   }
 
+  async userUsedSuperDislike(
+    groupMemberEmail: string,
+    currentGroupRefID: string,
+  ) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      groupMemberEmail,
+    );
+    await updateDoc(groupMemberSubCollectionRef, {
+      memberUsedSuperDislike: true,
+    });
+  }
+
+  async checkIfUserUsedSuperDislike(
+    groupMemberEmail: string,
+    currentGroupRefID: string,
+  ) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      groupMemberEmail,
+    );
+    const querySnapshot = await getDoc(groupMemberSubCollectionRef);
+    if (querySnapshot.exists()) {
+      return querySnapshot.data().memberUsedSuperDislike;
+    }
+  }
+
   async addRestaurantDataToGroup(restaurantData, currentGroupRefID: string) {
     var groupRestaurantSubCollectionRef = collection(
       this.groupsRef,
@@ -153,7 +186,7 @@ export class GroupsService {
   async groupMemberCheckInToGroup(
     groupMemberEmail: string,
     currentGroupRefID: string,
-    memberPreferences: any,
+    memberPreferences: GroupMemberPreferencesDto,
   ) {
     var groupMemberSubCollectionRef = doc(
       this.groupsRef,
@@ -207,6 +240,20 @@ export class GroupsService {
     return checkedInMembers;
   }
 
+  async checkIfUserIsCheckedIn(currentGroupRefID: string, userEmail: string) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      userEmail,
+    );
+
+    const querySnapshot = await getDoc(groupMemberSubCollectionRef);
+    if (querySnapshot.exists()) {
+      return querySnapshot.data().memberCheckedInGroup;
+    }
+  }
+
   async getGroupMetadata(currentGroupRefID: string) {
     const docRef = doc(this.groupsRef, currentGroupRefID);
     const docSnapshot = await getDoc(docRef);
@@ -228,6 +275,35 @@ export class GroupsService {
       return docSnapshot.data();
     }
   }
+
+  async swipeOnRestaurant(
+    currentGroupRefID: string,
+    restaurantID: string,
+    swipeDirection: string,
+  ) {
+    const swipeDirectionToDoc = {
+      right: 'rightSwipes',
+      left: 'leftSwipes',
+      down: 'superDislikes',
+    };
+    var voteRestaurantDocRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupVotes',
+      restaurantID,
+    );
+
+    try {
+      await updateDoc(voteRestaurantDocRef, {
+        [swipeDirectionToDoc[swipeDirection]]: increment(1),
+      });
+    } catch (e) {
+      await setDoc(voteRestaurantDocRef, {
+        [swipeDirectionToDoc[swipeDirection]]: increment(1),
+      });
+    }
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} group`;
   }

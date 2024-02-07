@@ -11,6 +11,7 @@ import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { CheckinMemberDto } from './dto/checkin-member.dto';
 
 @Controller('groups')
 @ApiTags('groups')
@@ -22,10 +23,23 @@ export class GroupsController {
     return this.groupsService.create(createGroupDto);
   }
 
-  // @Post()
-  // groupMemberCheckInToGroup(@Body() checkinParams: any) {
-  //   return this.groupsService.groupMemberCheckInToGroup("khuranajapnit@gmail.com", "abcd", {});
-  // }
+  @Post('group-member-checkin-to-group')
+  groupMemberCheckInToGroup(@Body() checkinParams: CheckinMemberDto) {
+    console.log(JSON.stringify(checkinParams));
+    return this.groupsService.groupMemberCheckInToGroup(
+      checkinParams.memberEmail,
+      checkinParams.groupID,
+      checkinParams.memberPreferences,
+    );
+  }
+
+  @Post('user-used-superdislike/:groupId/:email')
+  userUsedSuperDislike(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
+    return this.groupsService.userUsedSuperDislike(email, groupId);
+  }
 
   @Get()
   findAll() {
@@ -57,6 +71,22 @@ export class GroupsController {
     return this.groupsService.getCheckedInMembersForGroup(groupId);
   }
 
+  @Get('check-if-user-checked-in/:groupId/:email')
+  checkIfUserCheckedIn(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
+    return this.groupsService.checkIfUserIsCheckedIn(groupId, email);
+  }
+
+  @Get('check-if-user-used-superdislike/:groupId/:email')
+  checkIfUserUsedSuperDislike(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
+    return this.groupsService.checkIfUserUsedSuperDislike(email, groupId);
+  }
+
   @Get('group-metadata/:groupId')
   getGroupMetadata(@Param('groupId') groupId: string) {
     return this.groupsService.getGroupMetadata(groupId);
@@ -70,6 +100,18 @@ export class GroupsController {
     return this.groupsService.getUserDataFromGroup(groupId, email);
   }
 
+  @Post('swipe-on-restaurant/:groupId/:restaurantId/:swipeDirection')
+  swipeOnRestaurant(
+    @Param('groupId') groupId: string,
+    @Param('restaurantId') restaurantId: string,
+    @Param('swipeDirection') swipeDirection: string,
+  ) {
+    return this.groupsService.swipeOnRestaurant(
+      groupId,
+      restaurantId,
+      swipeDirection,
+    );
+  }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
     return this.groupsService.update(+id, updateGroupDto);
