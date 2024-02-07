@@ -1,8 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class GroupMemberPreferencesDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   latitude: number;
-  @ApiProperty()
+  @ApiPropertyOptional()
   longitude: number;
   @ApiProperty()
   radius: number;

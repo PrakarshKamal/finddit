@@ -15,6 +15,7 @@ import useAuth from "../../hooks/useAuth";
 import {
     createNewGroup,
     getCardDataFromGroup,
+    userCheckIn,
 } from "../../utils/api_function_calls/group_functions";
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
@@ -129,16 +130,17 @@ const GroupPreferences = ({ route, navigation }) => {
                     alert("No restaurants found");
                     return;
                 }
+                await userCheckIn(groupId, admin.user.email, {
+                    radius: radius * 10000,
+                    maxPrice: selectedPriceRange,
+                    minPrice: 1,
+                });
                 const group = {
                     groupName: groupName,
                     groupId: groupId,
                     cardData: cards,
                     groupIcon: groupIcon,
-                    groupMembers: groupMembers,
-                    groupAdmin: admin.user.email,
-                    groupDeadLine: groupDeadLine,
-                    isActive: isActive,
-                    adminPreferences: adminPreferences,
+                    loggedInUser: admin.user.email,
                 };
                 navigation.navigate("GroupCreated", group);
             } else {

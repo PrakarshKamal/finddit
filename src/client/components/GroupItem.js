@@ -3,16 +3,23 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import styles from "../styles/GroupItemStyles";
 import { icons } from "../utils/constants";
 import { useNavigation } from "@react-navigation/native";
-
-const GroupItem = ({ group }) => {
+import {
+    checkUserCheckedIn,
+    getCardDataFromGroup,
+} from "../utils/api_function_calls/group_functions";
+import { fetchImageUrl } from "../utils/functions";
+const GroupItem = ({ group, loggedInUser }) => {
     const navigation = useNavigation();
     const {
         groupIconID,
         groupName,
         groupAdminEmail,
         votingDeadline,
+        groupMembersEmails,
         timeStamp,
     } = group.groupMetadata;
+    const groupID = group.groupID;
+    console.log("groupID", groupID);
     const [remainingTime, setRemainingTime] = useState(null);
     const [isExpired, setIsExpired] = useState(false);
 
@@ -38,14 +45,34 @@ const GroupItem = ({ group }) => {
         }
     }, []);
 
-    const handleJoinSessionButton = () => {
-        navigation.navigate("UserPreferences", {
-            groupIconID: groupIconID,
-            groupName: groupName,
-            groupAdminEmail: groupAdminEmail,
-            votingDeadline: votingDeadline,
-            timeStamp: timeStamp,
-        });
+    const handleJoinSessionButton = async () => {
+        const isCheckedIn = await checkUserCheckedIn(groupID, loggedInUser);
+        if (isCheckedIn) {
+            const cardData = await getCardDataFromGroup(groupID);
+            let cards = await fetchImageUrl(cardData);
+            if (cards.length === 0) {
+                alert("No restaurants found");
+                return;
+            }
+            const group = {
+                groupName: groupName,
+                groupId: groupID,
+                cardData: cards,
+                groupIcon: groupIconID,
+                loggedInUser: loggedInUser,
+            };
+            navigation.navigate("GroupCreated", group);
+        } else {
+            navigation.navigate("UserPreferences", {
+                groupID: groupID,
+                groupIconID: groupIconID,
+                groupName: groupName,
+                groupAdminEmail: groupAdminEmail,
+                votingDeadline: votingDeadline,
+                groupMembersEmails: groupMembersEmails,
+                timeStamp: timeStamp,
+            });
+        }
     };
     return (
         <View>
