@@ -100,6 +100,18 @@ export class GroupsController {
     return this.groupsService.getUserDataFromGroup(groupId, email);
   }
 
+  @Post('swipe-on-restaurant/:groupId/:restaurantId/:swipeDirection')
+  swipeOnRestaurant(
+    @Param('groupId') groupId: string,
+    @Param('restaurantId') restaurantId: string,
+    @Param('swipeDirection') swipeDirection: string,
+  ) {
+    return this.groupsService.swipeOnRestaurant(
+      groupId,
+      restaurantId,
+      swipeDirection,
+    );
+  }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
     return this.groupsService.update(+id, updateGroupDto);

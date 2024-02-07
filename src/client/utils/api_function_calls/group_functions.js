@@ -72,6 +72,13 @@ async function getGroupMetadata(groupID) {
     await axios.get(`${NGROK_URL}/groups/group-metadata/${groupID}`);
 }
 
+async function swipeOnRestaurant(groupID, restaurantID, swipeDirection) {
+    await axios.post(
+        `${NGROK_URL}/groups/swipe-on-restaurant/${groupID}/${restaurantID}/${swipeDirection}`
+    );
+    //right, left, down
+}
+
 module.exports = {
     createNewGroup,
     getCardDataFromGroup,

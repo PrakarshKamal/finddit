@@ -20,6 +20,7 @@ import {
   getDoc,
   limit,
   doc,
+  increment,
 } from 'firebase/firestore';
 import { RestaurantDto } from 'src/dto/restaurant-response.dto';
 import { GroupMemberPreferencesDto } from './dto/group-member-preferences.dto';
@@ -274,6 +275,35 @@ export class GroupsService {
       return docSnapshot.data();
     }
   }
+
+  async swipeOnRestaurant(
+    currentGroupRefID: string,
+    restaurantID: string,
+    swipeDirection: string,
+  ) {
+    const swipeDirectionToDoc = {
+      right: 'rightSwipes',
+      left: 'leftSwipes',
+      down: 'superDislikes',
+    };
+    var voteRestaurantDocRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupVotes',
+      restaurantID,
+    );
+
+    try {
+      await updateDoc(voteRestaurantDocRef, {
+        [swipeDirectionToDoc[swipeDirection]]: increment(1),
+      });
+    } catch (e) {
+      await setDoc(voteRestaurantDocRef, {
+        [swipeDirectionToDoc[swipeDirection]]: increment(1),
+      });
+    }
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} group`;
   }
