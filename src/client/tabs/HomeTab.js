@@ -9,6 +9,7 @@ import GroupPreferences from "../screens/CreateSessionScreens/GroupPreferences";
 import GroupCreated from "../screens/Session/groupCreated";
 import ActiveSessions from "../screens/ActiveSessions";
 import LeaderBoard from "../screens/LeaderBoard";
+import UserPreferences from "../screens/UserPreferences";
 
 const HomeTab = () => {
     const Stack = createStackNavigator();
@@ -40,6 +41,7 @@ const HomeTab = () => {
                 options={{ header: HeaderWithoutBack, gestureEnabled: false }}
             />
             <Stack.Screen name="ActiveSessions" component={ActiveSessions} />
+            <Stack.Screen name="UserPreferences" component={UserPreferences} />
         </Stack.Navigator>
     );
 };
