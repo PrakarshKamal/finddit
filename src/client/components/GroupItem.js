@@ -8,6 +8,7 @@ import {
     getCardDataFromGroup,
 } from "../utils/api_function_calls/group_functions";
 import { fetchImageUrl } from "../utils/functions";
+import { Modal } from "react-native";
 const GroupItem = ({ group, loggedInUser }) => {
     const navigation = useNavigation();
     const {
@@ -22,6 +23,7 @@ const GroupItem = ({ group, loggedInUser }) => {
     console.log("groupID", groupID);
     const [remainingTime, setRemainingTime] = useState(null);
     const [isExpired, setIsExpired] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const SessionCreationtime = new Date(
@@ -46,36 +48,50 @@ const GroupItem = ({ group, loggedInUser }) => {
     }, []);
 
     const handleJoinSessionButton = async () => {
-        const isCheckedIn = await checkUserCheckedIn(groupID, loggedInUser);
-        if (isCheckedIn) {
-            const cardData = await getCardDataFromGroup(groupID);
-            let cards = await fetchImageUrl(cardData);
-            if (cards.length === 0) {
-                alert("No restaurants found");
-                return;
+        if (isLoading) {
+            // The button is already processing a request; prevent further clicks.
+            return;
+        }
+        setIsLoading(true);
+        try {
+            const isCheckedIn = await checkUserCheckedIn(groupID, loggedInUser);
+            if (isCheckedIn) {
+                const cardData = await getCardDataFromGroup(groupID);
+                let cards = await fetchImageUrl(cardData);
+                if (cards.length === 0) {
+                    alert("No restaurants found");
+                    return;
+                }
+                const group = {
+                    groupName: groupName,
+                    groupId: groupID,
+                    cardData: cards,
+                    groupIcon: groupIconID,
+                    loggedInUser: loggedInUser,
+                };
+                navigation.navigate("GroupCreated", group);
+            } else {
+                navigation.navigate("UserPreferences", {
+                    groupID: groupID,
+                    groupIconID: groupIconID,
+                    groupName: groupName,
+                    groupAdminEmail: groupAdminEmail,
+                    votingDeadline: votingDeadline,
+                    groupMembersEmails: groupMembersEmails,
+                    timeStamp: timeStamp,
+                });
             }
-            const group = {
-                groupName: groupName,
-                groupId: groupID,
-                cardData: cards,
-                groupIcon: groupIconID,
-                loggedInUser: loggedInUser,
-            };
-            navigation.navigate("GroupCreated", group);
-        } else {
-            navigation.navigate("UserPreferences", {
-                groupID: groupID,
-                groupIconID: groupIconID,
-                groupName: groupName,
-                groupAdminEmail: groupAdminEmail,
-                votingDeadline: votingDeadline,
-                groupMembersEmails: groupMembersEmails,
-                timeStamp: timeStamp,
-            });
+        } catch (err) {
+            throw err;
+        } finally {
+            setIsLoading(false);
         }
     };
     return (
         <View>
+            <Modal visible={isLoading} transparent={false}>
+                <Text>Loading</Text>
+            </Modal>
             <TouchableOpacity
                 style={styles.container}
                 onPress={() => handleJoinSessionButton()}
