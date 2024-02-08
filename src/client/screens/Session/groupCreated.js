@@ -5,6 +5,7 @@ import cardOverlayLabels from "../../styles/cardOverlayLabels";
 import styles from "../../styles/groupCreatedStyles";
 import CardItem from "../../components/CardItem";
 import { icons } from "../../utils/constants";
+import { swipeOnRestaurant } from "../../utils/api_function_calls/group_functions";
 
 const GroupCreated = ({ route, navigation }) => {
     const { groupName, groupId, groupIcon, cardData } = route.params;
@@ -15,6 +16,23 @@ const GroupCreated = ({ route, navigation }) => {
             </View>
         );
     };
+
+    const onRightSwipe = async (index) => {
+        const card = cardData[index];
+        const restaurantID = card["place_id"];
+        await swipeOnRestaurant(groupId, restaurantID, "right");
+    };
+    const onLeftSwipe = async (index) => {
+        const card = cardData[index];
+        const restaurantID = card["place_id"];
+        await swipeOnRestaurant(groupId, restaurantID, "left");
+    };
+    const onDownSwipe = async (index) => {
+        const card = cardData[index];
+        const restaurantID = card["place_id"];
+        await swipeOnRestaurant(groupId, restaurantID, "down");
+    };
+    const onUPSwipe = () => {};
 
     return (
         <View>
@@ -58,9 +76,9 @@ const GroupCreated = ({ route, navigation }) => {
                     cardIndex={0}
                     stackSeparation={15}
                     disableBottomSwipe={true}
-                    onSwipedLeft={(cardIndex) => console.log("Swiped left")}
-                    onSwipedRight={(cardIndex) => console.log("Swiped right")}
-                    onSwipedTop={(cardIndex) => console.log("Swiped top")}
+                    onSwipedLeft={(cardIndex) => onLeftSwipe(cardIndex)}
+                    onSwipedRight={(cardIndex) => onRightSwipe(cardIndex)}
+                    onSwipedTop={(cardIndex) => onUPSwipe("Swiped top")}
                     onSwipedAll={() => navigation.navigate("LeaderBoard")}
                     stackSize={5}
                     animateCardOpacity={true}

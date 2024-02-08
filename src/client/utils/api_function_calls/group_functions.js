@@ -81,7 +81,7 @@ async function getGroupMetadata(groupID) {
     await axios.get(`${NGROK_URL}/groups/group-metadata/${groupID}`);
 }
 
-async function swipeOnRestaurant(groupID, restaurantID, swipeDirection) {
+export async function swipeOnRestaurant(groupID, restaurantID, swipeDirection) {
     await axios.post(
         `${NGROK_URL}/groups/swipe-on-restaurant/${groupID}/${restaurantID}/${swipeDirection}`
     );
@@ -94,4 +94,5 @@ module.exports = {
     getActiveGroupsForUser,
     userCheckIn,
     checkUserCheckedIn,
+    swipeOnRestaurant,
 };
