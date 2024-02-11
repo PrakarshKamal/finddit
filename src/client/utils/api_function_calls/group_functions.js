@@ -29,18 +29,27 @@ async function getInactiveGroupsForUser(userEmail) {
     await axios.get(`${NGROK_URL}/groups/inactive-groups/${userEmail}`);
 }
 
-async function checkUserCheckedIn(groupID, userEmail) {
-    await axios.get(
+export async function checkUserCheckedIn(groupID, userEmail) {
+    const resp = await axios.get(
         `${NGROK_URL}/groups/check-if-user-checked-in/${groupID}/${userEmail}`
     );
+    if (resp.data) {
+        return resp.data;
+    } else {
+        return false;
+    }
 }
 
-async function userCheckIn(groupID, memberEmail, memberPreferences) {
-    await axios.post(`${NGROK_URL}/groups/group-member-checkin-to-group`, {
-        groupID,
-        memberEmail,
-        memberPreferences,
-    });
+export async function userCheckIn(groupID, memberEmail, memberPreferences) {
+    const resp = await axios.post(
+        `${NGROK_URL}/groups/group-member-checkin-to-group`,
+        {
+            groupID,
+            memberEmail,
+            memberPreferences,
+        }
+    );
+    return resp.status;
 }
 async function getUserDataForGroup(groupID, userEmail) {
     await axios.get(
@@ -72,26 +81,32 @@ async function getGroupMetadata(groupID) {
     await axios.get(`${NGROK_URL}/groups/group-metadata/${groupID}`);
 }
 
-async function swipeOnRestaurant(groupID, restaurantID, swipeDirection) {
+export async function swipeOnRestaurant(groupID, restaurantID, swipeDirection) {
     await axios.post(
         `${NGROK_URL}/groups/swipe-on-restaurant/${groupID}/${restaurantID}/${swipeDirection}`
     );
     //right, left, down
 }
 
-async function userFinishedVoting(groupID, userEmail) {
+export async function userFinishedVoting(groupID, userEmail) {
     await axios.post(
         `${NGROK_URL}/groups/user-finished-voting/${groupID}/${userEmail}`
     );
 }
 
-async function checkIfUserFinishedVoting(groupID, userEmail) {
-    await axios.get(
+export async function checkIfUserFinishedVoting(groupID, userEmail) {
+    const resp = await axios.get(
         `${NGROK_URL}/groups/check-if-user-finished-voting/${groupID}/${userEmail}`
     );
+    return resp.data;
 }
 module.exports = {
     createNewGroup,
     getCardDataFromGroup,
     getActiveGroupsForUser,
+    userCheckIn,
+    checkUserCheckedIn,
+    swipeOnRestaurant,
+    userFinishedVoting,
+    checkIfUserFinishedVoting,
 };

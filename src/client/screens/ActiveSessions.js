@@ -22,7 +22,7 @@ const ActiveSessions = ({ route }) => {
             setIsLoading(true);
             const response = await getActiveGroupsForUser(email);
             const data = await response.data;
-            console.log("Active groups:", data);
+            console.log("active groups", data);
             setActiveGroups(data);
             setIsLoading(false);
         } catch (error) {
@@ -31,7 +31,7 @@ const ActiveSessions = ({ route }) => {
     };
 
     const renderActiveGroups = (item) => {
-        return <GroupItem group={item.item}></GroupItem>;
+        return <GroupItem group={item.item} loggedInUser={email}></GroupItem>;
     };
     useEffect(() => {
         fetchActiveGroups();
