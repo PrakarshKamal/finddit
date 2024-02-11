@@ -88,16 +88,17 @@ export async function swipeOnRestaurant(groupID, restaurantID, swipeDirection) {
     //right, left, down
 }
 
-async function userFinishedVoting(groupID, userEmail) {
+export async function userFinishedVoting(groupID, userEmail) {
     await axios.post(
         `${NGROK_URL}/groups/user-finished-voting/${groupID}/${userEmail}`
     );
 }
 
-async function checkIfUserFinishedVoting(groupID, userEmail) {
-    await axios.get(
+export async function checkIfUserFinishedVoting(groupID, userEmail) {
+    const resp = await axios.get(
         `${NGROK_URL}/groups/check-if-user-finished-voting/${groupID}/${userEmail}`
     );
+    return resp.data;
 }
 module.exports = {
     createNewGroup,
@@ -106,4 +107,6 @@ module.exports = {
     userCheckIn,
     checkUserCheckedIn,
     swipeOnRestaurant,
+    userFinishedVoting,
+    checkIfUserFinishedVoting,
 };
