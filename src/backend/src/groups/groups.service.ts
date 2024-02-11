@@ -88,6 +88,7 @@ export class GroupsService {
           memberUsedSuperDislike: false,
           memberCheckedInGroup: false,
           memberCheckinTimestamp: null,
+          memberFinishedVoting: false,
         });
       }
       return `Admin & Members have been added to group ${currentGroupRefID}!`;
@@ -125,6 +126,37 @@ export class GroupsService {
     const querySnapshot = await getDoc(groupMemberSubCollectionRef);
     if (querySnapshot.exists()) {
       return querySnapshot.data().memberUsedSuperDislike;
+    }
+  }
+
+  async userFinishedVoting(
+    groupMemberEmail: string,
+    currentGroupRefID: string,
+  ) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      groupMemberEmail,
+    );
+    await updateDoc(groupMemberSubCollectionRef, {
+      memberFinishedVoting: true,
+    });
+  }
+
+  async checkIfUserFinishedVoting(
+    groupMemberEmail: string,
+    currentGroupRefID: string,
+  ) {
+    var groupMemberSubCollectionRef = doc(
+      this.groupsRef,
+      currentGroupRefID,
+      'groupMembers',
+      groupMemberEmail,
+    );
+    const querySnapshot = await getDoc(groupMemberSubCollectionRef);
+    if (querySnapshot.exists()) {
+      return querySnapshot.data().memberFinishedVoting;
     }
   }
 

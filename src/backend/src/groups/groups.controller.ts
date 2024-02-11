@@ -41,6 +41,14 @@ export class GroupsController {
     return this.groupsService.userUsedSuperDislike(email, groupId);
   }
 
+  @Post('user-finished-voting/:groupId/:email')
+  userFinishedVoting(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
+    return this.groupsService.userFinishedVoting(email, groupId);
+  }
+
   @Get()
   findAll() {
     return this.groupsService.findAll();
@@ -85,6 +93,14 @@ export class GroupsController {
     @Param('email') email: string,
   ) {
     return this.groupsService.checkIfUserUsedSuperDislike(email, groupId);
+  }
+
+  @Get('check-if-user-finished-voting/:groupId/:email')
+  checkIfUserFinishedVoting(
+    @Param('groupId') groupId: string,
+    @Param('email') email: string,
+  ) {
+    return this.groupsService.checkIfUserFinishedVoting(email, groupId);
   }
 
   @Get('group-metadata/:groupId')
