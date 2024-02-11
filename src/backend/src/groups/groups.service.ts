@@ -88,6 +88,7 @@ export class GroupsService {
           memberUsedSuperDislike: false,
           memberCheckedInGroup: false,
           memberCheckinTimestamp: null,
+          memberFinishedVoting: false,
         });
       }
       return `Admin & Members have been added to group ${currentGroupRefID}!`;
@@ -97,10 +98,12 @@ export class GroupsService {
     }
   }
 
-  async userUsedSuperDislike(
+  async updateParametersForUser(
+    contextParameter: string,
     groupMemberEmail: string,
     currentGroupRefID: string,
   ) {
+    // contextParameter = "memberUsedSuperDislike" or "memberFinishedVoting"
     var groupMemberSubCollectionRef = doc(
       this.groupsRef,
       currentGroupRefID,
@@ -108,14 +111,16 @@ export class GroupsService {
       groupMemberEmail,
     );
     await updateDoc(groupMemberSubCollectionRef, {
-      memberUsedSuperDislike: true,
+      [contextParameter]: true,
     });
   }
 
-  async checkIfUserUsedSuperDislike(
+  async getParametersForUser(
+    contextParameter: string,
     groupMemberEmail: string,
     currentGroupRefID: string,
   ) {
+    // contextParameter = "memberUsedSuperDislike" or "memberFinishedVoting" or "memberCheckedInGroup"
     var groupMemberSubCollectionRef = doc(
       this.groupsRef,
       currentGroupRefID,
@@ -124,7 +129,7 @@ export class GroupsService {
     );
     const querySnapshot = await getDoc(groupMemberSubCollectionRef);
     if (querySnapshot.exists()) {
-      return querySnapshot.data().memberUsedSuperDislike;
+      return querySnapshot.data()[contextParameter];
     }
   }
 
@@ -238,20 +243,6 @@ export class GroupsService {
       }
     });
     return checkedInMembers;
-  }
-
-  async checkIfUserIsCheckedIn(currentGroupRefID: string, userEmail: string) {
-    var groupMemberSubCollectionRef = doc(
-      this.groupsRef,
-      currentGroupRefID,
-      'groupMembers',
-      userEmail,
-    );
-
-    const querySnapshot = await getDoc(groupMemberSubCollectionRef);
-    if (querySnapshot.exists()) {
-      return querySnapshot.data().memberCheckedInGroup;
-    }
   }
 
   async getGroupMetadata(currentGroupRefID: string) {
