@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import styles from "../styles/GroupItemStyles";
 import { icons } from "../utils/constants";
 import { useNavigation } from "@react-navigation/native";
@@ -39,21 +39,30 @@ const GroupItem = ({ group }) => {
     }, []);
 
     const handleJoinSessionButton = () => {
-        navigation.navigate("UserPreferences", {
-            groupIconID: groupIconID,
-            groupName: groupName,
-            groupAdminEmail: groupAdminEmail,
-            votingDeadline: votingDeadline,
-            timeStamp: timeStamp,
-        });
+        if (!isExpired) {
+            navigation.navigate("UserPreferences", {
+                groupIconID: groupIconID,
+                groupName: groupName,
+                groupAdminEmail: groupAdminEmail,
+                votingDeadline: votingDeadline,
+                timeStamp: timeStamp,
+            });
+        }
     };
     return (
-        <View>
-            <TouchableOpacity
-                style={styles.container}
-                onPress={() => handleJoinSessionButton()}
+        <TouchableOpacity
+            onPress={() => handleJoinSessionButton()}
+            disabled={isExpired}
+        >
+            <View
+                style={[
+                    styles.container,
+                    isExpired
+                        ? styles.expiredContainer
+                        : styles.activeContainer,
+                ]}
             >
-                <View style={styles.textContainer}>
+                <View style={styles.leftContainer}>
                     <Image
                         source={
                             icons.find((icon) => icon.id === groupIconID)
@@ -61,8 +70,10 @@ const GroupItem = ({ group }) => {
                                       .source
                                 : icons[0].source
                         }
-                        style={{ width: 100, height: 100 }}
+                        style={styles.iconContainer}
                     ></Image>
+                </View>
+                <View>
                     <Text style={styles.groupName}>{groupName}</Text>
                     <Text style={styles.createdBy}>
                         Created by: {groupAdminEmail}
@@ -71,8 +82,8 @@ const GroupItem = ({ group }) => {
                         Expires in: {remainingTime}
                     </Text>
                 </View>
-            </TouchableOpacity>
-        </View>
+            </View>
+        </TouchableOpacity>
     );
 };
 
