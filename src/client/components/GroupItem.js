@@ -112,7 +112,12 @@ const GroupItem = ({ group, loggedInUser }) => {
                 </Text>
             </Modal>
             <TouchableOpacity
-                style={styles.container}
+                style={[
+                    styles.container,
+                    isExpired
+                        ? styles.expiredContainer
+                        : styles.activeContainer,
+                ]}
                 onPress={() => handleJoinSessionButton()}
             >
                 <View style={styles.leftContainer}>
@@ -135,8 +140,8 @@ const GroupItem = ({ group, loggedInUser }) => {
                         Expires in: {remainingTime}
                     </Text>
                 </View>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
     );
 };
 
