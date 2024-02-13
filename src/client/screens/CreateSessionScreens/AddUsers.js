@@ -20,7 +20,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const AddUsers = ({ route, navigation }) => {
     const { groupName, groupIcon } = route.params;
     const loggedInUser = useAuth();
-    const loggedInUserEmail = loggedInUser.user.email;
+    const loggedInUserEmail = loggedInUser?.user?.email;
     const [groupMembers, setGroupMembers] = useState([]);
     const [resultDropdownShown, setResultDropdownShown] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
