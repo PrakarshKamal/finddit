@@ -39,7 +39,17 @@ const ActiveSessions = ({ route }) => {
 
     return (
         <View>
-            <Text style={{ textAlign: "center" }}>Active Sessions</Text>
+            <Text
+                style={{
+                    textAlign: "center",
+                    fontSize: 20,
+                    fontWeight: 500,
+                    marginTop: 5,
+                    marginBottom: 10,
+                }}
+            >
+                ACTIVE SESSIONS
+            </Text>
             {isLoading ? (
                 <ActivityIndicator />
             ) : (

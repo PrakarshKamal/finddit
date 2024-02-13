@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     card: {
         maxHeight:
             Platform.OS === "ios"
-                ? screenHeight - bottomTabHeight - 280
+                ? screenHeight - bottomTabHeight - 165
                 : screenHeight * 0.7,
         marginTop: -40,
         flex: 1,
