@@ -8,26 +8,26 @@ const CardItem = ({ itemData }) => {
     const { name, rating, vicinity, place_opening_hours, price_level, image } =
         itemData;
     const costDict = {
-        1: <FontAwesome name="dollar" size={28} color="black" />,
+        1: <FontAwesome name="dollar" size={24} color="black" />,
         2: (
             <>
-                <FontAwesome name="dollar" size={28} color="black" />{" "}
-                <FontAwesome name="dollar" size={28} color="black" />
+                <FontAwesome name="dollar" size={24} color="black" />{" "}
+                <FontAwesome name="dollar" size={24} color="black" />
             </>
         ),
         3: (
             <>
-                <FontAwesome name="dollar" size={28} color="black" />{" "}
-                <FontAwesome name="dollar" size={28} color="black" />
-                <FontAwesome name="dollar" size={28} color="black" />
+                <FontAwesome name="dollar" size={24} color="black" />{" "}
+                <FontAwesome name="dollar" size={24} color="black" />
+                <FontAwesome name="dollar" size={24} color="black" />
             </>
         ),
         4: (
             <>
-                <FontAwesome name="dollar" size={28} color="black" />{" "}
-                <FontAwesome name="dollar" size={28} color="black" />{" "}
-                <FontAwesome name="dollar" size={28} color="black" />{" "}
-                <FontAwesome name="dollar" size={28} color="black" />
+                <FontAwesome name="dollar" size={24} color="black" />{" "}
+                <FontAwesome name="dollar" size={24} color="black" />{" "}
+                <FontAwesome name="dollar" size={24} color="black" />{" "}
+                <FontAwesome name="dollar" size={24} color="black" />
             </>
         ),
     };
@@ -55,10 +55,10 @@ const CardItem = ({ itemData }) => {
         let backgroundColor;
         switch (randomTag) {
             case "Vegan":
-                backgroundColor = "#ff74d4";
+                borderdColor = "#ff74d4";
                 break;
             case "GF":
-                backgroundColor = "#ff9500";
+                borderColor = "#ff9500";
                 break;
         }
         return (

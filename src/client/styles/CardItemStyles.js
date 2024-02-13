@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     name: {
-        fontSize: 30,
+        fontSize: 22,
         fontWeight: "bold",
         textTransform: "uppercase",
     },
     location: {
         marginTop: 3,
-        fontSize: 22,
+        fontSize: 20,
         color: "gray",
         marginBottom: -8,
     },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     ratingContainer: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 10,
+        marginBottom: 4,
     },
     rating: {
         fontSize: 28,
@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
     },
     tagContainer: {
         flexDirection: "row",
-        marginTop: 3,
+        marginTop: 5,
     },
     tag: {
-        paddingHorizontal: 15,
-        paddingVertical: 10,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
         borderRadius: 20,
         marginRight: 15,
     },
