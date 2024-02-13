@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     map: {
-      width: '100%',
-      height: '100%',
+        width: "100%",
+        height: "100%",
     },
     groupName: {
         fontSize: 24,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     nextButtonText: {
         color: "white",
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "bold",
     },
     toggleButtonContainer: {

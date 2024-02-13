@@ -33,7 +33,7 @@ const HomeTab = () => {
             <Stack.Screen
                 name="GroupCreated"
                 component={GroupCreated}
-                options={{ header: HeaderWithoutBack, gestureEnabled: false }}
+                options={{ headerShown: false, gestureEnabled: false }}
             />
             <Stack.Screen
                 name="LeaderBoard"
