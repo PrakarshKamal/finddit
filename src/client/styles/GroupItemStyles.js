@@ -15,14 +15,15 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     activeContainer: {
-        borderColor: "#50C878",
-        borderWidth: 3,
+        borderColor: "#29bf12",
+        borderWidth: 5,
     },
     expiredContainer: {
-        borderColor: "#636363",
-        borderWidth: 3,
+        borderColor: "#a5a5a5",
+        borderWidth: 5,
     },
     iconContainer: {
+        marginLeft: -10,
         width: 130,
         height: 130,
     },
