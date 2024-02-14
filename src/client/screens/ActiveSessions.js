@@ -48,7 +48,7 @@ const ActiveSessions = ({ route }) => {
                     marginBottom: 10,
                 }}
             >
-                ACTIVE SESSIONS
+                SESSION HISTORY
             </Text>
             {isLoading ? (
                 <ActivityIndicator />

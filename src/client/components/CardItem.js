@@ -55,10 +55,10 @@ const CardItem = ({ itemData }) => {
         let backgroundColor;
         switch (randomTag) {
             case "Vegan":
-                borderdColor = "#ff74d4";
+                backgroundColor = "#ff74d4";
                 break;
             case "GF":
-                borderColor = "#ff9500";
+                backgroundColor = "#ff9500";
                 break;
         }
         return (

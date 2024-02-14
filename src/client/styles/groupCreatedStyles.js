@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
             Platform.OS === "ios"
                 ? screenHeight - bottomTabHeight - 165
                 : screenHeight * 0.7,
-        marginTop: -40,
+        marginTop: -50,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
