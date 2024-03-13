@@ -5,5 +5,5 @@ export class GroupMemberPreferencesDto {
   @ApiProperty()
   minPrice: number;
   @ApiProperty()
-  travelRadius: number;
+  radius: number;
 }
