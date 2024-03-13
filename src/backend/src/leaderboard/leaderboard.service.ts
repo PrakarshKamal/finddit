@@ -67,7 +67,7 @@ export class LeaderboardService {
       if (context == 'price') {
         values.push(doc.data().memberPreferences.maxPrice);
       } else if (context == 'distance') {
-        values.push(doc.data().memberPreferences.travelRadius);
+        values.push(doc.data().memberPreferences.radius / 1000);
       }
     });
     return median(values);
@@ -89,7 +89,7 @@ export class LeaderboardService {
       );
       rightScoreMap[restaurantData[i]['place_id']] = score;
     }
-
+    console.log('rightScoreMap', rightScoreMap);
     return rightScoreMap;
   }
 
@@ -159,12 +159,15 @@ export class LeaderboardService {
     userDistanceMedian,
   ) {
     const multiplier = 10;
-    var distVar = resDistance - userDistanceMedian; // TODO
+    var distVar = resDistance - userDistanceMedian;
     const priceVar = Math.abs(data['price_level'] - userPriceMedian);
     const rating = data['rating'];
 
     if (distVar < 0) {
       distVar = 0;
+    }
+    if (distVar + priceVar == 0) {
+      return 99;
     }
     const rightSwipeScore = (multiplier * rating) / (distVar + priceVar);
 
