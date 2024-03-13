@@ -167,7 +167,7 @@ export class LeaderboardService {
       distVar = 0;
     }
     if (distVar + priceVar == 0) {
-      return 99;
+      return 0.1;
     }
     const rightSwipeScore = (multiplier * rating) / (distVar + priceVar);
 
