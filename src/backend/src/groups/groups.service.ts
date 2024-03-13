@@ -118,7 +118,9 @@ export class GroupsService {
 
     if (contextParameter == 'memberFinishedVoting') {
       if (await this.checkAllMembersFinishedVoting(currentGroupRefID)) {
-        return 'TODO';
+        return this.leaderboardService.getFinalScoreDataForRestaurant(
+          currentGroupRefID,
+        );
       }
     }
   }

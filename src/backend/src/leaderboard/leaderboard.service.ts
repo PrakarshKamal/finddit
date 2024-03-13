@@ -227,7 +227,60 @@ export class LeaderboardService {
     return restaurantDistanceFromCenter;
   }
 
-  async calculateTotalWeightedScoreForRestaurant() {}
+  async calculateTotalWeightedScoreForRestaurant(
+    rightSwipes,
+    rightSwipeScore,
+    leftSwipes,
+    leftSwipeScore,
+  ) {
+    return (
+      rightSwipes ** 2 * rightSwipeScore - leftSwipes ** 2 * leftSwipeScore
+    );
+  }
+
+  async getFinalScoreDataForRestaurant(currentGroupRefID) {
+    const totalScoreMap = {};
+    const querySnapshot = await getDocs(
+      collection(this.groupsRef, currentGroupRefID, 'groupVotes'),
+    );
+
+    const promises = querySnapshot.docs.map(async (doc) => {
+      var rightSwipes = 0;
+      var leftSwipes = 0;
+      const data = doc.data();
+      const rightSwipeScore = data.rightSwipeScore;
+      const leftSwipeScore = data.leftSwipeScore;
+      if (data.rightSwipes) {
+        rightSwipes += data.rightSwipes;
+      }
+      if (data.leftSwipes) {
+        leftSwipes += data.leftSwipes;
+      }
+      const totalScore = await this.calculateTotalWeightedScoreForRestaurant(
+        rightSwipes,
+        rightSwipeScore,
+        leftSwipes,
+        leftSwipeScore,
+      );
+      totalScoreMap[doc.id] = totalScore;
+    });
+    await Promise.all(promises);
+    await this.updateTotalScoreInDatabase(currentGroupRefID, totalScoreMap);
+  }
+
+  async updateTotalScoreInDatabase(currentGroupRefID, totalScoreMap) {
+    for (var key in totalScoreMap) {
+      var voteRestaurantDocRef = doc(
+        this.groupsRef,
+        currentGroupRefID,
+        'groupVotes',
+        key,
+      );
+      await updateDoc(voteRestaurantDocRef, {
+        totalScore: totalScoreMap[key],
+      });
+    }
+  }
   create(createLeaderboardDto: CreateLeaderboardDto) {
     return 'This action adds a new leaderboard';
   }
