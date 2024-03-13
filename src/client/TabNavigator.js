@@ -7,31 +7,42 @@ import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import HomeTab from "./tabs/HomeTab";
 
 const TabNavigator = () => {
-  const Tab = createBottomTabNavigator();
-  return (
-    <Tab.Navigator screenOptions={{headerShown:false}}>
-      <Tab.Screen
-        name="Home"
-        component={HomeTab}
-        options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <Entypo name="home" color={color} size={24} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Account"
-        component={AccountScreen}
-        options={{
-          tabBarLabel: "Account",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="user-alt" color={color} size={20} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
+    const Tab = createBottomTabNavigator();
+    return (
+        <Tab.Navigator
+            screenOptions={{
+                headerShown: false,
+                tabBarStyle: { backgroundColor: "#f27575" },
+            }}
+        >
+            <Tab.Screen
+                name="Home"
+                component={HomeTab}
+                options={{
+                    tabBarLabel: "Home",
+                    tabBarLabelStyle: { color: "white", fontWeight: "bold" },
+                    tabBarIcon: ({ color, size }) => (
+                        <Entypo name="home" color={"white"} size={26} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Account"
+                component={AccountScreen}
+                options={{
+                    tabBarLabel: "Account",
+                    tabBarLabelStyle: { color: "white", fontWeight: "bold" },
+                    tabBarIcon: ({ color, size }) => (
+                        <FontAwesome5
+                            name="user-alt"
+                            color={"white"}
+                            size={22}
+                        />
+                    ),
+                }}
+            />
+        </Tab.Navigator>
+    );
 };
 
 export default TabNavigator;
