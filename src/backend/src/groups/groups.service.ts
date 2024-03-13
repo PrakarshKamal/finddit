@@ -118,9 +118,10 @@ export class GroupsService {
 
     if (contextParameter == 'memberFinishedVoting') {
       if (await this.checkAllMembersFinishedVoting(currentGroupRefID)) {
-        return this.leaderboardService.getFinalScoreDataForRestaurant(
+        await this.leaderboardService.getFinalScoreDataForRestaurant(
           currentGroupRefID,
         );
+        return await this.leaderboardService.create(currentGroupRefID);
       }
     }
   }

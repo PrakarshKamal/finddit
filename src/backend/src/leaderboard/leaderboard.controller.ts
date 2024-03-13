@@ -17,31 +17,19 @@ import { UpdateLeaderboardDto } from './dto/update-leaderboard.dto';
 export class LeaderboardController {
   constructor(private readonly leaderboardService: LeaderboardService) {}
 
-  @Post()
-  create(@Body() createLeaderboardDto: CreateLeaderboardDto) {
-    return this.leaderboardService.create(createLeaderboardDto);
+  @Get(':groupId')
+  async create(@Param('groupId') groupId: string) {
+    return await this.leaderboardService.create(groupId);
   }
 
-  @Get()
-  findAll() {
-    return this.leaderboardService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.leaderboardService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateLeaderboardDto: UpdateLeaderboardDto,
+  @Get('get-place-info/:currentGroupRefID/:placeId')
+  async getPlaceInformation(
+    @Param('currentGroupRefID') currentGroupRefID: string,
+    @Param('placeId') placeId: string,
   ) {
-    return this.leaderboardService.update(+id, updateLeaderboardDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.leaderboardService.remove(+id);
+    return await this.leaderboardService.getPlaceInformation(
+      currentGroupRefID,
+      placeId,
+    );
   }
 }

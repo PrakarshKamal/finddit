@@ -281,10 +281,35 @@ export class LeaderboardService {
       });
     }
   }
-  create(createLeaderboardDto: CreateLeaderboardDto) {
-    return 'This action adds a new leaderboard';
+  async create(currentGroupRefID) {
+    var finalOrder = [];
+    const querySnapshot = await getDocs(
+      query(
+        collection(this.groupsRef, currentGroupRefID, 'groupVotes'),
+        orderBy('totalScore', 'desc'),
+      ),
+    );
+
+    querySnapshot.forEach((doc) => {
+      finalOrder.push(doc.id);
+    });
+    return finalOrder;
   }
 
+  async getPlaceInformation(currentGroupRefID: string, placeId: string) {
+    var placeDetails = [];
+    const querySnapshot = await getDocs(
+      query(
+        collection(this.groupsRef, currentGroupRefID, 'groupRestaurants'),
+        where('place_id', '==', placeId),
+      ),
+    );
+    if (querySnapshot.empty) {
+      console.log('No matching documents.');
+    } else {
+      return querySnapshot[0].data();
+    }
+  }
   findAll() {
     return `This action returns all leaderboard`;
   }
