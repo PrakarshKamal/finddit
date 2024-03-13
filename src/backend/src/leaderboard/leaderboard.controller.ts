@@ -1,9 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { LeaderboardService } from './leaderboard.service';
 import { CreateLeaderboardDto } from './dto/create-leaderboard.dto';
 import { UpdateLeaderboardDto } from './dto/update-leaderboard.dto';
 
 @Controller('leaderboard')
+@ApiTags('leaderboard')
 export class LeaderboardController {
   constructor(private readonly leaderboardService: LeaderboardService) {}
 
@@ -23,7 +33,10 @@ export class LeaderboardController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLeaderboardDto: UpdateLeaderboardDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateLeaderboardDto: UpdateLeaderboardDto,
+  ) {
     return this.leaderboardService.update(+id, updateLeaderboardDto);
   }
 

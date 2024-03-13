@@ -226,17 +226,24 @@ export class GroupsService {
         );
 
       const restaurantData = await this.getDataForCards(currentGroupRefID);
+      const restaurantDistancesFromAdmin =
+        await this.leaderboardService.getAdminAndRestaurantLocation(
+          currentGroupRefID,
+          restaurantData,
+        );
       const rightScoreMap =
         await this.leaderboardService.calculateAllRestaurantRightSwipeScores(
           restaurantData,
           userPriceMedian,
           userDistanceMedian,
+          restaurantDistancesFromAdmin,
         );
       const leftScoreMap =
         await this.leaderboardService.calculateAllRestaurantLeftSwipeScores(
           restaurantData,
           userPriceMedian,
           userDistanceMedian,
+          restaurantDistancesFromAdmin,
         );
       await this.leaderboardService.updateRightSwipeScoresInDatabase(
         currentGroupRefID,

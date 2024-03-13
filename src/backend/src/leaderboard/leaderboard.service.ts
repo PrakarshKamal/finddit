@@ -30,6 +30,25 @@ const median = (arr) => {
   return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
 };
 
+const distanceBetweenTwoPoints = (lat1, lon1, lat2, lon2) => {
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c; // Distance in km
+  return distance;
+};
+
+const deg2rad = (deg) => {
+  return deg * (Math.PI / 180);
+};
+
 @Injectable()
 export class LeaderboardService {
   private db: Firestore;
@@ -58,11 +77,13 @@ export class LeaderboardService {
     restaurantData,
     userPriceMedian,
     userDistanceMedian,
+    restaurantDistancesFromAdmin,
   ) {
     const rightScoreMap = {};
     for (let i = 0; i < restaurantData.length; i++) {
       const score = await this.calculateRestaurantRightSwipeScoreHelper(
         restaurantData[i],
+        restaurantDistancesFromAdmin[i],
         userPriceMedian,
         userDistanceMedian,
       );
@@ -70,18 +91,19 @@ export class LeaderboardService {
     }
 
     return rightScoreMap;
-    //TODO call function to add this to database
   }
 
   async calculateAllRestaurantLeftSwipeScores(
     restaurantData,
     userPriceMedian,
     userDistanceMedian,
+    restaurantDistancesFromAdmin,
   ) {
     const leftScoreMap = {};
     for (let i = 0; i < restaurantData.length; i++) {
       const score = await this.calculateRestaurantLeftSwipeScoreHelper(
         restaurantData[i],
+        restaurantDistancesFromAdmin[i],
         userPriceMedian,
         userDistanceMedian,
       );
@@ -91,7 +113,6 @@ export class LeaderboardService {
   }
 
   async updateRightSwipeScoresInDatabase(currentGroupRefID, rightScoreMap) {
-    console.log('rightScoreMap', rightScoreMap);
     for (var key in rightScoreMap) {
       var voteRestaurantDocRef = doc(
         this.groupsRef,
@@ -112,7 +133,6 @@ export class LeaderboardService {
     }
   }
   async updateLeftSwipeScoresInDatabase(currentGroupRefID, leftScoreMap) {
-    console.log('leftscoremaps', leftScoreMap);
     for (var key in leftScoreMap) {
       var voteRestaurantDocRef = doc(
         this.groupsRef,
@@ -134,12 +154,12 @@ export class LeaderboardService {
 
   async calculateRestaurantRightSwipeScoreHelper(
     data,
+    resDistance,
     userPriceMedian,
     userDistanceMedian,
   ) {
     const multiplier = 10;
-    var distVar = 100 - userDistanceMedian; // TODO
-
+    var distVar = resDistance - userDistanceMedian; // TODO
     const priceVar = Math.abs(data['price_level'] - userPriceMedian);
     const rating = data['rating'];
 
@@ -153,11 +173,12 @@ export class LeaderboardService {
 
   async calculateRestaurantLeftSwipeScoreHelper(
     data,
+    resDistance,
     userPriceMedian,
     userDistanceMedian,
   ) {
     const multiplier = 10;
-    var distVar = 100 - userDistanceMedian; // TODO
+    var distVar = resDistance - userDistanceMedian; // TODO
     const priceVar = Math.abs(data['price_level'] - userPriceMedian);
     const rating = data['rating'];
 
@@ -167,6 +188,40 @@ export class LeaderboardService {
     const leftSwipeScore = (multiplier * (distVar + priceVar)) / rating;
 
     return leftSwipeScore;
+  }
+
+  async calculateDistanceBetweenAdminAndRestaurant(
+    adminLat,
+    adminLng,
+    restaurantLat,
+    restaurantLng,
+  ) {
+    return distanceBetweenTwoPoints(
+      adminLat,
+      adminLng,
+      restaurantLat,
+      restaurantLng,
+    );
+  }
+
+  async getAdminAndRestaurantLocation(currentGroupRefID, restaurantData) {
+    const groupData = await getDoc(doc(this.groupsRef, currentGroupRefID));
+    const groupDataObj = groupData.data();
+    const adminLat = groupDataObj['adminPreferences']['latitude'];
+    const adminLng = groupDataObj['adminPreferences']['longitude'];
+    var restaurantDistanceFromCenter = [];
+    for (let i = 0; i < restaurantData.length; i++) {
+      const restaurantLat = restaurantData[i]['lat'];
+      const restaurantLng = restaurantData[i]['long'];
+      const distance = await this.calculateDistanceBetweenAdminAndRestaurant(
+        adminLat,
+        adminLng,
+        restaurantLat,
+        restaurantLng,
+      );
+      restaurantDistanceFromCenter.push(distance);
+    }
+    return restaurantDistanceFromCenter;
   }
 
   async calculateTotalWeightedScoreForRestaurant() {}
