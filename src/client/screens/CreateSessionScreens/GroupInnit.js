@@ -23,12 +23,6 @@ const GroupInnit = () => {
     const [isProfileIconModalVisible, setProfileIconModalVisible] =
         useState(false);
     const [selectedIcon, setSelectedIcon] = useState(null);
-    // const icons = [
-    //     { id: 1, source: require("../../assets/burger.jpeg") },
-    //     { id: 2, source: require("../../assets/pizza.jpeg") },
-    //     { id: 3, source: require("../../assets/coffee.jpeg") },
-    //     { id: 4, source: require("../../assets/sushi.jpeg") },
-    // ];
 
     // Function to handle icon selection
     const handleIconSelect = (icon) => {
@@ -134,7 +128,10 @@ const GroupInnit = () => {
                             <View style={styles.profileCircle}>
                                 {selectedIcon ? (
                                     <Image
-                                        style={styles.profileIcon}
+                                        style={[
+                                            styles.profileIcon,
+                                            { borderRadius: 100 },
+                                        ]}
                                         source={
                                             icons.find(
                                                 (icon) =>

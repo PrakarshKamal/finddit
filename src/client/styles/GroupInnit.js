@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         borderColor: "rgba(242, 117, 117, 0.35)",
         position: "relative",
+        alignItems: "center",
+        justifyContent: "center",
     },
     circleBorder: {
         top: 10,
@@ -81,8 +83,8 @@ const styles = StyleSheet.create({
         height: 100,
     },
     profileIcon: {
-        width: 120,
-        height: 120,
+        width: "100%",
+        height: "100%",
     },
     iconText: {
         fontSize: 16,
