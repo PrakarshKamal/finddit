@@ -7,11 +7,12 @@ const CardItem = ({ itemData }) => {
     // @kanwar need to add restuarnt id here so that we can add store swipes and shit directly to the restuartnat id
     const { name, rating, vicinity, place_opening_hours, price_level, image } =
         itemData;
+
     const costDict = {
-        1: "$",
-        2: "$$",
-        3: "$$$",
-        4: "$$$$",
+        1: "💵",
+        2: "💵💵",
+        3: "💵💵💵",
+        4: "💵💵💵💵",
     };
     return (
         <View style={styles.card}>
