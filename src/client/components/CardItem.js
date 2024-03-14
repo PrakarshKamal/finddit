@@ -1,7 +1,7 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "../styles/CardItemStyles";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, FontAwesome } from "@expo/vector-icons";
 
 const CardItem = ({ itemData }) => {
     // @kanwar need to add restuarnt id here so that we can add store swipes and shit directly to the restuartnat id
@@ -14,6 +14,43 @@ const CardItem = ({ itemData }) => {
         3: "💵💵💵",
         4: "💵💵💵💵",
     };
+
+    const getRandomTag = () => {
+        const tags = ["Vegan", "GF"];
+        return tags[Math.floor(Math.random() * tags.length)];
+    };
+
+    const renderVegNonVegTags = () => {
+        return (
+            <>
+                <View style={[styles.tag, { backgroundColor: "green" }]}>
+                    <Text style={styles.tagText}>Veg</Text>
+                </View>
+                <View style={[styles.tag, { backgroundColor: "red" }]}>
+                    <Text style={styles.tagText}>Non-Veg</Text>
+                </View>
+            </>
+        );
+    };
+
+    const renderThirdTag = () => {
+        const randomTag = getRandomTag();
+        let backgroundColor;
+        switch (randomTag) {
+            case "Vegan":
+                backgroundColor = "#ff74d4";
+                break;
+            case "GF":
+                backgroundColor = "#ff9500";
+                break;
+        }
+        return (
+            <View style={[styles.tag, { backgroundColor }]}>
+                <Text style={styles.tagText}>{randomTag}</Text>
+            </View>
+        );
+    };
+
     return (
         <View style={styles.card}>
             <Image source={{ uri: image }} style={styles.image} />
@@ -31,6 +68,10 @@ const CardItem = ({ itemData }) => {
                 </View>
                 <View style={styles.ratingContainer}>
                     <Text style={styles.rating}>{costDict[price_level]}</Text>
+                </View>
+                <View style={styles.tagContainer}>
+                    {renderVegNonVegTags()}
+                    {renderThirdTag()}
                 </View>
             </View>
         </View>

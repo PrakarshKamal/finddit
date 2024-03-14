@@ -78,7 +78,7 @@ const GroupCreated = ({ route, navigation }) => {
                 style={{
                     flexDirection: "row",
                     justifyContent: "center",
-                    marginTop: 20,
+                    marginTop: 40,
                 }}
             >
                 <Image

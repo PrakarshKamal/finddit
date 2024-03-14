@@ -3,6 +3,7 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { DbService } from 'src/db/db.service';
 import { NearbySearchService } from 'src/nearby-search/nearby-search.service';
+import { LeaderboardService } from 'src/leaderboard/leaderboard.service';
 import {
   Firestore,
   collection,
@@ -32,6 +33,7 @@ export class GroupsService {
   constructor(
     private readonly dbService: DbService,
     private readonly nearbySearchService: NearbySearchService,
+    private readonly leaderboardService: LeaderboardService,
   ) {
     this.db = this.dbService.getDB();
     this.groupsRef = collection(this.db, 'groups');
@@ -113,6 +115,15 @@ export class GroupsService {
     await updateDoc(groupMemberSubCollectionRef, {
       [contextParameter]: true,
     });
+
+    if (contextParameter == 'memberFinishedVoting') {
+      if (await this.checkAllMembersFinishedVoting(currentGroupRefID)) {
+        await this.leaderboardService.getFinalScoreDataForRestaurant(
+          currentGroupRefID,
+        );
+        return await this.leaderboardService.create(currentGroupRefID);
+      }
+    }
   }
 
   async getParametersForUser(
@@ -204,6 +215,48 @@ export class GroupsService {
       memberCheckinTimestamp: new Date(),
       memberPreferences: memberPreferences,
     });
+
+    if (await this.checkAllMembersCheckedIn(currentGroupRefID)) {
+      const userPriceMedian = await this.leaderboardService.calculateUserMedian(
+        currentGroupRefID,
+        'price',
+      );
+
+      const userDistanceMedian =
+        await this.leaderboardService.calculateUserMedian(
+          currentGroupRefID,
+          'distance',
+        );
+
+      const restaurantData = await this.getDataForCards(currentGroupRefID);
+      const restaurantDistancesFromAdmin =
+        await this.leaderboardService.getAdminAndRestaurantLocation(
+          currentGroupRefID,
+          restaurantData,
+        );
+      const rightScoreMap =
+        await this.leaderboardService.calculateAllRestaurantRightSwipeScores(
+          restaurantData,
+          userPriceMedian,
+          userDistanceMedian,
+          restaurantDistancesFromAdmin,
+        );
+      const leftScoreMap =
+        await this.leaderboardService.calculateAllRestaurantLeftSwipeScores(
+          restaurantData,
+          userPriceMedian,
+          userDistanceMedian,
+          restaurantDistancesFromAdmin,
+        );
+      await this.leaderboardService.updateRightSwipeScoresInDatabase(
+        currentGroupRefID,
+        rightScoreMap,
+      );
+      await this.leaderboardService.updateLeftSwipeScoresInDatabase(
+        currentGroupRefID,
+        leftScoreMap,
+      );
+    }
   }
 
   async getInactiveGroupsForUser(userEmail: string) {
@@ -243,6 +296,19 @@ export class GroupsService {
       }
     });
     return checkedInMembers;
+  }
+
+  async getVotingCompleteMembersForGroup(currentGroupRefID: string) {
+    var votingCompleteMembers = [];
+    const querySnapshot = await getDocs(
+      collection(this.groupsRef, currentGroupRefID, 'groupMembers'),
+    );
+    querySnapshot.forEach((doc) => {
+      if (doc.data().memberFinishedVoting) {
+        votingCompleteMembers.push(doc.id);
+      }
+    });
+    return votingCompleteMembers;
   }
 
   async getGroupMetadata(currentGroupRefID: string) {
@@ -293,6 +359,26 @@ export class GroupsService {
         [swipeDirectionToDoc[swipeDirection]]: increment(1),
       });
     }
+  }
+
+  async checkAllMembersCheckedIn(currentGroupRefID: string) {
+    const querySnapshot = await getDocs(
+      collection(this.groupsRef, currentGroupRefID, 'groupMembers'),
+    );
+    return (
+      (await this.getCheckedInMembersForGroup(currentGroupRefID)).length ==
+      querySnapshot.size
+    );
+  }
+
+  async checkAllMembersFinishedVoting(currentGroupRefID: string) {
+    const querySnapshot = await getDocs(
+      collection(this.groupsRef, currentGroupRefID, 'groupMembers'),
+    );
+    return (
+      (await this.getVotingCompleteMembersForGroup(currentGroupRefID)).length ==
+      querySnapshot.size
+    );
   }
 
   findOne(id: number) {

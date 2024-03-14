@@ -409,7 +409,7 @@ const GroupPreferences = ({ route, navigation }) => {
                         style={styles.nextButton}
                         onPress={handleGenerateButtonPressed}
                     >
-                        <Text style={styles.nextButtonText}>Generate</Text>
+                        <Text style={styles.nextButtonText}>GENERATE</Text>
                     </TouchableOpacity>
                 </View>
             )}

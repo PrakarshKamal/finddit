@@ -57,6 +57,11 @@ export class GroupsController {
     );
   }
 
+  @Get('all-group-members-checkedin/:groupId')
+  checkAllMembersCheckedIn(@Param('groupId') groupId: string) {
+    return this.groupsService.checkAllMembersCheckedIn(groupId);
+  }
+
   @Get()
   findAll() {
     return this.groupsService.findAll();
