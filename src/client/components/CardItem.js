@@ -7,29 +7,12 @@ const CardItem = ({ itemData }) => {
     // @kanwar need to add restuarnt id here so that we can add store swipes and shit directly to the restuartnat id
     const { name, rating, vicinity, place_opening_hours, price_level, image } =
         itemData;
+
     const costDict = {
-        1: <FontAwesome name="dollar" size={24} color="black" />,
-        2: (
-            <>
-                <FontAwesome name="dollar" size={24} color="black" />{" "}
-                <FontAwesome name="dollar" size={24} color="black" />
-            </>
-        ),
-        3: (
-            <>
-                <FontAwesome name="dollar" size={24} color="black" />{" "}
-                <FontAwesome name="dollar" size={24} color="black" />
-                <FontAwesome name="dollar" size={24} color="black" />
-            </>
-        ),
-        4: (
-            <>
-                <FontAwesome name="dollar" size={24} color="black" />{" "}
-                <FontAwesome name="dollar" size={24} color="black" />{" "}
-                <FontAwesome name="dollar" size={24} color="black" />{" "}
-                <FontAwesome name="dollar" size={24} color="black" />
-            </>
-        ),
+        1: "💵",
+        2: "💵💵",
+        3: "💵💵💵",
+        4: "💵💵💵💵",
     };
 
     const getRandomTag = () => {

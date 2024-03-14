@@ -1,5 +1,5 @@
 import { getEmbedUrlFromPhotoRef } from "./api_function_calls/photo_functions";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export const fetchImageUrl = async (cardData) => {
     const cards = [];
 
@@ -21,4 +21,16 @@ export const fetchImageUrl = async (cardData) => {
     await Promise.all(promises);
 
     return cards;
+};
+
+export const getLocalVotes = async (groupID) => {
+    try {
+        let previousVotes = await AsyncStorage.getItem("@" + groupID);
+        previousVotes = previousVotes
+            ? JSON.parse(previousVotes)
+            : { groupID: groupID, votes: [] };
+        return previousVotes.votes;
+    } catch (e) {
+        // error reading value
+    }
 };

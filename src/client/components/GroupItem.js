@@ -8,7 +8,7 @@ import {
     checkUserCheckedIn,
     getCardDataFromGroup,
 } from "../utils/api_function_calls/group_functions";
-import { fetchImageUrl } from "../utils/functions";
+import { fetchImageUrl, getLocalVotes } from "../utils/functions";
 import { Modal } from "react-native";
 import LeaderBoard from "../screens/LeaderBoard";
 const GroupItem = ({ group, loggedInUser }) => {
@@ -64,16 +64,21 @@ const GroupItem = ({ group, loggedInUser }) => {
                 if (hasVoted) {
                     navigation.navigate("LeaderBoard");
                 } else {
+                    const alreadyVotedCards = await getLocalVotes(groupID);
                     const cardData = await getCardDataFromGroup(groupID);
                     let cards = await fetchImageUrl(cardData);
                     if (cards.length === 0) {
                         alert("No restaurants found");
                         return;
                     }
+
+                    NewCards = cards.filter(
+                        (card) => !alreadyVotedCards.includes(card.place_id)
+                    );
                     const group = {
                         groupName: groupName,
                         groupId: groupID,
-                        cardData: cards,
+                        cardData: NewCards,
                         groupIcon: groupIconID,
                         loggedInUser: loggedInUser,
                     };
