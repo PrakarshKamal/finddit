@@ -7,9 +7,10 @@ export async function getLeaderboard(groupID) {
 }
 
 export async function getRestaurantDataFromPlaceID(groupID, placeID) {
-    return await axios.get(
+    const ret = await axios.get(
         `${NGROK_URL}/leaderboard/get-place-info/${groupID}/${placeID}`
     );
+    return ret.data;
 }
 
 module.exports = {
