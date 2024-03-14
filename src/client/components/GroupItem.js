@@ -62,7 +62,7 @@ const GroupItem = ({ group, loggedInUser }) => {
                     loggedInUser
                 );
                 if (hasVoted) {
-                    navigation.navigate("LeaderBoard");
+                    navigation.navigate("LeaderBoard", { groupID: groupID });
                 } else {
                     const alreadyVotedCards = await getLocalVotes(groupID);
                     const cardData = await getCardDataFromGroup(groupID);

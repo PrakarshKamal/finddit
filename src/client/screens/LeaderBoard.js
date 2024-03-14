@@ -1,7 +1,19 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getLeaderboard } from "../utils/api_function_calls/leaderboard_functions";
 
-const LeaderBoard = () => {
+const LeaderBoard = ({ route }) => {
+    const { groupID } = route.params;
+    const [leaderboard, setleaderboard] = useState([]);
+    const fetchLeaderBoard = async () => {
+        const LeaderBoard = await getLeaderboard(groupID);
+        setleaderboard(LeaderBoard);
+        console.log(LeaderBoard);
+    };
+    useEffect(() => {
+        fetchLeaderBoard();
+    }, []);
+
     return (
         <View>
             <Text
