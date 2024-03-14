@@ -49,10 +49,10 @@ const LeaderBoard = ({ route }) => {
                 <View style={styles.container}>
                     <Text
                         style={{
-                            marginTop: 100,
+                            marginTop: 10,
                             textAlign: "center",
-                            fontSize: 30,
-                            fontWeight: "bold",
+                            fontSize: 20,
+                            fontWeight: 500,
                             color: "gray",
                         }}
                     >
