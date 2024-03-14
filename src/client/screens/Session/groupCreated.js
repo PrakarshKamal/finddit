@@ -68,7 +68,6 @@ const GroupCreated = ({ route, navigation }) => {
 
     const onSwipeAllCards = async () => {
         await userFinishedVoting(groupId, loggedInUser);
-        console.log(temp);
         navigation.navigate("LeaderBoard");
     };
 
