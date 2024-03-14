@@ -24,19 +24,19 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         marginLeft: -10,
-        width: 130,
-        height: 130,
+        width: 110,
+        height: 110,
     },
     groupIcon: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         borderRadius: 25,
     },
     leftContainer: {
         flex: 1,
     },
     groupName: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: "bold",
         marginBottom: 12,
     },
