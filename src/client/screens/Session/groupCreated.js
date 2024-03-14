@@ -5,6 +5,7 @@ import cardOverlayLabels from "../../styles/cardOverlayLabels";
 import styles from "../../styles/groupCreatedStyles";
 import CardItem from "../../components/CardItem";
 import { icons } from "../../utils/constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     swipeOnRestaurant,
     userFinishedVoting,
@@ -20,26 +21,54 @@ const GroupCreated = ({ route, navigation }) => {
             </View>
         );
     };
+    const registerVoteLocally = async (groupID, restaurantID) => {
+        try {
+            console.log(restaurantID);
+
+            let previousVotes = await AsyncStorage.getItem("@" + groupID);
+            previousVotes = previousVotes
+                ? JSON.parse(previousVotes)
+                : { groupID: groupID, votes: [] };
+
+            console.log(previousVotes);
+
+            previousVotes.votes.push(restaurantID);
+
+            console.log(previousVotes.votes);
+
+            await AsyncStorage.setItem(
+                "@" + groupID,
+                JSON.stringify(previousVotes)
+            );
+        } catch (e) {
+            // Handle errors appropriately
+            console.error(e);
+        }
+    };
 
     const onRightSwipe = async (index) => {
         const card = cardData[index];
         const restaurantID = card["place_id"];
+        await registerVoteLocally(groupId, restaurantID);
         await swipeOnRestaurant(groupId, restaurantID, "right");
     };
     const onLeftSwipe = async (index) => {
         const card = cardData[index];
         const restaurantID = card["place_id"];
+        await registerVoteLocally(groupId, restaurantID);
         await swipeOnRestaurant(groupId, restaurantID, "left");
     };
     const onDownSwipe = async (index) => {
         const card = cardData[index];
         const restaurantID = card["place_id"];
+        await registerVoteLocally(groupId, restaurantID);
         await swipeOnRestaurant(groupId, restaurantID, "down");
     };
     const onUPSwipe = () => {};
 
     const onSwipeAllCards = async () => {
         await userFinishedVoting(groupId, loggedInUser);
+        console.log(temp);
         navigation.navigate("LeaderBoard");
     };
 

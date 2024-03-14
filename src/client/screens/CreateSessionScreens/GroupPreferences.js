@@ -24,6 +24,7 @@ import MapView, { Circle, Marker } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { getEmbedUrlFromPhotoRef } from "../../utils/api_function_calls/photo_functions";
 import { ActivityIndicator } from "react-native";
+import { getLocalVotes } from "../../utils/functions";
 
 const GroupPreferences = ({ route, navigation }) => {
     const { groupName, groupIcon, groupMembers } = route.params;
@@ -124,6 +125,7 @@ const GroupPreferences = ({ route, navigation }) => {
             );
             if (res.data) {
                 const groupId = res.data;
+                const alreadyVotedCards = await getLocalVotes(groupId);
                 const cardData = await getCardDataFromGroup(groupId);
                 let cards = await fetchImageUrl(cardData);
                 if (cards.length === 0) {
@@ -135,10 +137,13 @@ const GroupPreferences = ({ route, navigation }) => {
                     maxPrice: selectedPriceRange,
                     minPrice: 1,
                 });
+                NewCards = cards.filter(
+                    (card) => !alreadyVotedCards.includes(card.place_id)
+                );
                 const group = {
                     groupName: groupName,
                     groupId: groupId,
-                    cardData: cards,
+                    cardData: NewCards,
                     groupIcon: groupIcon,
                     loggedInUser: admin.user.email,
                 };
