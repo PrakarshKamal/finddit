@@ -14,6 +14,13 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
+    loadingText: {
+        marginTop: 150,
+        textAlign: "center",
+        fontSize: 30,
+        fontWeight: "bold",
+        color: "gray",
+    },
     activeContainer: {
         borderColor: "#29bf12",
         borderWidth: 5,

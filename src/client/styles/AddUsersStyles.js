@@ -7,6 +7,13 @@ const styles = StyleSheet.create({
         padding: 20,
     },
 
+    groupName: {
+        display: "flex",
+        flex: 1,
+        alignContent: "center",
+        alignItems: "center",
+    },
+
     nextButton: {
         position: "relative",
         left: 110,

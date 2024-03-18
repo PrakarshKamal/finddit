@@ -104,17 +104,7 @@ const GroupItem = ({ group, loggedInUser }) => {
     return (
         <View>
             <Modal visible={isLoading} transparent={false}>
-                <Text
-                    style={{
-                        marginTop: 150,
-                        textAlign: "center",
-                        fontSize: 30,
-                        fontWeight: "bold",
-                        color: "gray",
-                    }}
-                >
-                    Loading
-                </Text>
+                <Text style={styles.loadingText}>Loading</Text>
             </Modal>
             <TouchableOpacity
                 style={[

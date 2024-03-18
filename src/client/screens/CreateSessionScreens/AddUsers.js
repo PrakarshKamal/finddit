@@ -89,14 +89,7 @@ const AddUsers = ({ route, navigation }) => {
         setSearchResult([]);
     }
     return (
-        <View
-            style={{
-                display: "flex",
-                flex: 1,
-                alignContent: "center",
-                alignItems: "center",
-            }}
-        >
+        <View style={styles.groupName}>
             <Text>{groupName}</Text>
             <UserSearchBar
                 searchUser={searchUser}

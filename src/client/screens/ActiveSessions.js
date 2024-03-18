@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { getActiveGroupsForUser } from "../utils/api_function_calls/group_functions";
 import GroupItem from "../components/GroupItem";
+import styles from "../styles/ActiveSessionsStyles";
 
 const ActiveSessions = ({ route }) => {
     const { email } = route.params;
@@ -39,17 +40,7 @@ const ActiveSessions = ({ route }) => {
 
     return (
         <View>
-            <Text
-                style={{
-                    textAlign: "center",
-                    fontSize: 20,
-                    fontWeight: 500,
-                    marginTop: 5,
-                    marginBottom: 10,
-                }}
-            >
-                SESSION HISTORY
-            </Text>
+            <Text style={styles.sessionHistoryText}>SESSION HISTORY</Text>
             {isLoading ? (
                 <ActivityIndicator />
             ) : (
@@ -60,15 +51,7 @@ const ActiveSessions = ({ route }) => {
                             renderItem={renderActiveGroups}
                         ></FlatList>
                     ) : (
-                        <Text
-                            style={{
-                                marginTop: 100,
-                                textAlign: "center",
-                                fontSize: 30,
-                                fontWeight: "bold",
-                                color: "gray",
-                            }}
-                        >
+                        <Text style={styles.noActiveGroupsText}>
                             {" "}
                             No active groups found
                         </Text>
