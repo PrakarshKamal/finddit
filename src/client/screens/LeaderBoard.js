@@ -33,8 +33,9 @@ const LeaderBoard = ({ route }) => {
                     position: index + 1,
                     restaurantName: rest.name,
                 });
+                console.log(rest);
             });
-            setleaderboardData(temp.slice(0, 10));
+            setleaderboardData(temp.slice(0, 5));
         } catch (error) {
             console.error("Error fetching restaurant data:", error);
         }
@@ -47,15 +48,7 @@ const LeaderBoard = ({ route }) => {
         <View style={styles.container}>
             {leaderboard.length == 0 ? (
                 <View style={styles.container}>
-                    <Text
-                        style={{
-                            marginTop: 10,
-                            textAlign: "center",
-                            fontSize: 20,
-                            fontWeight: 500,
-                            color: "gray",
-                        }}
-                    >
+                    <Text style={styles.leaderboardTitleText}>
                         Leader board will be displayed here
                     </Text>
                 </View>
@@ -122,7 +115,9 @@ const LeaderBoard = ({ route }) => {
                                 <View style={styles.leaderboardTextContainer}>
                                     <View style={styles.leaderboardNumber}>
                                         <MaterialCommunityIcons
-                                            name={`numeric-${item.position}-box-outline`}
+                                            name={`numeric-${
+                                                item.position + 3
+                                            }-box-outline`}
                                             size={36}
                                             color="rgba(0, 0, 1, 0.6)"
                                         />
