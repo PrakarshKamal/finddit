@@ -58,13 +58,12 @@ const GroupCreated = ({ route, navigation }) => {
         await registerVoteLocally(groupId, restaurantID);
         await swipeOnRestaurant(groupId, restaurantID, "left");
     };
-    const onDownSwipe = async (index) => {
+    const onUpSwipe = async (index) => {
         const card = cardData[index];
         const restaurantID = card["place_id"];
         await registerVoteLocally(groupId, restaurantID);
         await swipeOnRestaurant(groupId, restaurantID, "down");
     };
-    const onUPSwipe = () => {};
 
     const onSwipeAllCards = async () => {
         await userFinishedVoting(groupId, loggedInUser);
@@ -92,7 +91,7 @@ const GroupCreated = ({ route, navigation }) => {
                     disableBottomSwipe={true}
                     onSwipedLeft={(cardIndex) => onLeftSwipe(cardIndex)}
                     onSwipedRight={(cardIndex) => onRightSwipe(cardIndex)}
-                    onSwipedTop={(cardIndex) => onDownSwipe(cardIndex)}
+                    onSwipedTop={(cardIndex) => onUpSwipe(cardIndex)}
                     onSwipedAll={() => onSwipeAllCards()}
                     stackSize={5}
                     animateCardOpacity={true}
