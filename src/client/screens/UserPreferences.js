@@ -125,7 +125,9 @@ const UserPreferences = ({ route, navigation }) => {
                 <ActivityIndicator></ActivityIndicator>
             ) : (
                 <View style={styles.container}>
-                    <Text>Set your Preferences for this group</Text>
+                    <Text style={styles.setPreferencesText}>
+                        Set preferences for this group
+                    </Text>
                     <Image
                         source={
                             icons.find((icon) => icon.id === groupIconID)
@@ -133,7 +135,7 @@ const UserPreferences = ({ route, navigation }) => {
                                       .source
                                 : icons[0].source
                         }
-                        style={{ width: 100, height: 100 }}
+                        style={styles.groupIcon}
                     ></Image>
                     <Text style={styles.groupName}>{groupName}</Text>
 

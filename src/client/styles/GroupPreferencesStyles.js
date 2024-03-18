@@ -9,11 +9,27 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
+    setPreferencesText: {
+        textAlign: "center",
+        fontSize: 22,
+        marginTop: -15,
+        marginBottom: 30,
+    },
+
     groupName: {
         fontSize: 24,
         fontWeight: "bold",
+        marginTop: 5,
         marginBottom: 20,
         textAlign: "center",
+    },
+    groupIcon: {
+        alignSelf: "center",
+        height: 100,
+        width: 100,
+        borderColor: "#f27575",
+        borderWidth: 3,
+        borderRadius: 50,
     },
     locationContainer: {
         marginTop: 20,
@@ -34,7 +50,7 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 16,
         borderWidth: 1,
-        width: Dimensions.get("window").width - 50, // Take up full width
+        width: Dimensions.get("window").width - 50,
         borderColor: "transparent",
     },
     slider: {
