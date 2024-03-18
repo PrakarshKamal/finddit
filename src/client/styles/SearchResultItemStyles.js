@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 50,
         height: 50,
-        borderRadius: 25, // For a circular profile image
+        borderRadius: 25,
         marginRight: 10,
     },
     textContainer: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
     email: {
         fontSize: 14,
-        color: "rgba(0, 0, 0, 0.5)", // Slightly faded text
+        color: "rgba(0, 0, 0, 0.5)",
     },
 });
 export default styles;

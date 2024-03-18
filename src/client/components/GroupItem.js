@@ -50,7 +50,6 @@ const GroupItem = ({ group, loggedInUser }) => {
 
     const handleJoinSessionButton = async () => {
         if (isLoading) {
-            // The button is already processing a request; prevent further clicks.
             return;
         }
         setIsLoading(true);

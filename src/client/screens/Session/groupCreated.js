@@ -41,7 +41,6 @@ const GroupCreated = ({ route, navigation }) => {
                 JSON.stringify(previousVotes)
             );
         } catch (e) {
-            // Handle errors appropriately
             console.error(e);
         }
     };

@@ -55,7 +55,6 @@ const GroupPreferences = ({ route, navigation }) => {
                 };
                 cards.push(card);
             } catch (error) {
-                // Handle errors if necessary
                 console.error(`Error processing item: ${error.message}`);
             }
         });
@@ -109,7 +108,6 @@ const GroupPreferences = ({ route, navigation }) => {
         };
         const groupMembersEmails = groupMembers.map((user) => user.email);
         if (isLoading) {
-            // The button is already processing a request; prevent further clicks.
             return;
         }
         setIsLoading(true);

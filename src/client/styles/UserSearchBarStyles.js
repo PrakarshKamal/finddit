@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         height: 45,
-        color: "#333", // Text color
+        color: "#333",
     },
 });
 

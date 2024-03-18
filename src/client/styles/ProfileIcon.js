@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     },
     userName: {
         marginLeft: 25,
-        fontSize: 18, // Adjust the font size as needed
+        fontSize: 18,
     },
     iconContainer: {
         width: 100,
