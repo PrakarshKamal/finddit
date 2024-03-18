@@ -73,35 +73,12 @@ const GroupCreated = ({ route, navigation }) => {
 
     return (
         <View>
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    marginTop: 40,
-                }}
-            >
+            <View style={styles.container}>
                 <Image
                     source={icons.find((icon) => icon.id === groupIcon).source}
-                    style={{
-                        width: 50,
-                        height: 50,
-                        borderRadius: 25,
-                        borderWidth: 2,
-                        borderColor: "#f27575",
-                        alignSelf: "left",
-                    }}
+                    style={styles.groupIcon}
                 ></Image>
-                <Text
-                    style={{
-                        marginLeft: 5,
-                        textAlign: "center",
-                        alignSelf: "center",
-                        fontSize: 30,
-                        fontWeight: "bold",
-                    }}
-                >
-                    {groupName}
-                </Text>
+                <Text style={styles.groupName}>{groupName}</Text>
             </View>
             <View>
                 <Swiper

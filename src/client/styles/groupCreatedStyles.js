@@ -4,6 +4,26 @@ const screenHeight = Dimensions.get("window").height;
 const bottomTabHeight = 50;
 
 const styles = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 40,
+    },
+    groupIcon: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: "#f27575",
+        alignSelf: "left",
+    },
+    groupName: {
+        marginLeft: 5,
+        textAlign: "center",
+        alignSelf: "center",
+        fontSize: 30,
+        fontWeight: "bold",
+    },
     card: {
         maxHeight:
             Platform.OS === "ios"
