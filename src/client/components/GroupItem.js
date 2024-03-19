@@ -101,7 +101,7 @@ const GroupItem = ({ group, loggedInUser }) => {
         }
     };
     return (
-        <View>
+        <View style={styles.textContainer}>
             <Modal visible={isLoading} transparent={false}>
                 <Text style={styles.loadingText}>Loading</Text>
             </Modal>
@@ -114,7 +114,7 @@ const GroupItem = ({ group, loggedInUser }) => {
                 ]}
                 onPress={() => handleJoinSessionButton()}
             >
-                <View style={styles.leftContainer}>
+                <View>
                     <Image
                         source={
                             icons.find((icon) => icon.id === groupIconID)
@@ -127,7 +127,11 @@ const GroupItem = ({ group, loggedInUser }) => {
                 </View>
                 <View>
                     <Text style={styles.groupName}>{groupName}</Text>
-                    <Text style={styles.createdBy}>
+                    <Text
+                        style={styles.createdBy}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
                         Created by: {groupAdminEmail}
                     </Text>
                     <Text style={styles.expiresIn}>

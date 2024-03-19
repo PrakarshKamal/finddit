@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         maxHeight:
             Platform.OS === "ios"
                 ? screenHeight - bottomTabHeight - 165
-                : screenHeight * 0.7,
+                : screenHeight * 0.8,
         marginTop: -50,
         flex: 1,
         justifyContent: "center",

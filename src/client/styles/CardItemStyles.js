@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
     image: {
         marginTop: 5,
-        width: Dimensions.get("window").width - 70,
+        width: Dimensions.get("window").width - 60,
         height: Dimensions.get("window").height / 2.3,
         borderRadius: 10,
     },

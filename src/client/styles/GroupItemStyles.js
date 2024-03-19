@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 25,
     },
-    leftContainer: {
+    textContainer: {
         flex: 1,
     },
     groupName: {
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     createdBy: {
         fontSize: 16,
         color: "gray",
+        maxWidth: 250,
     },
     expiresIn: {
         fontSize: 16,

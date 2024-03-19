@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     sessionHistoryText: {
         textAlign: "center",
         fontSize: 20,
-        fontWeight: 500,
+        fontWeight: 600,
         marginTop: 5,
         marginBottom: 10,
     },
