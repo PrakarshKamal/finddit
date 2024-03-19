@@ -43,17 +43,17 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     groupName: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: "bold",
         marginBottom: 12,
     },
     createdBy: {
-        fontSize: 16,
+        fontSize: 18,
         color: "gray",
         maxWidth: 250,
     },
     expiresIn: {
-        fontSize: 16,
+        fontSize: 18,
         color: "gray",
     },
 });
