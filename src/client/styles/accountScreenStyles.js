@@ -6,6 +6,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    accountEmailText: {
+        fontSize: 24,
+        fontWeight: 600,
+        marginBottom: 20,
+    },
+
     signOutButton: {
         width: "50%",
         padding: 15,

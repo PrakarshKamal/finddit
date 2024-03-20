@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "../styles/leaderboardStyles";
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 import {
     getLeaderboard,
     getRestaurantDataFromPlaceID,
 } from "../utils/api_function_calls/leaderboard_functions";
-import { fetchImageUrl } from "../utils/functions";
+import { getEmbedUrlFromPhotoRef } from "../utils/api_function_calls/photo_functions";
 
 const LeaderBoard = ({ route }) => {
     const { groupID } = route.params;
     const [leaderboard, setleaderboard] = useState([]);
     const [leaderboardData, setleaderboardData] = useState([]);
     const [modalRestaurant, setModalRestaurant] = useState(null);
+    const [top1Image, setTop1Image] = useState(null);
+    const [top2Image, setTop2Image] = useState(null);
+    const [top3Image, setTop3Image] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const fetchLeaderBoard = async () => {
         const LeaderBoardIds = await getLeaderboard(groupID);
@@ -22,28 +25,29 @@ const LeaderBoard = ({ route }) => {
         }
         console.log(LeaderBoard);
     };
+    const fetchImageUrl = async (item) => {
+        let ref = item.photos[0].photo_reference;
+        console.log("ref", ref);
+        let imageUrl = await getEmbedUrlFromPhotoRef(ref, 1000);
+        console.log("imageUrl1", imageUrl);
+        return imageUrl;
+    };
     async function fetchRestaurantData(restaurantIDs) {
         try {
             console.log(restaurantIDs);
             const promises = restaurantIDs.map((restID) =>
                 getRestaurantDataFromPlaceID(groupID, restID)
             );
-
             const restaurantData = await Promise.all(promises);
+            setleaderboardData(restaurantData.slice(0, 8));
             let temp = [];
             let imageFetchList = [];
-            let restWithImages = await fetchImageUrl({ data: restaurantData });
-            restWithImages.forEach((rest, index) => {
-                temp.push({
-                    position: index + 1,
-                    restaurantName: rest.name,
-                    id: rest.place_id,
-                    image: rest.image,
-                    ...rest,
-                });
-                console.log(rest.image);
-            });
-            setleaderboardData(temp.slice(0, 8));
+            const imgUrl1 = await fetchImageUrl(restaurantData[0]);
+            setTop1Image({ uri: imgUrl1 });
+            const imgUrl2 = await fetchImageUrl(restaurantData[1]);
+            setTop2Image({ uri: imgUrl2 });
+            const imgUrl3 = await fetchImageUrl(restaurantData[2]);
+            setTop3Image({ uri: imgUrl3 });
         } catch (error) {
             console.error("Error fetching restaurant data:", error);
         }
@@ -79,40 +83,84 @@ const LeaderBoard = ({ route }) => {
                         />
                         <View style={styles.podiumContainer}>
                             <View
-                                style={[styles.podiumCircle, { bottom: 100 }]}
+                                style={[
+                                    styles.podiumCircleTop,
+                                    { bottom: 105 },
+                                ]}
                             >
+                                <Image
+                                    source={top1Image}
+                                    style={styles.podiumCircleImageTop}
+                                ></Image>
                                 <MaterialCommunityIcons
                                     name={`numeric-1-box`}
                                     size={36}
                                     color="rgba(0, 0, 1, 0.4)"
                                     style={styles.podiumNumber}
                                 />
+                                <Text
+                                    style={{
+                                        top: 30,
+                                        fontSize: 16,
+                                        fontWeight: 500,
+                                    }}
+                                >
+                                    {leaderboardData[0]?.name}
+                                </Text>
                             </View>
+
                             <View
                                 style={[
                                     styles.podiumCircleLower,
-                                    { left: -150, bottom: -15 },
+                                    { left: -180, bottom: -8 },
                                 ]}
                             >
+                                <Image
+                                    source={top2Image}
+                                    style={styles.podiumCircleImageLower}
+                                />
                                 <MaterialCommunityIcons
                                     name={`numeric-2-box`}
                                     size={36}
                                     color="rgba(0, 0, 1, 0.4)"
                                     style={styles.podiumNumber}
                                 />
+                                <Text
+                                    style={{
+                                        top: 30,
+                                        fontSize: 16,
+                                        fontWeight: 500,
+                                    }}
+                                >
+                                    {leaderboardData[1]?.name}
+                                </Text>
                             </View>
+
                             <View
                                 style={[
                                     styles.podiumCircleLower,
-                                    { right: -150, bottom: -15 },
+                                    { right: -180, bottom: -8 },
                                 ]}
                             >
+                                <Image
+                                    source={top3Image}
+                                    style={styles.podiumCircleImageLower}
+                                />
                                 <MaterialCommunityIcons
                                     name={`numeric-3-box`}
                                     size={36}
                                     color="rgba(0, 0, 1, 0.4)"
                                     style={styles.podiumNumber}
                                 />
+                                <Text
+                                    style={{
+                                        top: 30,
+                                        fontSize: 16,
+                                        fontWeight: 500,
+                                    }}
+                                >
+                                    {leaderboardData[2]?.name}
+                                </Text>
                             </View>
                         </View>
                     </View>
@@ -129,7 +177,9 @@ const LeaderBoard = ({ route }) => {
                                     >
                                         <View style={styles.leaderboardNumber}>
                                             <MaterialCommunityIcons
-                                                name={`numeric-${item.position}-box-outline`}
+                                                name={`numeric-${
+                                                    index + 4
+                                                }-box-outline`}
                                                 size={36}
                                                 color="rgba(0, 0, 1, 0.6)"
                                             />
@@ -137,7 +187,7 @@ const LeaderBoard = ({ route }) => {
                                         <Text
                                             style={styles.leaderboardItemText}
                                         >
-                                            {item.restaurantName}
+                                            {item?.name}
                                         </Text>
                                     </View>
                                 </View>
