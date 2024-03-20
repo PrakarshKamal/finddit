@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        top: 60,
+        marginBottom: 40,
+        top: 50,
     },
     signOutButtonText: {
         color: "white",

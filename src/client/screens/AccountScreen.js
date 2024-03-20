@@ -30,27 +30,34 @@ const AccountScreen = () => {
         fetchUserData(loggedInUserEmail);
     }, []);
     return (
-        <View style={styles.container}>
-            <Text style={styles.accountDetailsText}>Your account</Text>
-            <Image
-                source={
-                    avatars.find((avatar) => avatar.id === avatarIconID)
-                        ? avatars.find((avatar) => avatar.id === avatarIconID)
-                              .source
-                        : avatars[0].source
-                }
-                style={styles.avatarIcon}
-            />
-            <Text style={styles.usertNameText}>
-                {firstName} {lastName}
-            </Text>
-            <Text style={styles.userEmailText}>{loggedInUserEmail}</Text>
-            <TouchableOpacity
-                style={styles.signOutButton}
-                onPress={signOutUser}
-            >
-                <Text style={styles.signOutButtonText}>Sign Out</Text>
-            </TouchableOpacity>
+        <View style={{ flex: 1 }}>
+            {isLoading ? null : (
+                <View style={styles.container}>
+                    <Text style={styles.accountDetailsText}>Your account</Text>
+                    <Image
+                        source={
+                            avatars.find((avatar) => avatar.id === avatarIconID)
+                                ? avatars.find(
+                                      (avatar) => avatar.id === avatarIconID
+                                  ).source
+                                : avatars[0].source
+                        }
+                        style={styles.avatarIcon}
+                    />
+                    <Text style={styles.usertNameText}>
+                        {firstName} {lastName}
+                    </Text>
+                    <Text style={styles.userEmailText}>
+                        {loggedInUserEmail}
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.signOutButton}
+                        onPress={signOutUser}
+                    >
+                        <Text style={styles.signOutButtonText}>Sign Out</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View>
     );
 };
