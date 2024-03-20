@@ -44,7 +44,7 @@ const AccountScreen = () => {
                         }
                         style={styles.avatarIcon}
                     />
-                    <Text style={styles.usertNameText}>
+                    <Text style={styles.userNameText}>
                         {firstName} {lastName}
                     </Text>
                     <Text style={styles.userEmailText}>

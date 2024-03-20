@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: "rgba(0, 0, 1, 0.7)",
     },
-    usertNameText: {
+    userNameText: {
         fontSize: 28,
         fontWeight: 600,
         marginBottom: 20,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginBottom: 40,
-        top: 50,
+        top: 40,
     },
     signOutButtonText: {
         color: "white",
