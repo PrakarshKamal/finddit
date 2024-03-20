@@ -46,6 +46,7 @@ const AddUsers = ({ route, navigation }) => {
                 input,
                 loggedInUserEmail
             );
+            console.log(response);
             setSearchResult(response);
             setResultDropdownShown(true);
         } catch (err) {
