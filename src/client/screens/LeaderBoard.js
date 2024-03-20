@@ -36,7 +36,7 @@ const LeaderBoard = ({ route }) => {
             restWithImages.forEach((rest, index) => {
                 temp.push({
                     position: index + 1,
-                    name: rest.name,
+                    restaurantName: rest.name,
                     id: rest.place_id,
                     image: rest.image,
                     ...rest,
