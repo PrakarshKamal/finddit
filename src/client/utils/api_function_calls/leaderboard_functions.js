@@ -21,7 +21,7 @@ export async function getGoogleMapsLinkForPlaceID(placeID) {
     const res = await axios.get(
         `${PLACE_DETAILS_URL}&place_id=${placeID}&key=AIzaSyA5sUNngPmqBGtRaYu2B9RZU6yshKW4StA` // same API key as photo_functions.js
     );
-    return res.result.url;
+    return res.data.result.url;
 }
 
 module.exports = {
