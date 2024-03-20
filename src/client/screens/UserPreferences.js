@@ -34,7 +34,7 @@ const UserPreferences = ({ route, navigation }) => {
     console.log(route.params);
     const loggedInUser = useAuth();
     const loggedInUserEmail = loggedInUser.user.email;
-    const [radius, setRadius] = useState(1); // Default radius value
+    const [radius, setRadius] = useState(1); // Default radius value set to 1 KM
     const [selectedPriceRange, setSelectedPriceRange] = useState(null);
     const [openNow, setOpenNow] = useState(true);
     const [groupDeadLine, setGroupDeadLine] = useState(24);
@@ -60,7 +60,6 @@ const UserPreferences = ({ route, navigation }) => {
                 };
                 cards.push(card);
             } catch (error) {
-                // Handle errors if necessary
                 console.error(`Error processing item: ${error.message}`);
             }
         });
@@ -85,7 +84,6 @@ const UserPreferences = ({ route, navigation }) => {
             minPrice: 1,
         };
         if (isLoading) {
-            // The button is already processing a request; prevent further clicks.
             return;
         }
         setIsLoading(true);
@@ -125,7 +123,9 @@ const UserPreferences = ({ route, navigation }) => {
                 <ActivityIndicator></ActivityIndicator>
             ) : (
                 <View style={styles.container}>
-                    <Text>Set your Preferences for this group</Text>
+                    <Text style={styles.setPreferencesText}>
+                        Set preferences for this group
+                    </Text>
                     <Image
                         source={
                             icons.find((icon) => icon.id === groupIconID)
@@ -133,7 +133,7 @@ const UserPreferences = ({ route, navigation }) => {
                                       .source
                                 : icons[0].source
                         }
-                        style={{ width: 100, height: 100 }}
+                        style={styles.groupIcon}
                     ></Image>
                     <Text style={styles.groupName}>{groupName}</Text>
 

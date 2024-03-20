@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         borderRadius: 15,
-        backgroundColor: "lightgray", // Border color
+        backgroundColor: "lightgray",
         position: "absolute",
         borderColor: "transparent",
         justifyContent: "center",
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         flex: 1,
         flexDirection: "column",
-        width: Dimensions.get("window").width - 50, // Take up full width
+        width: Dimensions.get("window").width - 50,
     },
     textInput: {
         height: 40,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     selectedIcon: {
         borderRadius: 20,
         borderColor: "#f27575",
-        borderWidth: 2, // Customize the border width for the selected icon
+        borderWidth: 2,
     },
     buttonContainer: {
         flexDirection: "row",

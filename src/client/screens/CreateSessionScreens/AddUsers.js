@@ -38,7 +38,6 @@ const AddUsers = ({ route, navigation }) => {
     }
     async function searchUser(input) {
         if (isLoading) {
-            // The button is already processing a request; prevent further clicks.
             return;
         }
         setIsLoading(true);
@@ -73,7 +72,6 @@ const AddUsers = ({ route, navigation }) => {
         setGroupMembers(temp);
     }
 
-    // Render individual icons in the grid
     const renderIconItem = ({ item }) => (
         <ProfileIcon user={item} removeUser={removeUser} />
     );
@@ -89,14 +87,7 @@ const AddUsers = ({ route, navigation }) => {
         setSearchResult([]);
     }
     return (
-        <View
-            style={{
-                display: "flex",
-                flex: 1,
-                alignContent: "center",
-                alignItems: "center",
-            }}
-        >
+        <View style={styles.groupName}>
             <Text>{groupName}</Text>
             <UserSearchBar
                 searchUser={searchUser}
@@ -137,7 +128,7 @@ const AddUsers = ({ route, navigation }) => {
                 horizontal={false}
                 data={groupMembers}
                 renderItem={renderIconItem}
-                numColumns={2} // Adjust the number of columns as needed
+                numColumns={2}
                 contentContainerStyle={styles.iconGrid}
             />
 

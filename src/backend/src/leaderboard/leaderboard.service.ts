@@ -307,7 +307,7 @@ export class LeaderboardService {
     if (querySnapshot.empty) {
       console.log('No matching documents.');
     } else {
-      return querySnapshot[0].data();
+      return querySnapshot.docs[0].data();
     }
   }
   findAll() {

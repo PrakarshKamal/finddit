@@ -36,14 +36,12 @@ const GroupInnit = () => {
 
     // Function to handle select button press
     const handleSelectPress = () => {
-        // Add your logic for confirming the selected icon
         if (selectedIcon) {
             console.log(`Selected Icon: ${selectedIcon.source}`);
             setProfileIconModalVisible(false);
         }
     };
 
-    // Render individual icons in the grid
     const renderIconItem = ({ item }) => (
         <TouchableOpacity
             style={[
@@ -89,17 +87,15 @@ const GroupInnit = () => {
                                 Pick a Profile Icon for Your Group
                             </Text>
 
-                            {/* Icon Grid */}
                             <View style={styles.iconGrid}>
                                 <FlatList
                                     data={icons}
                                     renderItem={renderIconItem}
                                     keyExtractor={(item) => item.id}
-                                    numColumns={2} // Adjust the number of columns as needed
+                                    numColumns={2}
                                 />
                             </View>
 
-                            {/* Select and Cancel Buttons */}
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity
                                     onPress={handleCancelPress}

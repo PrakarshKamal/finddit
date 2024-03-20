@@ -14,6 +14,13 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
+    loadingText: {
+        marginTop: 150,
+        textAlign: "center",
+        fontSize: 30,
+        fontWeight: "bold",
+        color: "gray",
+    },
     activeContainer: {
         borderColor: "#29bf12",
         borderWidth: 5,
@@ -24,15 +31,15 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         marginLeft: -10,
-        width: 130,
-        height: 130,
+        width: 110,
+        height: 110,
     },
     groupIcon: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         borderRadius: 25,
     },
-    leftContainer: {
+    textContainer: {
         flex: 1,
     },
     groupName: {
@@ -41,11 +48,12 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     createdBy: {
-        fontSize: 16,
+        fontSize: 18,
         color: "gray",
+        maxWidth: 250,
     },
     expiresIn: {
-        fontSize: 16,
+        fontSize: 18,
         color: "gray",
     },
 });

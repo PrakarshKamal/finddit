@@ -85,7 +85,7 @@ export async function swipeOnRestaurant(groupID, restaurantID, swipeDirection) {
     await axios.post(
         `${NGROK_URL}/groups/swipe-on-restaurant/${groupID}/${restaurantID}/${swipeDirection}`
     );
-    //right, left, down
+    //right, left, up
 }
 
 export async function userFinishedVoting(groupID, userEmail) {

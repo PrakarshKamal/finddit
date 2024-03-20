@@ -41,7 +41,6 @@ const GroupCreated = ({ route, navigation }) => {
                 JSON.stringify(previousVotes)
             );
         } catch (e) {
-            // Handle errors appropriately
             console.error(e);
         }
     };
@@ -58,50 +57,26 @@ const GroupCreated = ({ route, navigation }) => {
         await registerVoteLocally(groupId, restaurantID);
         await swipeOnRestaurant(groupId, restaurantID, "left");
     };
-    const onDownSwipe = async (index) => {
+    const onUpSwipe = async (index) => {
         const card = cardData[index];
         const restaurantID = card["place_id"];
         await registerVoteLocally(groupId, restaurantID);
         await swipeOnRestaurant(groupId, restaurantID, "down");
     };
-    const onUPSwipe = () => {};
 
     const onSwipeAllCards = async () => {
         await userFinishedVoting(groupId, loggedInUser);
-        navigation.navigate("LeaderBoard");
+        navigation.navigate("LeaderBoard", { groupID: groupId });
     };
 
     return (
         <View>
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    marginTop: 40,
-                }}
-            >
+            <View style={styles.container}>
                 <Image
                     source={icons.find((icon) => icon.id === groupIcon).source}
-                    style={{
-                        width: 50,
-                        height: 50,
-                        borderRadius: 25,
-                        borderWidth: 2,
-                        borderColor: "#f27575",
-                        alignSelf: "left",
-                    }}
+                    style={styles.groupIcon}
                 ></Image>
-                <Text
-                    style={{
-                        marginLeft: 5,
-                        textAlign: "center",
-                        alignSelf: "center",
-                        fontSize: 30,
-                        fontWeight: "bold",
-                    }}
-                >
-                    {groupName}
-                </Text>
+                <Text style={styles.groupName}>{groupName}</Text>
             </View>
             <View>
                 <Swiper
@@ -115,7 +90,7 @@ const GroupCreated = ({ route, navigation }) => {
                     disableBottomSwipe={true}
                     onSwipedLeft={(cardIndex) => onLeftSwipe(cardIndex)}
                     onSwipedRight={(cardIndex) => onRightSwipe(cardIndex)}
-                    onSwipedTop={(cardIndex) => onDownSwipe(cardIndex)}
+                    onSwipedTop={(cardIndex) => onUpSwipe(cardIndex)}
                     onSwipedAll={() => onSwipeAllCards()}
                     stackSize={5}
                     animateCardOpacity={true}

@@ -7,23 +7,23 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     actionButton: {
-        width: 200, // Button width
-        height: 200, // Button height
+        width: 200,
+        height: 200,
         borderWidth: 3,
         borderColor: "#f27575",
-        borderRadius: 15, // Button border radius
-        marginBottom: 30, // Spacing between buttons
+        borderRadius: 15,
+        marginBottom: 30,
         justifyContent: "center",
         alignItems: "center",
-        shadowOffset: { width: 3, height: 3 }, // Button shadow
+        shadowOffset: { width: 3, height: 3 },
         shadowOpacity: 0.5,
         shadowRadius: 3,
         backgroundColor: "white",
     },
     buttonText: {
-        color: "black", // Text color
-        fontSize: 18, // Text font size
-        fontWeight: "bold", // Text font weight
+        color: "black",
+        fontSize: 18,
+        fontWeight: "bold",
     },
 
     createSessionIcon: {
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     },
 
     joinSessionIcon: {
-        // position: "relative",
         bottom: 0,
         top: 20,
         right: 5,

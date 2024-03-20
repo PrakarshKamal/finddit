@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "flex-end",
     },
     leaderboardTitleText: {
         textAlign: "center",
@@ -14,13 +13,14 @@ const styles = StyleSheet.create({
     crownIcon: {
         flex: 1,
         alignItems: "center",
+        marginTop: -5,
     },
     podiumContainer: {
         position: "absolute",
         bottom: 20,
         alignItems: "center",
     },
-    podiumCircle: {
+    podiumCircleTop: {
         width: 140,
         height: 140,
         borderRadius: 100,
@@ -32,6 +32,12 @@ const styles = StyleSheet.create({
         borderColor: "rgba(242, 117, 117, 0.35)",
         position: "absolute",
     },
+    podiumCircleImageTop: {
+        top: 9.5,
+        width: 120,
+        height: 120,
+        borderRadius: 100,
+    },
     podiumCircleLower: {
         width: 120,
         height: 120,
@@ -40,9 +46,15 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: 20,
+        marginBottom: 25,
         borderColor: "rgba(242, 117, 117, 0.35)",
         position: "absolute",
+    },
+    podiumCircleImageLower: {
+        top: 9.5,
+        width: 100,
+        height: 100,
+        borderRadius: 100,
     },
     podiumNumber: {
         position: "absolute",
