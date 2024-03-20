@@ -1,4 +1,4 @@
-const NGROK_URL = "https://8663-76-66-96-30.ngrok-free.app";
+const NGROK_URL = "https://87c3-108-170-147-96.ngrok-free.app";
 
 const icons = [
     { id: 1, source: require("../assets/burger.jpeg") },
