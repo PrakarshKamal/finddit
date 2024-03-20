@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AccountScreen from "./screens/AccountScreen";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import HomeTab from "./tabs/HomeTab";
+import AccountTab from "./tabs/AccountTab";
 
 const TabNavigator = () => {
     const Tab = createBottomTabNavigator();
@@ -28,7 +29,7 @@ const TabNavigator = () => {
             />
             <Tab.Screen
                 name="Account"
-                component={AccountScreen}
+                component={AccountTab}
                 options={{
                     tabBarLabel: "Account",
                     tabBarLabelStyle: { color: "white", fontWeight: "bold" },
