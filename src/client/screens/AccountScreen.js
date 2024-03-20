@@ -1,4 +1,4 @@
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-native";
 import useAuth from "../hooks/useAuth";
@@ -7,6 +7,7 @@ import {
     fetchUserDataFromEmail,
     findUserByEmailOrName,
 } from "../utils/api_function_calls/user_functions";
+import { avatars } from "../utils/constants";
 
 const AccountScreen = () => {
     const { signOutUser } = useAuth();
@@ -15,13 +16,13 @@ const AccountScreen = () => {
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [profileIconID, setProfileIconID] = useState(null);
+    const [avatarIconID, setAvatarIconID] = useState(null);
     const fetchUserData = async (email) => {
         setIsLoading(true);
         const resp = await fetchUserDataFromEmail(email);
         setLastName(resp.lastName);
         setFirstName(resp.firstName);
-        setProfileIconID(resp.iconID);
+        setAvatarIconID(resp.iconID);
         setIsLoading(false);
     };
 
@@ -30,11 +31,20 @@ const AccountScreen = () => {
     }, []);
     return (
         <View style={styles.container}>
-            <Text>icon id = {profileIconID}</Text>
-            <Text style={styles.accountEmailText}>
-                Welcome {firstName} {lastName}
+            <Text style={styles.accountDetailsText}>Your account</Text>
+            <Image
+                source={
+                    avatars.find((avatar) => avatar.id === avatarIconID)
+                        ? avatars.find((avatar) => avatar.id === avatarIconID)
+                              .source
+                        : avatars[0].source
+                }
+                style={styles.avatarIcon}
+            />
+            <Text style={styles.usertNameText}>
+                {firstName} {lastName}
             </Text>
-            <Text>{loggedInUserEmail}</Text>
+            <Text style={styles.userEmailText}>{loggedInUserEmail}</Text>
             <TouchableOpacity
                 style={styles.signOutButton}
                 onPress={signOutUser}
