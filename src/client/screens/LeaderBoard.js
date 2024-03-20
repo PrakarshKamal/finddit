@@ -118,7 +118,7 @@ const LeaderBoard = ({ route }) => {
                     </View>
 
                     <View>
-                        {leaderboardData.map((item, index) => (
+                        {leaderboardData.slice(3, 8).map((item, index) => (
                             <TouchableOpacity>
                                 <View
                                     key={index}
@@ -129,9 +129,7 @@ const LeaderBoard = ({ route }) => {
                                     >
                                         <View style={styles.leaderboardNumber}>
                                             <MaterialCommunityIcons
-                                                name={`numeric-${
-                                                    item.position + 3
-                                                }-box-outline`}
+                                                name={`numeric-${item.position}-box-outline`}
                                                 size={36}
                                                 color="rgba(0, 0, 1, 0.6)"
                                             />
