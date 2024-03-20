@@ -6,9 +6,13 @@ import styles from "../styles/accountScreenStyles";
 
 const AccountScreen = () => {
     const { signOutUser } = useAuth();
+    const loggedInUser = useAuth();
+    const loggedInUserEmail = loggedInUser?.user?.email;
     return (
         <View style={styles.container}>
-            <Text>Account Screen</Text>
+            <Text style={styles.accountEmailText}>
+                Welcome {loggedInUserEmail}!
+            </Text>
             <TouchableOpacity
                 style={styles.signOutButton}
                 onPress={signOutUser}
