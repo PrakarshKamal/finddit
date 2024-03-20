@@ -2,22 +2,25 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "../styles/CardItemStyles";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const CardItem = ({ itemData }) => {
     // @kanwar need to add restuarnt id here so that we can add store swipes and shit directly to the restuartnat id
-    const { name, rating, vicinity, place_opening_hours, price_level, image } =
-        itemData;
+    const {
+        name,
+        rating,
+        vicinity,
+        place_opening_hours,
+        price_level,
+        image,
+        tag,
+    } = itemData;
 
     const costDict = {
         1: "💵",
         2: "💵💵",
         3: "💵💵💵",
         4: "💵💵💵💵",
-    };
-
-    const getRandomTag = () => {
-        const tags = ["Vegan", "GF"];
-        return tags[Math.floor(Math.random() * tags.length)];
     };
 
     const renderVegNonVegTags = () => {
@@ -33,14 +36,20 @@ const CardItem = ({ itemData }) => {
         );
     };
 
-    const renderThirdTag = () => {
-        const randomTag = getRandomTag();
+    const renderThirdTag = (randomTag) => {
         let backgroundColor;
         switch (randomTag) {
             case "Vegan":
                 backgroundColor = "#ff74d4";
                 break;
             case "GF":
+                backgroundColor = "#ff9500";
+                break;
+
+            case "Hot Pick":
+                backgroundColor = "#ff3b30";
+                break;
+            case "Trending":
                 backgroundColor = "#ff9500";
                 break;
         }
@@ -55,7 +64,11 @@ const CardItem = ({ itemData }) => {
         <View style={styles.card}>
             <Image source={{ uri: image }} style={styles.image} />
             <View style={styles.infoContainer}>
-                <Text numberOfLines={2} style={styles.name}>
+                <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={styles.name}
+                >
                     {name}
                 </Text>
                 <Text style={styles.location}>{vicinity}</Text>
@@ -71,7 +84,7 @@ const CardItem = ({ itemData }) => {
                 </View>
                 <View style={styles.tagContainer}>
                     {renderVegNonVegTags()}
-                    {renderThirdTag()}
+                    {renderThirdTag(tag)}
                 </View>
             </View>
         </View>
