@@ -24,17 +24,28 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
     },
+    avatarIcon: {
+        width: 60,
+        height: 60,
+        borderRadius: 25,
+        marginRight: 10,
+        marginTop: 10,
+    },
     firstName: {
         fontSize: 20,
         fontWeight: "bold",
+        alignSelf: "center",
     },
     lastName: {
         fontSize: 20,
         fontWeight: "bold",
+        alignSelf: "center",
     },
     email: {
-        fontSize: 14,
+        fontSize: 16,
         color: "rgba(0, 0, 0, 0.5)",
+        marginLeft: 72,
+        marginTop: -20,
     },
 });
 export default styles;
