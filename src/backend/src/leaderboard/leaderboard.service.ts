@@ -232,7 +232,12 @@ export class LeaderboardService {
     rightSwipeScore,
     leftSwipes,
     leftSwipeScore,
+    superDislikes,
   ) {
+    if (superDislikes / (rightSwipes + leftSwipes) > 0.333) {
+      return -999;
+    }
+    leftSwipes = leftSwipes + 2 * superDislikes;
     return (
       rightSwipes ** 2 * rightSwipeScore - leftSwipes ** 2 * leftSwipeScore
     );
@@ -247,6 +252,7 @@ export class LeaderboardService {
     const promises = querySnapshot.docs.map(async (doc) => {
       var rightSwipes = 0;
       var leftSwipes = 0;
+      var superDislikes = 0;
       const data = doc.data();
       const rightSwipeScore = data.rightSwipeScore;
       const leftSwipeScore = data.leftSwipeScore;
@@ -256,11 +262,15 @@ export class LeaderboardService {
       if (data.leftSwipes) {
         leftSwipes += data.leftSwipes;
       }
+      if (data.superDislikes) {
+        superDislikes += data.superDislikes;
+      }
       const totalScore = await this.calculateTotalWeightedScoreForRestaurant(
         rightSwipes,
         rightSwipeScore,
         leftSwipes,
         leftSwipeScore,
+        superDislikes,
       );
       totalScoreMap[doc.id] = totalScore;
     });
