@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import styles from "../styles/leaderboardStyles";
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 import {
     getLeaderboard,
     getRestaurantDataFromPlaceID,
 } from "../utils/api_function_calls/leaderboard_functions";
+import { fetchImageUrl } from "../utils/functions";
 
 const LeaderBoard = ({ route }) => {
     const { groupID } = route.params;
     const [leaderboard, setleaderboard] = useState([]);
     const [leaderboardData, setleaderboardData] = useState([]);
+    const [modalRestaurant, setModalRestaurant] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
     const fetchLeaderBoard = async () => {
         const LeaderBoardIds = await getLeaderboard(groupID);
         setleaderboard(LeaderBoardIds);
@@ -28,14 +31,19 @@ const LeaderBoard = ({ route }) => {
 
             const restaurantData = await Promise.all(promises);
             let temp = [];
-            restaurantData.forEach((rest, index) => {
+            let imageFetchList = [];
+            let restWithImages = await fetchImageUrl({ data: restaurantData });
+            restWithImages.forEach((rest, index) => {
                 temp.push({
                     position: index + 1,
-                    restaurantName: rest.name,
+                    name: rest.name,
+                    id: rest.place_id,
+                    image: rest.image,
+                    ...rest,
                 });
-                console.log(rest);
+                console.log(rest.image);
             });
-            setleaderboardData(temp.slice(0, 5));
+            setleaderboardData(temp.slice(0, 8));
         } catch (error) {
             console.error("Error fetching restaurant data:", error);
         }
@@ -111,22 +119,31 @@ const LeaderBoard = ({ route }) => {
 
                     <View>
                         {leaderboardData.map((item, index) => (
-                            <View key={index} style={styles.leaderboardItem}>
-                                <View style={styles.leaderboardTextContainer}>
-                                    <View style={styles.leaderboardNumber}>
-                                        <MaterialCommunityIcons
-                                            name={`numeric-${
-                                                item.position + 3
-                                            }-box-outline`}
-                                            size={36}
-                                            color="rgba(0, 0, 1, 0.6)"
-                                        />
+                            <TouchableOpacity>
+                                <View
+                                    key={index}
+                                    style={styles.leaderboardItem}
+                                >
+                                    <View
+                                        style={styles.leaderboardTextContainer}
+                                    >
+                                        <View style={styles.leaderboardNumber}>
+                                            <MaterialCommunityIcons
+                                                name={`numeric-${
+                                                    item.position + 3
+                                                }-box-outline`}
+                                                size={36}
+                                                color="rgba(0, 0, 1, 0.6)"
+                                            />
+                                        </View>
+                                        <Text
+                                            style={styles.leaderboardItemText}
+                                        >
+                                            {item.restaurantName}
+                                        </Text>
                                     </View>
-                                    <Text style={styles.leaderboardItemText}>
-                                        {item.restaurantName}
-                                    </Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         ))}
                     </View>
                 </View>
