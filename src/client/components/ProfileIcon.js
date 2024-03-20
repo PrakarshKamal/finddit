@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "../styles/ProfileIcon";
 import { Icon } from "@rneui/base";
-import { MaterialIcons } from "@expo/vector-icons";
+import { avatars } from "../utils/constants";
 
 const ProfileIcon = ({ user, removeUser }) => {
     function removeUserOnPress() {
@@ -16,7 +16,16 @@ const ProfileIcon = ({ user, removeUser }) => {
                 </View>
             </TouchableOpacity>
             <View style={styles.iconContainer}>
-                <MaterialIcons name="person-outline" size={72} color="gray" />
+                <Image
+                    source={
+                        avatars.find((avatar) => avatar.id === user.iconID)
+                            ? avatars.find(
+                                  (avatar) => avatar.id === user.iconID
+                              ).source
+                            : avatars[0].source
+                    }
+                    style={styles.avatarIcon}
+                />
             </View>
             <Text style={styles.userName}>
                 {user.firstName} {user.lastName}

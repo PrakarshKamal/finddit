@@ -55,6 +55,11 @@ const LeaderBoard = ({ route }) => {
             console.error("Error fetching restaurant data:", error);
         }
     }
+    const openExternalUrl = async (id) => {
+        const url = await getGoogleMapsLinkForPlaceID(id);
+        console.log(url);
+        Linking.openURL(url);
+    };
     useEffect(() => {
         fetchLeaderBoard();
     }, []);
@@ -93,11 +98,16 @@ const LeaderBoard = ({ route }) => {
                                     }}
                                 />
                                 <View style={styles.podiumContainer}>
-                                    <View
+                                    <TouchableOpacity
                                         style={[
                                             styles.podiumCircleTop,
                                             { bottom: 105 },
                                         ]}
+                                        onPress={() => {
+                                            openExternalUrl(
+                                                leaderboardData[0]?.place_id
+                                            );
+                                        }}
                                     >
                                         <Image
                                             source={top1Image}
@@ -118,13 +128,18 @@ const LeaderBoard = ({ route }) => {
                                         >
                                             {leaderboardData[0]?.name}
                                         </Text>
-                                    </View>
+                                    </TouchableOpacity>
 
-                                    <View
+                                    <TouchableOpacity
                                         style={[
                                             styles.podiumCircleLower,
                                             { left: -180, bottom: -8 },
                                         ]}
+                                        onPress={() => {
+                                            openExternalUrl(
+                                                leaderboardData[1]?.place_id
+                                            );
+                                        }}
                                     >
                                         <Image
                                             source={top2Image}
@@ -147,13 +162,18 @@ const LeaderBoard = ({ route }) => {
                                         >
                                             {leaderboardData[1]?.name}
                                         </Text>
-                                    </View>
+                                    </TouchableOpacity>
 
-                                    <View
+                                    <TouchableOpacity
                                         style={[
                                             styles.podiumCircleLower,
                                             { right: -180, bottom: -8 },
                                         ]}
+                                        onPress={() => {
+                                            openExternalUrl(
+                                                leaderboardData[2]?.place_id
+                                            );
+                                        }}
                                     >
                                         <Image
                                             source={top3Image}
@@ -176,7 +196,7 @@ const LeaderBoard = ({ route }) => {
                                         >
                                             {leaderboardData[2]?.name}
                                         </Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
 
@@ -185,13 +205,8 @@ const LeaderBoard = ({ route }) => {
                                     .slice(3, 8)
                                     .map((item, index) => (
                                         <TouchableOpacity
-                                            onPress={async () => {
-                                                const url =
-                                                    await getGoogleMapsLinkForPlaceID(
-                                                        item.place_id
-                                                    );
-                                                console.log(url);
-                                                Linking.openURL(url);
+                                            onPress={() => {
+                                                openExternalUrl(item.place_id);
                                             }}
                                         >
                                             <View

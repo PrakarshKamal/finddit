@@ -6,10 +6,20 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    accountEmailText: {
+    accountDetailsText: {
+        fontSize: 30,
+        color: "rgba(0, 0, 1, 0.7)",
+    },
+    userNameText: {
+        fontSize: 28,
+        fontWeight: 600,
+        marginBottom: 20,
+    },
+    userEmailText: {
         fontSize: 24,
         fontWeight: 600,
         marginBottom: 20,
+        color: "#3685FC",
     },
 
     signOutButton: {
@@ -20,12 +30,21 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        marginBottom: 40,
+        top: 40,
     },
     signOutButtonText: {
         color: "white",
         textAlign: "center",
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: "bold",
+    },
+    avatarIcon: {
+        width: 300,
+        height: 300,
+        borderRadius: 50,
+        marginBottom: 10,
+        marginTop: 10,
     },
 });
 
