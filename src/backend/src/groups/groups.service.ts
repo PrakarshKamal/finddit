@@ -100,7 +100,8 @@ export class GroupsService {
         await this.emailService.sendEmail(
           groupMemberEmail,
           'Finddit - Added to Group',
-          `You have been added to the group '${groupName}' on Finddit by ${groupAdminEmail}`,
+          `You have been added to the group '${groupName}' on Finddit by ${groupAdminEmail} \n\nThe voting deadline is 24 hours. \n\nWe hope you Finddit!
+          `,
         );
       }
       return `Admin & Members have been added to group ${currentGroupRefID}!`;
