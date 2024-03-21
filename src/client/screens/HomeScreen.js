@@ -13,7 +13,7 @@ const HomeScreen = () => {
   };
 
   const handleButton2Press = () => {
-    navigation.navigate("ActiveSessions" , {email: user.user.email});
+    navigation.navigate("ActiveSessions" , {email: user?.user?.email});
   };
     return (
         <>
