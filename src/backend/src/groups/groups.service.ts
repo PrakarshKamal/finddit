@@ -4,6 +4,7 @@ import { UpdateGroupDto } from './dto/update-group.dto';
 import { DbService } from 'src/db/db.service';
 import { NearbySearchService } from 'src/nearby-search/nearby-search.service';
 import { LeaderboardService } from 'src/leaderboard/leaderboard.service';
+import { EmailService } from 'src/leaderboard/email.service';
 import {
   Firestore,
   collection,
@@ -34,6 +35,7 @@ export class GroupsService {
     private readonly dbService: DbService,
     private readonly nearbySearchService: NearbySearchService,
     private readonly leaderboardService: LeaderboardService,
+    private readonly emailService: EmailService,
   ) {
     this.db = this.dbService.getDB();
     this.groupsRef = collection(this.db, 'groups');
@@ -62,6 +64,7 @@ export class GroupsService {
         docRef.id,
         createGroupDto.groupMembersEmails,
         createGroupDto.groupAdminEmail,
+        createGroupDto.groupName,
       );
       return docRef.id;
     } catch (e) {
@@ -74,6 +77,7 @@ export class GroupsService {
     currentGroupRefID: string,
     groupMembersEmails: string[],
     groupAdminEmail: string,
+    groupName: string,
   ) {
     try {
       groupMembersEmails.push(groupAdminEmail);
@@ -92,6 +96,12 @@ export class GroupsService {
           memberCheckinTimestamp: null,
           memberFinishedVoting: false,
         });
+
+        await this.emailService.sendEmail(
+          groupMemberEmail,
+          'Finddit - Added to Group',
+          `You have been added to the group '${groupName}' on Finddit by ${groupAdminEmail}`,
+        );
       }
       return `Admin & Members have been added to group ${currentGroupRefID}!`;
     } catch (e) {
