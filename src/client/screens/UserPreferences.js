@@ -161,7 +161,20 @@ const UserPreferences = ({ route, navigation }) => {
                         style={styles.groupIcon}
                     ></Image>
                     <Text style={styles.groupName}>{groupName}</Text>
-                    <Text> {locationToShow}</Text>
+                    <Text style={styles.locationSetForGroupText}>
+                        Location set for this group:
+                    </Text>
+                    <Text
+                        style={styles.locationTextForUser}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
+                        {locationToShow.includes(",")
+                            ? locationToShow
+                                  .substring(locationToShow.indexOf(",") + 1)
+                                  .trim()
+                            : ""}
+                    </Text>
                     <Divider width={1} />
 
                     <View style={styles.radiusContainer}>
@@ -183,7 +196,9 @@ const UserPreferences = ({ route, navigation }) => {
                     <Divider width={1} />
 
                     <View>
-                        <Text style={styles.priceLabel}>PRICE RANGE</Text>
+                        <Text style={styles.priceLabel}>
+                            Choose a price range
+                        </Text>
                         <View style={styles.priceRangeContainer}>
                             <TouchableOpacity
                                 style={[
@@ -283,10 +298,10 @@ const UserPreferences = ({ route, navigation }) => {
                     <Divider width={1} />
 
                     <TouchableOpacity
-                        style={styles.nextButton}
+                        style={styles.checkInButton}
                         onPress={handleCheckinButtonPressed}
                     >
-                        <Text style={styles.nextButtonText}>Check In</Text>
+                        <Text style={styles.checkInButtonText}>Check In</Text>
                     </TouchableOpacity>
                 </View>
             )}

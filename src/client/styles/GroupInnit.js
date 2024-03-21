@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
     },
+    groupNameLabel: {
+        fontSize: 20,
+        marginBottom: 10,
+    },
     textInputView: {
         marginTop: 20,
         flex: 1,
@@ -55,6 +59,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         height: 40,
+        fontSize: 20,
     },
     nextButton: {
         position: "relative",
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
         bottom: 20,
     },
     headingForGroupName: {
-        fontSize: 16,
+        fontSize: 22,
         textAlign: "center",
         marginBottom: 20,
     },
