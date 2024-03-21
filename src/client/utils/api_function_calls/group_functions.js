@@ -101,6 +101,13 @@ export async function checkIfUserFinishedVoting(groupID, userEmail) {
     );
     return resp.data;
 }
+
+export async function getPlaceAddressFromLatLong(lat, long) {
+    const res = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&location_type=ROOFTOP&result_type=street_address&key=AIzaSyA5sUNngPmqBGtRaYu2B9RZU6yshKW4StA`
+    );
+    return res.data.results[0]["formatted_address"];
+}
 module.exports = {
     createNewGroup,
     getCardDataFromGroup,
@@ -110,6 +117,7 @@ module.exports = {
     swipeOnRestaurant,
     userFinishedVoting,
     checkIfUserFinishedVoting,
+    getPlaceAddressFromLatLong,
     userUsedSuperDislike,
     checkIfUserUsedSuperDislike,
 };

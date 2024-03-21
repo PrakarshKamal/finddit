@@ -27,6 +27,7 @@ import { getEmbedUrlFromPhotoRef } from "../utils/api_function_calls/photo_funct
 import { ActivityIndicator } from "react-native";
 import { icons } from "../utils/constants";
 import { fetchImageUrl } from "../utils/functions";
+import { getPlaceAddressFromLatLong } from "../utils/api_function_calls/group_functions";
 
 const UserPreferences = ({ route, navigation }) => {
     const { groupID, groupName, groupIconID, groupMembersEmails } =
@@ -69,7 +70,8 @@ const UserPreferences = ({ route, navigation }) => {
 
     //     return cards;
     // };
-
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    console.log(getPlaceAddressFromLatLong(43.6426, -79.3871));
     const handlePriceRangeSelect = (priceRange) => {
         setSelectedPriceRange(priceRange);
     };
