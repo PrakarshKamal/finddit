@@ -68,7 +68,7 @@ function SignupScreen() {
             if (resp) {
                 console.log("User created in database", resp);
             } else {
-                console.log("failed");
+                console.log(resp);
             }
         }
     };
