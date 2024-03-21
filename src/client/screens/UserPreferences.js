@@ -26,6 +26,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { getEmbedUrlFromPhotoRef } from "../utils/api_function_calls/photo_functions";
 import { ActivityIndicator } from "react-native";
 import { icons } from "../utils/constants";
+import { fetchImageUrl } from "../utils/functions";
 
 const UserPreferences = ({ route, navigation }) => {
     const { groupID, groupName, groupIconID, groupMembersEmails } =
@@ -47,27 +48,27 @@ const UserPreferences = ({ route, navigation }) => {
     const handleRadiusChange = (value) => {
         setRadius(value);
     };
-    const fetchImageUrl = async (cardData) => {
-        const cards = [];
+    // const fetchImageUrl = async (cardData) => {
+    //     const cards = [];
 
-        const promises = cardData.data.map(async (item) => {
-            try {
-                let ref = item.photos[0].photo_reference;
-                let imageUrl = await getEmbedUrlFromPhotoRef(ref, 1000);
-                let card = {
-                    ...item,
-                    image: imageUrl,
-                };
-                cards.push(card);
-            } catch (error) {
-                console.error(`Error processing item: ${error.message}`);
-            }
-        });
+    //     const promises = cardData.data.map(async (item) => {
+    //         try {
+    //             let ref = item.photos[0].photo_reference;
+    //             let imageUrl = await getEmbedUrlFromPhotoRef(ref, 1000);
+    //             let card = {
+    //                 ...item,
+    //                 image: imageUrl,
+    //             };
+    //             cards.push(card);
+    //         } catch (error) {
+    //             console.error(`Error processing item: ${error.message}`);
+    //         }
+    //     });
 
-        await Promise.all(promises);
+    //     await Promise.all(promises);
 
-        return cards;
-    };
+    //     return cards;
+    // };
 
     const handlePriceRangeSelect = (priceRange) => {
         setSelectedPriceRange(priceRange);
