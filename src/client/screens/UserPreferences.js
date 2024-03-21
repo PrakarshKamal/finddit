@@ -98,12 +98,12 @@ const UserPreferences = ({ route, navigation }) => {
         }
         setIsLoading(true);
         try {
-            const resp = await userCheckIn(
-                groupID,
-                loggedInUserEmail,
-                userPreferences
+            userCheckIn(groupID, loggedInUserEmail, userPreferences).then(
+                (res) => {
+                    if (res !== 201) alert("Something went wrong");
+                }
             );
-            if (resp == 201) {
+            if (true) {
                 const cardData = await getCardDataFromGroup(groupID);
                 let cards = await fetchImageUrl(cardData);
                 if (cards.length === 0) {
