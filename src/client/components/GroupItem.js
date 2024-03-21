@@ -20,6 +20,7 @@ const GroupItem = ({ group, loggedInUser }) => {
         votingDeadline,
         groupMembersEmails,
         timeStamp,
+        adminPreferences,
     } = group.groupMetadata;
     const groupID = group.groupID;
     const [remainingTime, setRemainingTime] = useState(null);
@@ -92,6 +93,8 @@ const GroupItem = ({ group, loggedInUser }) => {
                     votingDeadline: votingDeadline,
                     groupMembersEmails: groupMembersEmails,
                     timeStamp: timeStamp,
+                    latitude: adminPreferences["latitude"],
+                    longitude: adminPreferences["longitude"],
                 });
             }
         } catch (err) {

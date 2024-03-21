@@ -315,7 +315,7 @@ export class GroupsService {
     const docRef = doc(this.groupsRef, currentGroupRefID);
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
-      console.log(docSnapshot.data());
+      console.log('hheihfh', docSnapshot.data());
       return docSnapshot.data();
     }
   }
