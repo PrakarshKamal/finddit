@@ -34,7 +34,7 @@ const UserPreferences = ({ route, navigation }) => {
 
     console.log(route.params);
     const loggedInUser = useAuth();
-    const loggedInUserEmail = loggedInUser.user.email;
+    const loggedInUserEmail = loggedInUser?.user?.email;
     const [radius, setRadius] = useState(1); // Default radius value set to 1 KM
     const [selectedPriceRange, setSelectedPriceRange] = useState(null);
     const [openNow, setOpenNow] = useState(true);
