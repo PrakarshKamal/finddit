@@ -4,11 +4,12 @@ import { LeaderboardController } from './leaderboard.controller';
 import { GroupsModule } from 'src/groups/groups.module';
 import { DbService } from 'src/db/db.service';
 import { DatabaseModule } from 'src/db/db.module';
+import { EmailService } from './email.service';
 
 @Module({
   controllers: [LeaderboardController],
-  providers: [LeaderboardService],
+  providers: [LeaderboardService, EmailService],
   imports: [DatabaseModule],
-  exports: [LeaderboardService],
+  exports: [LeaderboardService, EmailService],
 })
 export class LeaderboardModule {}
