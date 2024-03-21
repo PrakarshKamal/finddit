@@ -84,7 +84,7 @@ const GroupInnit = () => {
                     >
                         <SafeAreaView style={styles.container}>
                             <Text style={styles.headingForProfileIcon}>
-                                Pick a Profile Icon for Your Group
+                                Pick a profile icon for your group
                             </Text>
 
                             <View style={styles.iconGrid}>

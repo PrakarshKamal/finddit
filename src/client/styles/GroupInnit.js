@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
     },
     headingForProfileIcon: {
         color: "black",
-        fontSize: 18,
+        fontSize: 22,
         textAlign: "center",
-        marginTop: 30,
+        marginTop: 40,
         marginBottom: 30,
     },
     profileCircle: {
@@ -77,15 +77,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageContainer: {
-        margin: 5,
+        marginHorizontal: 6,
+        marginVertical: 4,
         borderWidth: 2,
         borderColor: "transparent",
         padding: 5,
         borderRadius: 20,
     },
     image: {
-        width: 100,
-        height: 100,
+        width: 110,
+        height: 110,
     },
     profileIcon: {
         width: "100%",
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     selectedIcon: {
         borderRadius: 20,
         borderColor: "#f27575",
-        borderWidth: 2,
+        borderWidth: 3,
     },
     buttonContainer: {
         flexDirection: "row",
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        marginLeft: 20,
+        marginLeft: 40,
         marginBottom: 20,
     },
     cancelButton: {
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: "white",
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: "bold",
     },
 });
