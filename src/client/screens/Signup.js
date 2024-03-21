@@ -27,7 +27,7 @@ function SignupScreen() {
     const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const iconID = Math.floor(Math.random() * 4);
+    const iconID = Math.floor(Math.random() * 8);
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [inUseEmail, setEmailInUse] = useState(false);
     const [weakPassword, setWeakPassword] = useState(false);
