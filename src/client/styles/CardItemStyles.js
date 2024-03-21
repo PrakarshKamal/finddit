@@ -45,11 +45,39 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: 5,
     },
-    tag: {
-        paddingHorizontal: 12,
+    vegTag: {
+        minWidth: 60,
+        minHeight: 30,
+        textAlign: "center",
+        borderRadius: 20,
+        marginRight: 10,
+        alignItems: "center", // Add this line
+        justifyContent: "center", // Add this line
+    },
+    nonVegTag: {
+        minWidth: 100,
+        minHeight: 30,
+        textAlign: "center",
+        borderRadius: 20,
+        marginRight: 10,
+        alignItems: "center", // Add this line
+        justifyContent: "center", // Add this line
+    },
+    thirdTag: {
+        flexDirection: "row", // Add this line
+        alignItems: "center", // Add this line
+        paddingHorizontal: 16,
         paddingVertical: 8,
         borderRadius: 20,
-        marginRight: 15,
+        marginRight: 10,
+    },
+    fireTag: {
+        marginLeft: -5,
+        marginRight: 5,
+    },
+    boltTag: {
+        marginLeft: -5,
+        marginRight: 5,
     },
     tagText: {
         color: "white",

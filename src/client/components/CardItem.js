@@ -1,8 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "../styles/CardItemStyles";
-import { Entypo, FontAwesome } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
 const CardItem = ({ itemData }) => {
     // @kanwar need to add restuarnt id here so that we can add store swipes and shit directly to the restuartnat id
@@ -26,10 +25,10 @@ const CardItem = ({ itemData }) => {
     const renderVegNonVegTags = () => {
         return (
             <>
-                <View style={[styles.tag, { backgroundColor: "green" }]}>
+                <View style={[styles.vegTag, { backgroundColor: "green" }]}>
                     <Text style={styles.tagText}>Veg</Text>
                 </View>
-                <View style={[styles.tag, { backgroundColor: "red" }]}>
+                <View style={[styles.nonVegTag, { backgroundColor: "red" }]}>
                     <Text style={styles.tagText}>Non-Veg</Text>
                 </View>
             </>
@@ -38,23 +37,40 @@ const CardItem = ({ itemData }) => {
 
     const renderThirdTag = (randomTag) => {
         let backgroundColor;
+        let iconName;
         switch (randomTag) {
             case "Vegan":
                 backgroundColor = "#ff74d4";
                 break;
             case "GF":
-                backgroundColor = "#ff9500";
+                backgroundColor = "#47DAD9";
                 break;
-
             case "Hot Pick":
-                backgroundColor = "#ff3b30";
+                backgroundColor = "#ff9500";
+                iconName = "fire";
                 break;
             case "Trending":
-                backgroundColor = "#ff9500";
+                backgroundColor = "#ffd700";
+                iconName = "bolt";
                 break;
         }
         return (
-            <View style={[styles.tag, { backgroundColor }]}>
+            <View style={[styles.thirdTag, { backgroundColor, iconName }]}>
+                {iconName === "fire" ? (
+                    <FontAwesome5
+                        name={iconName}
+                        size={20}
+                        color="#F1F929"
+                        style={styles.fireTag}
+                    />
+                ) : (
+                    <FontAwesome5
+                        name={iconName}
+                        size={18}
+                        color="white"
+                        style={styles.boltTag}
+                    />
+                )}
                 <Text style={styles.tagText}>{randomTag}</Text>
             </View>
         );
