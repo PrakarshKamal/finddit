@@ -61,16 +61,17 @@ async function getCheckedInUsersForGroup(groupID) {
     await axios.get(`${NGROK_URL}/groups/checked-in-members/${groupID}`);
 }
 
-async function userUsedSuperDislike(groupID, userEmail) {
+export async function userUsedSuperDislike(groupID, userEmail) {
     await axios.post(
         `${NGROK_URL}/groups/user-used-superdislike/${groupID}/${userEmail}`
     );
 }
 
-async function checkIfUserUsedSuperDislike(groupID, userEmail) {
-    await axios.get(
+export async function checkIfUserUsedSuperDislike(groupID, userEmail) {
+    const result = await axios.get(
         `${NGROK_URL}/groups/check-if-user-used-superdislike/${groupID}/${userEmail}`
     );
+    return result.data;
 }
 
 async function getCardDataFromGroup(groupID) {
@@ -117,4 +118,6 @@ module.exports = {
     userFinishedVoting,
     checkIfUserFinishedVoting,
     getPlaceAddressFromLatLong,
+    userUsedSuperDislike,
+    checkIfUserUsedSuperDislike,
 };

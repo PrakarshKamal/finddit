@@ -186,6 +186,9 @@ const GroupPreferences = ({ route, navigation }) => {
                             {
                                 <GooglePlacesAutocomplete
                                     placeholder="Search"
+                                    textInputProps={{
+                                        placeholderTextColor: "gray",
+                                    }}
                                     fetchDetails={true}
                                     GooglePlacesSearchQuery={{
                                         rankby: "distance",
@@ -199,15 +202,7 @@ const GroupPreferences = ({ route, navigation }) => {
                                         radius: 30000,
                                         location: `${region.latitude}, ${region.longitude}`,
                                     }}
-                                    styles={{
-                                        container: {
-                                            flex: 0,
-                                            position: "absolute",
-                                            width: "100%",
-                                            zIndex: 1,
-                                        },
-                                        listView: { backgroundColor: "white" },
-                                    }}
+                                    styles={styles.googlePlacesInput}
                                 />
                             }
                             <MapView

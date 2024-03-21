@@ -1,4 +1,4 @@
-const NGROK_URL = "https://87c3-108-170-147-96.ngrok-free.app";
+const NGROK_URL = "https://ea27-76-66-96-30.ngrok-free.app";
 
 const icons = [
     { id: 1, source: require("../assets/burger.jpeg") },
@@ -15,6 +15,10 @@ const avatars = [
     { id: 1, source: require("../assets/avatar2.png") },
     { id: 2, source: require("../assets/avatar3.png") },
     { id: 3, source: require("../assets/avatar4.png") },
+    { id: 4, source: require("../assets/avatar5.png") },
+    { id: 5, source: require("../assets/avatar6.png") },
+    { id: 6, source: require("../assets/avatar7.png") },
+    { id: 7, source: require("../assets/avatar8.png") },
 ];
 
 module.exports = {
