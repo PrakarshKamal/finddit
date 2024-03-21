@@ -16,6 +16,19 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
 
+    locationSetForGroupText: {
+        fontSize: 18,
+        textAlign: "center",
+        marginBottom: 10,
+    },
+
+    locationTextForUser: {
+        fontSize: 18,
+        textAlign: "center",
+        marginBottom: 20,
+        fontWeight: "bold",
+        color: "#3685FC",
+    },
     groupName: {
         fontSize: 24,
         fontWeight: "bold",
@@ -81,6 +94,21 @@ const styles = StyleSheet.create({
     },
     priceRangeText: {
         fontSize: 16,
+    },
+    checkInButton: {
+        position: "absolute",
+        bottom: 20,
+        right: 20,
+        backgroundColor: "#f27575",
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderRadius: 5,
+    },
+    checkInButtonText: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+        textTransform: "uppercase",
     },
     nextButton: {
         position: "absolute",

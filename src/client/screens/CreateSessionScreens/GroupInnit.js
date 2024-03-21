@@ -65,7 +65,7 @@ const GroupInnit = () => {
                 groupName: groupName,
             });
         } else {
-            alert("Enter all data");
+            alert("Enter a group name and select a profile icon");
         }
     }
     return (
@@ -84,7 +84,7 @@ const GroupInnit = () => {
                     >
                         <SafeAreaView style={styles.container}>
                             <Text style={styles.headingForProfileIcon}>
-                                Pick a Profile Icon for Your Group
+                                Pick a profile icon for your group
                             </Text>
 
                             <View style={styles.iconGrid}>
@@ -117,7 +117,7 @@ const GroupInnit = () => {
                         </SafeAreaView>
                     </Modal>
                     <Text style={styles.headingForGroupName}>
-                        Set the name of the group and choose a profile icon
+                        Set the group name and choose a profile icon
                     </Text>
                     <View style={styles.container}>
                         <TouchableOpacity onPress={handleProfileIconPressed}>
@@ -148,7 +148,7 @@ const GroupInnit = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.textInputView}>
-                        <Text>GROUP NAME</Text>
+                        <Text style={styles.groupNameLabel}>GROUP NAME</Text>
                         <TextInput
                             placeholder="Enter text here"
                             style={styles.textInput}

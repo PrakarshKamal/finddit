@@ -9,7 +9,7 @@ import {
     Modal,
     Image,
 } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "../styles/GroupPreferencesStyles";
 import Slider from "@react-native-community/slider";
 import useAuth from "../hooks/useAuth";
@@ -30,10 +30,16 @@ import { fetchImageUrl } from "../utils/functions";
 import { getPlaceAddressFromLatLong } from "../utils/api_function_calls/group_functions";
 
 const UserPreferences = ({ route, navigation }) => {
-    const { groupID, groupName, groupIconID, groupMembersEmails } =
-        route.params;
+    const {
+        groupID,
+        groupName,
+        groupIconID,
+        groupMembersEmails,
+        latitude,
+        longitude,
+    } = route.params;
 
-    console.log(route.params);
+    console.log("heee ", route.params);
     const loggedInUser = useAuth();
     const loggedInUserEmail = loggedInUser?.user?.email;
     const [radius, setRadius] = useState(1); // Default radius value set to 1 KM
@@ -44,6 +50,7 @@ const UserPreferences = ({ route, navigation }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [locationSelected, setLocationSelected] = useState(false);
+    const [locationToShow, setLocationToShow] = useState("Loading");
     const mapRef = useRef(null);
 
     const handleRadiusChange = (value) => {
@@ -70,7 +77,7 @@ const UserPreferences = ({ route, navigation }) => {
 
     //     return cards;
     // };
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
     console.log(getPlaceAddressFromLatLong(43.6426, -79.3871));
     const handlePriceRangeSelect = (priceRange) => {
         setSelectedPriceRange(priceRange);
@@ -120,6 +127,21 @@ const UserPreferences = ({ route, navigation }) => {
             setIsLoading(false);
         }
     };
+    const fetchLocationString = async () => {
+        if (latitude && longitude) {
+            setIsLoading(true);
+            const locationToShow = await getPlaceAddressFromLatLong(
+                latitude,
+                longitude
+            );
+            setLocationToShow(locationToShow);
+            setIsLoading(false);
+        }
+    };
+    useEffect(() => {
+        fetchLocationString();
+    }, []);
+
     return (
         <View style={styles.container}>
             {isLoading ? (
@@ -139,7 +161,20 @@ const UserPreferences = ({ route, navigation }) => {
                         style={styles.groupIcon}
                     ></Image>
                     <Text style={styles.groupName}>{groupName}</Text>
-
+                    <Text style={styles.locationSetForGroupText}>
+                        Location set for this group:
+                    </Text>
+                    <Text
+                        style={styles.locationTextForUser}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
+                        {locationToShow.includes(",")
+                            ? locationToShow
+                                  .substring(locationToShow.indexOf(",") + 1)
+                                  .trim()
+                            : ""}
+                    </Text>
                     <Divider width={1} />
 
                     <View style={styles.radiusContainer}>
@@ -161,7 +196,9 @@ const UserPreferences = ({ route, navigation }) => {
                     <Divider width={1} />
 
                     <View>
-                        <Text style={styles.priceLabel}>PRICE RANGE</Text>
+                        <Text style={styles.priceLabel}>
+                            Choose a price range
+                        </Text>
                         <View style={styles.priceRangeContainer}>
                             <TouchableOpacity
                                 style={[
@@ -261,10 +298,10 @@ const UserPreferences = ({ route, navigation }) => {
                     <Divider width={1} />
 
                     <TouchableOpacity
-                        style={styles.nextButton}
+                        style={styles.checkInButton}
                         onPress={handleCheckinButtonPressed}
                     >
-                        <Text style={styles.nextButtonText}>Check In</Text>
+                        <Text style={styles.checkInButtonText}>Check In</Text>
                     </TouchableOpacity>
                 </View>
             )}
