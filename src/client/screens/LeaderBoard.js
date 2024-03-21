@@ -125,6 +125,8 @@ const LeaderBoard = ({ route }) => {
                                                 fontSize: 16,
                                                 fontWeight: 500,
                                             }}
+                                            numberOfLines={1}
+                                            ellipsizeMode="tail"
                                         >
                                             {leaderboardData[0]?.name}
                                         </Text>
@@ -159,6 +161,8 @@ const LeaderBoard = ({ route }) => {
                                                 fontSize: 16,
                                                 fontWeight: 500,
                                             }}
+                                            numberOfLines={1}
+                                            ellipsizeMode="tail"
                                         >
                                             {leaderboardData[1]?.name}
                                         </Text>
@@ -193,6 +197,8 @@ const LeaderBoard = ({ route }) => {
                                                 fontSize: 16,
                                                 fontWeight: 500,
                                             }}
+                                            numberOfLines={1}
+                                            ellipsizeMode="tail"
                                         >
                                             {leaderboardData[2]?.name}
                                         </Text>

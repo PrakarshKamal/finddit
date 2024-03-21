@@ -10,6 +10,7 @@ async function sendSignUpRequest(firstName, lastName, email, iconID) {
             lastName,
             iconID,
         });
+        return "created user in database";
     } catch (error) {
         throw error;
     }

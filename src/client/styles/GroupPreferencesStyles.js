@@ -106,6 +106,26 @@ const styles = StyleSheet.create({
     openNowSwitch: {
         marginTop: 16,
     },
+    googlePlacesInput: {
+        container: {
+            flex: 0,
+            position: "absolute",
+            width: "100%",
+            zIndex: 1,
+            backgroundColor: "white",
+        },
+        listView: {
+            backgroundColor: "white",
+        },
+        textInput: {
+            fontSize: 16,
+            borderWidth: 2,
+            borderColor: "gray",
+            paddingHorizontal: 10,
+            marginTop: 10,
+            maxwidth: "50%",
+        },
+    },
 });
 
 export default styles;
