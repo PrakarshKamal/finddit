@@ -1,0 +1,1 @@
+Today, we brainstormed the algorithm we will use to rank our restaurants. It will involve a cost function which factors in user preferences, their votes and veto power. The aim is to maximize the happiness in the group.

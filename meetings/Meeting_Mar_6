@@ -1,0 +1,1 @@
+After discussing more about our algorithm implementation, we had to think about some outlier edge cases and how we will handle user votes. Our approach was to calculate restaurant scores and voting scores separately by creating different functions for them. In the end, we will create another function which computes the final weighted score for each restaurant.

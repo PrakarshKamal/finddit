@@ -7,6 +7,6 @@ export class AppService {
   }
 
   getHello2(): object {
-    return { message: 'Hello World!'};
+    return { message: 'Hello World!' };
   }
 }
