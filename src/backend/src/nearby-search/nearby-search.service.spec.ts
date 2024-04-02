@@ -20,39 +20,32 @@ describe('NearbySearchService', () => {
 describe('getNearbyPlaces', () => {
   let service: NearbySearchService;
   it('should return a list of places for valid coordinates', async () => {
-    // Setup mock response
+    
     const mockApiResponse = {
-      /* mock successful API response */
     };
 
-    // Execute
     const places =
-      await service.getNearbyPlaces(/* valid coordinates and parameters */);
+      await service.getNearbyPlaces();
 
-    // Assert
+    
     expect(places).toBeDefined();
-    expect(Array.isArray(places)).toBe(true);
-    // Further assertions to validate structure of places
+    expect(Array.isArray(places)).toBe(true);\
   });
 });
 
 describe('getNearbyPlaces', () => {
   let service: NearbySearchService;
   it('should return a list of places for valid coordinates', async () => {
-    // Setup mock response
     const mockApiResponse = {
-      /* mock successful API response */
     };
     jest.spyOn(service, 'callExternalApi').mockResolvedValue(mockApiResponse);
 
-    // Execute
+    
     const places =
-      await service.getNearbyPlaces(/* valid coordinates and parameters */);
+      await service.getNearbyPlaces();
 
-    // Assert
     expect(places).toBeDefined();
     expect(Array.isArray(places)).toBe(true);
-    // Further assertions to validate structure of places
   });
 });
 
@@ -72,20 +65,16 @@ describe('getNearbyPlaces', () => {
 describe('processApiResponse', () => {
   let service: NearbySearchService;
   it('should correctly filter and process API response based on criteria', async () => {
-    // Setup mock response and expected outcome
     const mockApiResponse = {
-      /* detailed response including various places */
     };
     const expectedFilteredResults = {
-      /* expected filtered and processed results */
     };
 
-    // Simulate processing
     const processedResults = service.processApiResponse(
-      mockApiResponse /* filtering criteria */,
+      mockApiResponse,
     );
 
-    // Assert
+    
     expect(processedResults).toEqual(expectedFilteredResults);
   });
 });
