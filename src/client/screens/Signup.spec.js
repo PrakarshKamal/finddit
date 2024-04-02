@@ -15,7 +15,6 @@ jest.mock("../hooks/useAuth", () => ({
     }),
 }));
 
-// Mocking axios and sendSignUpRequest function
 jest.mock("axios", () => ({
     post: jest.fn(() => Promise.resolve({ data: {} })),
 }));

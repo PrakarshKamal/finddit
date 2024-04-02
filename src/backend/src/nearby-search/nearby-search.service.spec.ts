@@ -52,12 +52,10 @@ describe('getNearbyPlaces', () => {
 describe('getNearbyPlaces', () => {
   let service: NearbySearchService;
   it('should validate input parameters and throw if invalid', async () => {
-    // Execute with invalid parameters
     await expect(
-      service.getNearbyPlaces(/* invalid parameters */),
+      service.getNearbyPlaces(),
     ).rejects.toThrow('Invalid parameters');
 
-    // Assertions to ensure no API call is made
     expect(service.callExternalApi).not.toHaveBeenCalled();
   });
 });

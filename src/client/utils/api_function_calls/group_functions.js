@@ -1,5 +1,6 @@
 import { NGROK_URL } from "../constants";
 import axios from "axios";
+const API_KEY = process.env.GCP_KEY;
 
 async function createNewGroup(
     groupName,
